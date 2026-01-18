@@ -4,7 +4,8 @@ import './index.css';
 import Home from './pages/Home/Home.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
-import GroupForm from "./components/GroupForm/GroupForm.tsx";
+import GroupForm from './components/GroupForm/GroupForm.tsx';
+import ExpensesForm from './components/ExpensesForm/ExpensesForm.tsx';
 
 const router = createBrowserRouter([
     {
@@ -19,11 +20,15 @@ const router = createBrowserRouter([
                 path: '/group',
                 element: <GroupForm />,
             },
+            {
+                path: '/expenses',
+                element: <ExpensesForm />,
+            },
         ],
     },
 ]);
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <RouterProvider router={router} />

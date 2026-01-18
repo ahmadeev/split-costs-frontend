@@ -1,43 +1,42 @@
 import './GroupForm.css';
 import { type ChangeEvent, type SyntheticEvent, useCallback, useState } from 'react';
 
+type Names = Record<string, string>;
+
 export default function GroupForm() {
     const [emptyFieldsCount, setEmptyFieldsCount] = useState(0);
 
     const [groupName, setGroupName] = useState('');
 
-    type Names = Record<number, string>;
-    type SetNames = (names: Names) => void;
-
     const [names, setNames] = useState<Names>({});
 
-    const handleGroupNameInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleGroupNameInput = (e: ChangeEvent<HTMLInputElement>): void => {
         setGroupName(e.target.value);
     };
 
-    const handleNameInput = useCallback((e: ChangeEvent<HTMLInputElement>, names: Names, setNames: SetNames) => {
+    const handleNameInput = useCallback((e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
 
-        setNames({ ...names, [name]: value });
+        setNames((prev: Names) => ({ ...prev, [name]: value }));
     }, []);
 
-    const handleEditClick = useCallback((e: SyntheticEvent<HTMLElement>) => {
+    const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
         const el = e.currentTarget.querySelector('input[type="text"]') as HTMLInputElement;
 
         el.focus();
-    }, []);
+    };
 
-    const handleAddClick = useCallback(() => {
+    const handleAddClick = () => {
         setEmptyFieldsCount(prev => prev + 1);
-    }, []);
+    };
 
-    const handleSubmitClick = useCallback((groupName: string, names: Names) => {
+    const handleSubmitClick = useCallback(() => {
         console.log(groupName);
         console.log(names);
-    }, []);
+    }, [groupName, names]);
 
     return (
-        <div className="group-form-container">
+        <div className="group-form__container">
             <div className='group-form__row group-form__header'>
                 <div>
                     <span>Назовите группу:</span>
@@ -62,7 +61,7 @@ export default function GroupForm() {
                             className='group-form__text-input'
                             type='text'
                             placeholder='Введите имя'
-                            onChange={(e: ChangeEvent<HTMLInputElement>) => { handleNameInput(e, names, setNames); }}
+                            onChange={handleNameInput}
                             name={`input-${String(index)}`}
                         />
                     </div>
@@ -80,7 +79,7 @@ export default function GroupForm() {
                 </div>
             </div>
             <button
-                onClick={() => { handleSubmitClick(groupName, names); }}
+                onClick={() => { handleSubmitClick(); }}
                 className='group-form__submit-button'
             >Создать группу</button>
         </div>

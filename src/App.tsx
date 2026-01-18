@@ -6,6 +6,7 @@ export default function App() {
             <nav style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
                 <Link to="/">Главная</Link>
                 <Link to="/group">Группа</Link>
+                <Link to="/expenses">Расходы</Link>
             </nav>
 
             <hr />
