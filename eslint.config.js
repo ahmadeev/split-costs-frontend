@@ -58,6 +58,10 @@ export default defineConfig([
         { blankLine: 'always', prev: 'for', next: '*' },
         { blankLine: 'always', prev: 'while', next: '*' },
       ],
+
+      '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/non-nullable-type-assertion-style': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'error',
     },
   },
 ])
