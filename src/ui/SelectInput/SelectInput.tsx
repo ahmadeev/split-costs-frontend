@@ -36,13 +36,14 @@ export default function SelectInput({ options, handler }: Props) {
                             options.map((option: Option) => (
                                 <div
                                     className={styles.option}
+                                    key={option.id}
                                     onClick={() => {
                                         setValue(option);
                                         handler(option.id ?? 0);
                                         setIsShown(!isShown);
                                     }}
                                 >
-                                    <span key={option.id}>{option.name}</span>
+                                    <span>{option.name}</span>
                                 </div>
                             ))
                         }
