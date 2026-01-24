@@ -63,12 +63,11 @@ export default function ExpensesForm() {
         <div className={'form-layout__container'}>
             <div
                 onClick={handleEditClick}
-                style={{ border: '1px black solid' }}
-                className='form-layout__row form-layout__row_bordered expense-form__row'
+                className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
             >
                 <input
                     type="text"
-                    className='form-layout__text-input_invisible-border'
+                    className='form-layout__text-input_invisible-border form-layout__text-input_header'
                     placeholder='Введите сумму'
                     value={amount}
                     onChange={handleAmountChange}
@@ -76,7 +75,7 @@ export default function ExpensesForm() {
             </div>
 
             {hintString && (
-                <div className={'form-layout__row expense-form__row'}>
+                <div className={'form-layout__row'}>
                     <span>{hintString}</span>
                 </div>
             )}
@@ -86,13 +85,16 @@ export default function ExpensesForm() {
                     <></>
                 ) : (
                     GROUP_NAMES.map((name: string, index: number) => (
-                        <div className='form-layout__row form-layout__row_bordered expense-form__row' key={index}>
-                            <input
-                                type="checkbox"
-                                name={name}
-                                onChange={handleCheckStateChange}
-                            />
-                            <span>{name}</span>
+                        <div className='form-layout__row form-layout__row_bordered' key={index}>
+                            <label style={{ cursor: 'pointer' }}>
+                                <input
+                                    type="checkbox"
+                                    name={name}
+                                    onChange={handleCheckStateChange}
+                                    style={{ margin: '1rem', cursor: 'pointer' }}
+                                />
+                                <span>{name}</span>
+                            </label>
                         </div>
                     ))
                 )

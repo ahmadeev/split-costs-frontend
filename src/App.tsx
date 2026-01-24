@@ -1,16 +1,18 @@
-import { Link, Outlet } from 'react-router-dom';
-
-type Styles = Record<string, string>;
+import { NavLink, Outlet } from 'react-router-dom';
+import type { CSSProperties } from 'react';
 
 export default function App() {
-    const navStyles: Styles = {
+    const navHeight = '10vh';
+
+    const navStyles: CSSProperties = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         gap: '1rem',
         width: '100%',
-        position: 'fixed',
+        height: navHeight,
         padding: '1rem',
+        position: 'fixed',
         top: '0',
         left: '0',
         boxSizing: 'border-box',
@@ -19,14 +21,18 @@ export default function App() {
         zIndex: '9999',
     };
 
+    const getActiveLinkStyles = (isActive: boolean): CSSProperties => {
+        return isActive ? { textDecoration: 'underline' } : { textDecoration: 'none' };
+    };
+
     return (
         <>
             <nav style={navStyles}>
-                <Link to="/">Главная</Link>
-                <Link to="/group">Группа</Link>
-                <Link to="/expenses">Расходы</Link>
+                <NavLink to="/" style={({ isActive }) => getActiveLinkStyles(isActive)}>Главная</NavLink>
+                <NavLink to="/group" style={({ isActive }) => getActiveLinkStyles(isActive)}>Группа</NavLink>
+                <NavLink to="/expenses" style={({ isActive }) => getActiveLinkStyles(isActive)}>Расходы</NavLink>
             </nav>
-            <div style={{ fontFamily: 'Arial', padding: '20px' }}>
+            <div style={{ marginTop: navHeight, width: '100%', height: '100%' }}>
                 <Outlet/>
             </div>
         </>

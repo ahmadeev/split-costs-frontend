@@ -1,31 +1,3 @@
-:root {
-    --border-radius: 0.5rem;
-    --on-hover-white: #f3f3f3;
-}
-
-.group-form__row {
-    gap: 1rem;
-
-    cursor: pointer;
-
-    transition: all 0.2s ease-in-out;
-}
-
-.group-form__row * {
-    background-color: transparent;
-}
-
-.group-form__header {
-    flex-direction: column;
-    cursor: auto;
-    align-items: flex-start;
-    justify-content: center;
-}
-
-.group-form__row:hover {
-    background-color: var(--on-hover-white);
-}
-
 .group-form__add-button {
     display: flex;
     justify-content: center;
