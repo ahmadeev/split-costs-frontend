@@ -2,7 +2,7 @@ import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
 import { type ChangeEvent, type SyntheticEvent, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
-import type { Expense, Group, Member } from '../../types/types.ts';
+import type { Expense, GroupResponseDTO, Member, MemberResponseDTO } from '../../types/types.ts';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
 
 type Checks = Record<string, boolean>;
@@ -36,7 +36,7 @@ const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
     el.focus();
 };
 
-const GROUP: Group = {
+const GROUP: GroupResponseDTO = {
     id: 1,
     name: 'Buhaem v pyatnicu',
     members: [
@@ -67,7 +67,7 @@ const GROUP: Group = {
     ],
 };
 
-const GROUP_2 = {
+const GROUP_2: GroupResponseDTO = {
     id: 2,
     name: 'веселые посиделки',
     members: [
@@ -78,7 +78,7 @@ const GROUP_2 = {
     ],
 };
 
-const GROUPS: Group[] = [GROUP, GROUP_2];
+const GROUPS: GroupResponseDTO[] = [GROUP, GROUP_2];
 
 export default function ExpensesForm() {
     const [total, setTotal] = useState('');
@@ -87,12 +87,12 @@ export default function ExpensesForm() {
         setTotal(e.target.value);
     };
 
-    const [group, setGroup] = useState<Group>(GROUPS[0]);
+    const [group, setGroup] = useState<GroupResponseDTO>(GROUPS[0]);
 
     const [isDividedEvenly, setIsDividedEvenly] = useState<boolean>(true);
 
     const [checksState, setChecksState] = useState<Checks>(() => {
-        return group.members.reduce((acc: Checks, value: Member) => {
+        return group.members.reduce((acc: Checks, value: MemberResponseDTO) => {
             return { ...acc, [value.name]: true };
         }, {});
     });
@@ -113,7 +113,7 @@ export default function ExpensesForm() {
     };
 
     const selectChangeHandler = (id: number) => {
-        const group: Group = GROUPS.find((group: Group) => group.id === id)!;
+        const group: GroupResponseDTO = GROUPS.find((group: GroupResponseDTO) => group.id === id)!;
 
         setGroup(group);
 
@@ -164,14 +164,14 @@ export default function ExpensesForm() {
                 isDividedEvenly ? (
                     <></>
                 ) : (
-                    group.members.map((member: Member, index: number) => (
+                    group.members.map((member: MemberResponseDTO, index: number) => (
                         <div className='form-layout__row form-layout__row_bordered' key={index}>
                             <label style={{ cursor: 'pointer' }}>
                                 <input
                                     type="checkbox"
                                     name={member.name}
                                     onChange={handleCheckStateChange}
-                                    checked={checksState[member.id]}
+                                    checked={checksState[member.name]}
                                     style={{ margin: '1rem', cursor: 'pointer' }}
                                 />
                                 <span>{member.name}</span>
