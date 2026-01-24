@@ -59,8 +59,25 @@ export default function ExpensesForm() {
     // todo: не обновляется c useMemo
     const hintString = getHintString(+amount, checksState);
 
+    const [expenseName, setExpenseName] = useState('');
+
+    const handleExpenseNameInput = (e: ChangeEvent<HTMLInputElement>): void => {
+        setExpenseName(e.target.value);
+    };
+
     return (
         <div className={'form-layout__container'}>
+            <div
+                onClick={handleEditClick}
+                className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
+            >
+                <input
+                    className='form-layout__text-input_invisible-border form-layout__text-input_header'
+                    type="text"
+                    placeholder='Введите комментарий'
+                    onChange={handleExpenseNameInput}
+                />
+            </div>
             <div
                 onClick={handleEditClick}
                 className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
@@ -113,6 +130,7 @@ export default function ExpensesForm() {
             <button
                 className='form-layout__button_primary form-layout__button_full-width'
                 onClick={() => {
+                    console.log(expenseName);
                     console.log(amount);
                     console.log(Object.keys(checksState).filter(name => checksState[name]));
                 }}

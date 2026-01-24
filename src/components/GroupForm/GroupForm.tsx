@@ -40,7 +40,7 @@ export default function GroupForm() {
         <div className="form-layout__container">
             <div
                 onClick={handleEditClick}
-                className='form-layout__row form-layout__row_bordered form-layout__row_header-input group-form__row'
+                className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
             >
                 <input
                     className='form-layout__text-input_invisible-border form-layout__text-input_header'
@@ -52,7 +52,7 @@ export default function GroupForm() {
             {Array.from({ length: emptyFieldsCount }).map((_: unknown, index: number) => (
                 <div
                     onClick={handleEditClick}
-                    className='form-layout__row form-layout__row_bordered group-form__row'
+                    className='form-layout__row form-layout__row_bordered'
                     key={index}
                     style={{ cursor: 'text' }}
                 >
@@ -67,7 +67,7 @@ export default function GroupForm() {
             ))}
             <div
                 onClick={handleAddClick}
-                className='form-layout__row form-layout__row_bordered group-form__row'
+                className='form-layout__row form-layout__row_bordered'
                 style={{ cursor: 'pointer', gap: '1rem' }}
             >
                 <div className='group-form__add-button'>
