@@ -1,8 +1,9 @@
 import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
-import { type ChangeEvent, type SyntheticEvent, useState } from 'react';
+import { type ChangeEvent, type SyntheticEvent, useEffect, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
 import type { Expense, Group, Member } from '../../types/types.ts';
+import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -36,6 +37,7 @@ const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
 };
 
 const GROUP: Group = {
+    id: 1,
     name: 'Buhaem v pyatnicu',
     members: [
         {
@@ -65,6 +67,19 @@ const GROUP: Group = {
     ],
 };
 
+const GROUP_2 = {
+    id: 2,
+    name: 'веселые посиделки',
+    members: [
+        {
+            id: 1,
+            name: 'Леша',
+        },
+    ],
+};
+
+const GROUPS: Group[] = [GROUP, GROUP_2];
+
 export default function ExpensesForm() {
     const [amount, setAmount] = useState('');
 
@@ -72,10 +87,12 @@ export default function ExpensesForm() {
         setAmount(e.target.value);
     };
 
+    const [group, setGroup] = useState<Group>(GROUPS[0]);
+
     const [divideEvenly, setDivideEvenly] = useState<boolean>(true);
 
     const [checksState, setChecksState] = useState<Checks>(() => {
-        return GROUP.members.reduce((acc: Checks, value: Member) => {
+        return group.members.reduce((acc: Checks, value: Member) => {
             return { ...acc, [value.name]: true };
         }, {});
     });
@@ -93,6 +110,18 @@ export default function ExpensesForm() {
 
     const handleExpenseNameInput = (e: ChangeEvent<HTMLInputElement>): void => {
         setExpenseName(e.target.value);
+    };
+
+    const selectChangeHandler = (id: number) => {
+        const group: Group = GROUPS.find((group: Group) => group.id === id)!;
+
+        setGroup(group);
+
+        setChecksState(() => {
+            return group.members.reduce((acc: Checks, value: Member) => {
+                return { ...acc, [value.name]: true };
+            }, {});
+        });
     };
 
     return (
@@ -127,11 +156,15 @@ export default function ExpensesForm() {
                 </div>
             )}
 
+            <div>
+                <SelectInput options={GROUPS} handler={selectChangeHandler} />
+            </div>
+
             {
                 divideEvenly ? (
                     <></>
                 ) : (
-                    GROUP.members.map((member: Member, index: number) => (
+                    group.members.map((member: Member, index: number) => (
                         <div className='form-layout__row form-layout__row_bordered' key={index}>
                             <label style={{ cursor: 'pointer' }}>
                                 <input

@@ -1,0 +1,54 @@
+import { useEffect, useState } from 'react';
+import styles from './SelectInput.module.css';
+
+interface Option { id?: number, name: string }
+
+interface Props {
+    options: Option[];
+    handler: (id: number) => void;
+}
+
+export default function SelectInput({ options, handler }: Props) {
+    const [isShown, setIsShown] = useState(false);
+
+    const [value, setValue] = useState<Option>();
+
+    useEffect(() => {
+        document.addEventListener('click', (e: PointerEvent) => {
+            const select = document.querySelector(`.${styles.container}`);
+
+            if (!select?.contains(e.target as Node)) {
+                setIsShown(false);
+            }
+        });
+    }, []);
+
+    return (
+        <div className={styles.container}>
+            <div
+                className={`${styles.option} ${styles.option_header} ${isShown ? styles.option_top : ''} ${value ? '' : styles.trigger}`}
+                onClick={() => { setIsShown(!isShown); }}
+            >{value?.name ?? 'Выберите группу'}</div>
+            {
+                isShown && (
+                    <div className={styles.block}>
+                        {
+                            options.map((option: Option) => (
+                                <div
+                                    className={styles.option}
+                                    onClick={() => {
+                                        setValue(option);
+                                        handler(option.id ?? 0);
+                                        setIsShown(!isShown);
+                                    }}
+                                >
+                                    <span key={option.id}>{option.name}</span>
+                                </div>
+                            ))
+                        }
+                    </div>
+                )
+            }
+        </div>
+    );
+}

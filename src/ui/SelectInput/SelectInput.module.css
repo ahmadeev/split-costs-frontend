@@ -1,0 +1,51 @@
+.container {
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    user-select: none;
+    cursor: pointer;
+}
+
+.block {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    z-index: 9995;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px black solid;
+    padding: 0.6rem 1.2rem;
+    box-sizing: border-box;
+
+    transition: background-color 0.2s ease-in-out;
+}
+
+.option_header {
+    border-radius: 0.5rem;
+}
+
+.option_top {
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.option:not(:first-child) {
+    border-top: none;
+}
+
+.option:last-child:not(.option_header) {
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.option:hover {
+    background-color: var(--on-hover-white);
+}
+
+.trigger {
+    color: #888888;
+}
