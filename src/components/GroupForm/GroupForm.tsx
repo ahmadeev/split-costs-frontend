@@ -37,6 +37,9 @@ export default function GroupForm() {
 
     return (
         <div className="group-form__container">
+            <div>
+                <h2 style={{ textAlign: 'left' }}>Создать группу</h2>
+            </div>
             <div className='group-form__row group-form__header'>
                 <div>
                     <span>Назовите группу:</span>

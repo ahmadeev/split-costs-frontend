@@ -51,6 +51,10 @@ export default function ExpensesForm() {
 
     return (
         <div className={'expense-form__container'}>
+            <div>
+                <h2 style={{ textAlign: 'left' }}>Записать расходы</h2>
+            </div>
+
             <div className='expense-form__row'>
                 <input
                     type="text"
