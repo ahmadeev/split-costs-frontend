@@ -1,6 +1,6 @@
 import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
-import { type ChangeEvent, type SyntheticEvent, useMemo, useState } from 'react';
+import { type ChangeEvent, type SyntheticEvent, useState } from 'react';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -56,8 +56,8 @@ export default function ExpensesForm() {
         setChecksState({ ...checksState, [elementName]: !checksState[elementName] });
     };
 
-    // todo: не обновляется
-    const hintString = useMemo(() => getHintString(+amount, checksState), [amount, checksState]);
+    // todo: не обновляется c useMemo
+    const hintString = getHintString(+amount, checksState);
 
     return (
         <div className={'form-layout__container'}>
