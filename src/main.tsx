@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
 import GroupForm from './components/GroupForm/GroupForm.tsx';
 import ExpensesForm from './components/ExpensesForm/ExpensesForm.tsx';
+import NotFoundError from './pages/NotFoundError/NotFoundError.tsx';
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
                 element: <ExpensesForm />,
             },
         ],
+        errorElement: <NotFoundError />,
     },
 ]);
 
