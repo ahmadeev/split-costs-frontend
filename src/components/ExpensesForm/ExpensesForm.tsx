@@ -2,7 +2,7 @@ import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
 import { type ChangeEvent, type SyntheticEvent, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
-import type { Expense, GroupResponseDTO, Member, MemberResponseDTO } from '../../types/types.ts';
+import type { Expense, GroupResponseDTO, MemberResponseDTO } from '../../types/types.ts';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
 
 type Checks = Record<string, boolean>;
@@ -118,7 +118,7 @@ export default function ExpensesForm() {
         setGroup(group);
 
         setChecksState(() => {
-            return group.members.reduce((acc: Checks, value: Member) => {
+            return group.members.reduce((acc: Checks, value: MemberResponseDTO) => {
                 return { ...acc, [value.name]: isDividedEvenly };
             }, {});
         });

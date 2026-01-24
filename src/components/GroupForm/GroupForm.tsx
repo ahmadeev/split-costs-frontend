@@ -2,7 +2,7 @@ import '../FormLayout/FormLayout.css';
 import './GroupForm.css';
 import { type ChangeEvent, type SyntheticEvent, useCallback, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
-import type { Group, Member } from '../../types/types.ts';
+import type { Group, MemberResponseDTO } from '../../types/types.ts';
 
 export type Names = Record<string, string>;
 
@@ -34,7 +34,7 @@ export default function GroupForm() {
     };
 
     const handleSubmitClick = useCallback(() => {
-        const members: Member[] = Object.entries(names).map(([id, name]: [string, string]): Member => {
+        const members: MemberResponseDTO[] = Object.entries(names).map(([id, name]: [string, string]): MemberResponseDTO => {
             return { id: +id, name: name };
         });
 
