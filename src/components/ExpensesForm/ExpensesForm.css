@@ -1,17 +1,4 @@
-.expense-form__container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.expense-form__row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.expense-form__row > :is(button, input[type="text"]) {
+.expense-form__row > input[type="text"] {
     width: 100%;
 }
 

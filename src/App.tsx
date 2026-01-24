@@ -1,19 +1,34 @@
 import { Link, Outlet } from 'react-router-dom';
 
+type Styles = Record<string, string>;
+
 export default function App() {
+    const navStyles: Styles = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '1rem',
+        width: '100%',
+        position: 'fixed',
+        padding: '1rem',
+        top: '0',
+        left: '0',
+        boxSizing: 'border-box',
+        borderBottom: '1px solid #ddd',
+        backgroundColor: 'white',
+        zIndex: '9999',
+    };
+
     return (
-        <div style={{ fontFamily: 'Arial', padding: '20px' }}>
-            <div style={{ position: 'absolute', top: '1rem' }}>
-                <nav style={{ display: 'flex', gap: '15px' }}>
-                    <Link to="/">Главная</Link>
-                    <Link to="/group">Группа</Link>
-                    <Link to="/expenses">Расходы</Link>
-                </nav>
-
-                <hr/>
+        <>
+            <nav style={navStyles}>
+                <Link to="/">Главная</Link>
+                <Link to="/group">Группа</Link>
+                <Link to="/expenses">Расходы</Link>
+            </nav>
+            <div style={{ fontFamily: 'Arial', padding: '20px' }}>
+                <Outlet/>
             </div>
-
-            <Outlet/>
-        </div>
+        </>
     );
 }

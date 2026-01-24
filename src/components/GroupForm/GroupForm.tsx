@@ -1,3 +1,4 @@
+import '../FormLayout/FormLayout.css';
 import './GroupForm.css';
 import { type ChangeEvent, type SyntheticEvent, useCallback, useState } from 'react';
 
@@ -36,43 +37,39 @@ export default function GroupForm() {
     }, [groupName, names]);
 
     return (
-        <div className="group-form__container">
-            <div>
-                <h2 style={{ textAlign: 'left' }}>Создать группу</h2>
-            </div>
-            <div className='group-form__row group-form__header'>
-                <div>
-                    <span>Назовите группу:</span>
-                </div>
-                <div>
-                    <input
-                        className='group-form__text-input'
-                        type="text"
-                        placeholder='Отчаянные козявки'
-                        onChange={handleGroupNameInput}
-                    />
-                </div>
+        <div className="form-layout__container">
+            <div
+                style={{ border: 'none', backgroundColor: '#f3f3f3', cursor: 'text' }}
+                onClick={handleEditClick}
+                className='form-layout__row form-layout__row_bordered group-form__row group-form__header'
+            >
+                <input
+                    className='form-layout__text-input_invisible-border'
+                    type="text"
+                    placeholder='Отчаянные козявки'
+                    onChange={handleGroupNameInput}
+                    style={{ fontWeight: 'bold', fontSize: '2rem' }}
+                />
             </div>
             {Array.from({ length: emptyFieldsCount }).map((_: unknown, index: number) => (
                 <div
                     onClick={handleEditClick}
-                    className='group-form__row'
+                    className='form-layout__row form-layout__row_bordered group-form__row'
                     key={index}
+                    style={{ cursor: 'text' }}
                 >
-                    <div>
-                        <input
-                            className='group-form__text-input'
-                            type='text'
-                            placeholder='Введите имя'
-                            onChange={handleNameInput}
-                            name={`input-${String(index)}`}
-                        />
-                    </div>
+                    <input
+                        className='form-layout__text-input_invisible-border'
+                        type='text'
+                        placeholder='Введите имя'
+                        onChange={handleNameInput}
+                        name={`input-${String(index)}`}
+                    />
                 </div>
             ))}
             <div
                 onClick={handleAddClick}
-                className='group-form__row'
+                className='form-layout__row form-layout__row_bordered group-form__row'
             >
                 <div className='group-form__add-button'>
                     <span>+</span>
@@ -83,7 +80,7 @@ export default function GroupForm() {
             </div>
             <button
                 onClick={() => { handleSubmitClick(); }}
-                className='group-form__submit-button'
+                className='form-layout__button_primary form-layout__button_full-width'
             >Создать группу</button>
         </div>
     );
