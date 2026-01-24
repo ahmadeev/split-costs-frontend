@@ -1,6 +1,6 @@
 import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
-import { type ChangeEvent, type SyntheticEvent, useEffect, useState } from 'react';
+import { type ChangeEvent, type SyntheticEvent, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
 import type { Expense, Group, Member } from '../../types/types.ts';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
@@ -81,10 +81,10 @@ const GROUP_2 = {
 const GROUPS: Group[] = [GROUP, GROUP_2];
 
 export default function ExpensesForm() {
-    const [amount, setAmount] = useState('');
+    const [total, setTotal] = useState('');
 
     const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setAmount(e.target.value);
+        setTotal(e.target.value);
     };
 
     const [group, setGroup] = useState<Group>(GROUPS[0]);
@@ -104,12 +104,12 @@ export default function ExpensesForm() {
     };
 
     // todo: не обновляется c useMemo
-    const hintString = getHintString(+amount, checksState);
+    const hintString = getHintString(+total, checksState);
 
-    const [expenseName, setExpenseName] = useState('');
+    const [details, setDetails] = useState('');
 
     const handleExpenseNameInput = (e: ChangeEvent<HTMLInputElement>): void => {
-        setExpenseName(e.target.value);
+        setDetails(e.target.value);
     };
 
     const selectChangeHandler = (id: number) => {
@@ -127,25 +127,25 @@ export default function ExpensesForm() {
     return (
         <FormLayout>
             <div
-                onClick={handleEditClick}
                 className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
+                onClick={handleEditClick}
             >
                 <input
-                    className='form-layout__text-input_invisible-border form-layout__text-input_header'
                     type="text"
+                    className='form-layout__text-input_invisible-border form-layout__text-input_header'
                     placeholder='Введите комментарий'
                     onChange={handleExpenseNameInput}
                 />
             </div>
             <div
-                onClick={handleEditClick}
                 className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
+                onClick={handleEditClick}
             >
                 <input
                     type="text"
                     className='form-layout__text-input_invisible-border form-layout__text-input_header'
                     placeholder='Введите сумму'
-                    value={amount}
+                    value={total}
                     onChange={handleAmountChange}
                 />
             </div>
@@ -194,8 +194,8 @@ export default function ExpensesForm() {
                 className='form-layout__button_primary form-layout__button_full-width'
                 onClick={() => {
                     const expense: Expense = {
-                        total: +amount,
-                        details: expenseName,
+                        total: +total,
+                        details: details,
                         group: GROUP,
                     };
 

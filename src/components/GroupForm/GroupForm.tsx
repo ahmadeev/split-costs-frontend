@@ -6,6 +6,12 @@ import type { Group, Member } from '../../types/types.ts';
 
 export type Names = Record<string, string>;
 
+const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
+    const el = e.currentTarget.querySelector('input[type="text"]') as HTMLInputElement;
+
+    el.focus();
+};
+
 export default function GroupForm() {
     const [emptyFieldsCount, setEmptyFieldsCount] = useState(0);
 
@@ -22,12 +28,6 @@ export default function GroupForm() {
 
         setNames((prev: Names) => ({ ...prev, [name]: value }));
     }, []);
-
-    const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
-        const el = e.currentTarget.querySelector('input[type="text"]') as HTMLInputElement;
-
-        el.focus();
-    };
 
     const handleAddClick = () => {
         setEmptyFieldsCount(prev => prev + 1);
@@ -46,35 +46,35 @@ export default function GroupForm() {
     return (
         <FormLayout>
             <div
-                onClick={handleEditClick}
                 className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
+                onClick={handleEditClick}
             >
                 <input
-                    className='form-layout__text-input_invisible-border form-layout__text-input_header'
                     type="text"
+                    className='form-layout__text-input_invisible-border form-layout__text-input_header'
                     placeholder='Отчаянные козявки'
                     onChange={handleGroupNameInput}
                 />
             </div>
             {Array.from({ length: emptyFieldsCount }).map((_: unknown, index: number) => (
                 <div
-                    onClick={handleEditClick}
                     className='form-layout__row form-layout__row_bordered'
+                    onClick={handleEditClick}
                     key={index}
                     style={{ cursor: 'text' }}
                 >
                     <input
-                        className='form-layout__text-input_invisible-border'
                         type='text'
+                        className='form-layout__text-input_invisible-border'
+                        name={`input-${String(index)}`}
                         placeholder='Введите имя'
                         onChange={handleNameInput}
-                        name={`input-${String(index)}`}
                     />
                 </div>
             ))}
             <div
-                onClick={handleAddClick}
                 className='form-layout__row form-layout__row_bordered'
+                onClick={handleAddClick}
                 style={{ cursor: 'pointer', gap: '1rem' }}
             >
                 <div className='group-form__add-button'>
@@ -85,10 +85,10 @@ export default function GroupForm() {
                 </div>
             </div>
             <button
+                className='form-layout__button_primary form-layout__button_full-width'
                 onClick={() => {
                     handleSubmitClick();
                 }}
-                className='form-layout__button_primary form-layout__button_full-width'
             >Создать группу
             </button>
         </FormLayout>
