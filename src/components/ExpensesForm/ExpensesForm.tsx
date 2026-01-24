@@ -89,7 +89,7 @@ export default function ExpensesForm() {
 
     const [group, setGroup] = useState<Group>(GROUPS[0]);
 
-    const [divideEvenly, setDivideEvenly] = useState<boolean>(true);
+    const [isDividedEvenly, setIsDividedEvenly] = useState<boolean>(true);
 
     const [checksState, setChecksState] = useState<Checks>(() => {
         return group.members.reduce((acc: Checks, value: Member) => {
@@ -119,7 +119,7 @@ export default function ExpensesForm() {
 
         setChecksState(() => {
             return group.members.reduce((acc: Checks, value: Member) => {
-                return { ...acc, [value.name]: true };
+                return { ...acc, [value.name]: isDividedEvenly };
             }, {});
         });
     };
@@ -157,11 +157,11 @@ export default function ExpensesForm() {
             )}
 
             <div>
-                <SelectInput options={GROUPS} handler={selectChangeHandler} />
+                <SelectInput options={GROUPS} defaultValue={group} handler={selectChangeHandler} />
             </div>
 
             {
-                divideEvenly ? (
+                isDividedEvenly ? (
                     <></>
                 ) : (
                     group.members.map((member: Member, index: number) => (
@@ -171,6 +171,7 @@ export default function ExpensesForm() {
                                     type="checkbox"
                                     name={member.name}
                                     onChange={handleCheckStateChange}
+                                    checked={checksState[member.id]}
                                     style={{ margin: '1rem', cursor: 'pointer' }}
                                 />
                                 <span>{member.name}</span>
@@ -182,13 +183,15 @@ export default function ExpensesForm() {
 
             <button
                 onClick={() => {
-                    Object.keys(checksState).forEach((name: string) => {
-                        checksState[name] = !divideEvenly;
+                    setChecksState((): Checks => {
+                        return Object.keys(checksState).reduce((acc: Checks, name: string) => {
+                            return { ...acc, [name]: !isDividedEvenly };
+                        }, {});
                     });
 
-                    setDivideEvenly((prev: boolean) => !prev);
+                    setIsDividedEvenly((prev: boolean) => !prev);
                 }}
-            >{divideEvenly ? 'Выбрать из списка' : 'Разделить поровну'}</button>
+            >{isDividedEvenly ? 'Выбрать из списка' : 'Разделить поровну'}</button>
 
             <button
                 className='form-layout__button_primary form-layout__button_full-width'

@@ -5,13 +5,14 @@ interface Option { id?: number, name: string }
 
 interface Props {
     options: Option[];
+    defaultValue?: Option;
     handler: (id: number) => void;
 }
 
-export default function SelectInput({ options, handler }: Props) {
+export default function SelectInput({ options, handler, defaultValue }: Props) {
     const [isShown, setIsShown] = useState(false);
 
-    const [value, setValue] = useState<Option>();
+    const [value, setValue] = useState<Option | null | undefined>(defaultValue);
 
     useEffect(() => {
         document.addEventListener('click', (e: PointerEvent) => {
