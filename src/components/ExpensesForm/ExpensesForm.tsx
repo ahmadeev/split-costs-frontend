@@ -1,6 +1,7 @@
 import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
 import { type ChangeEvent, type SyntheticEvent, useState } from 'react';
+import FormLayout from '../FormLayout/FormLayout.tsx';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -66,7 +67,7 @@ export default function ExpensesForm() {
     };
 
     return (
-        <div className={'form-layout__container'}>
+        <FormLayout>
             <div
                 onClick={handleEditClick}
                 className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
@@ -136,6 +137,6 @@ export default function ExpensesForm() {
                 }}
             >Сохранить
             </button>
-        </div>
+        </FormLayout>
     );
 }

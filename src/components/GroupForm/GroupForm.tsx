@@ -1,6 +1,7 @@
 import '../FormLayout/FormLayout.css';
 import './GroupForm.css';
 import { type ChangeEvent, type SyntheticEvent, useCallback, useState } from 'react';
+import FormLayout from '../FormLayout/FormLayout.tsx';
 
 type Names = Record<string, string>;
 
@@ -37,7 +38,7 @@ export default function GroupForm() {
     }, [groupName, names]);
 
     return (
-        <div className="form-layout__container">
+        <FormLayout>
             <div
                 onClick={handleEditClick}
                 className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
@@ -78,9 +79,12 @@ export default function GroupForm() {
                 </div>
             </div>
             <button
-                onClick={() => { handleSubmitClick(); }}
+                onClick={() => {
+                    handleSubmitClick();
+                }}
                 className='form-layout__button_primary form-layout__button_full-width'
-            >Создать группу</button>
-        </div>
+            >Создать группу
+            </button>
+        </FormLayout>
     );
 }
