@@ -2,6 +2,7 @@ import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
 import { type ChangeEvent, type SyntheticEvent, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
+import type { Expense, Group, Member } from '../../types/types.ts';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -34,7 +35,35 @@ const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
     el.focus();
 };
 
-const GROUP_NAMES = ['Леша', 'Саша', 'Ваня', 'Толя', 'Вася', 'Акакий'];
+const GROUP: Group = {
+    name: 'Buhaem v pyatnicu',
+    members: [
+        {
+            id: 1,
+            name: 'Леша',
+        },
+        {
+            id: 2,
+            name: 'Саша',
+        },
+        {
+            id: 3,
+            name: 'Ваня',
+        },
+        {
+            id: 4,
+            name: 'Дима',
+        },
+        {
+            id: 5,
+            name: 'Тима',
+        },
+        {
+            id: 6,
+            name: 'Фая',
+        },
+    ],
+};
 
 export default function ExpensesForm() {
     const [amount, setAmount] = useState('');
@@ -46,8 +75,8 @@ export default function ExpensesForm() {
     const [divideEvenly, setDivideEvenly] = useState<boolean>(true);
 
     const [checksState, setChecksState] = useState<Checks>(() => {
-        return GROUP_NAMES.reduce((acc: Checks, value: string) => {
-            return { ...acc, [value]: true };
+        return GROUP.members.reduce((acc: Checks, value: Member) => {
+            return { ...acc, [value.name]: true };
         }, {});
     });
 
@@ -102,16 +131,16 @@ export default function ExpensesForm() {
                 divideEvenly ? (
                     <></>
                 ) : (
-                    GROUP_NAMES.map((name: string, index: number) => (
+                    GROUP.members.map((member: Member, index: number) => (
                         <div className='form-layout__row form-layout__row_bordered' key={index}>
                             <label style={{ cursor: 'pointer' }}>
                                 <input
                                     type="checkbox"
-                                    name={name}
+                                    name={member.name}
                                     onChange={handleCheckStateChange}
                                     style={{ margin: '1rem', cursor: 'pointer' }}
                                 />
-                                <span>{name}</span>
+                                <span>{member.name}</span>
                             </label>
                         </div>
                     ))
@@ -131,9 +160,13 @@ export default function ExpensesForm() {
             <button
                 className='form-layout__button_primary form-layout__button_full-width'
                 onClick={() => {
-                    console.log(expenseName);
-                    console.log(amount);
-                    console.log(Object.keys(checksState).filter(name => checksState[name]));
+                    const expense: Expense = {
+                        total: +amount,
+                        details: expenseName,
+                        group: GROUP,
+                    };
+
+                    console.log(expense);
                 }}
             >Сохранить
             </button>

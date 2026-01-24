@@ -2,8 +2,9 @@ import '../FormLayout/FormLayout.css';
 import './GroupForm.css';
 import { type ChangeEvent, type SyntheticEvent, useCallback, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
+import type { Group, Member } from '../../types/types.ts';
 
-type Names = Record<string, string>;
+export type Names = Record<string, string>;
 
 export default function GroupForm() {
     const [emptyFieldsCount, setEmptyFieldsCount] = useState(0);
@@ -33,8 +34,13 @@ export default function GroupForm() {
     };
 
     const handleSubmitClick = useCallback(() => {
-        console.log(groupName);
-        console.log(names);
+        const members: Member[] = Object.entries(names).map(([id, name]: [string, string]): Member => {
+            return { id: +id, name: name };
+        });
+
+        const group: Group = { name: groupName, members };
+
+        console.log(group);
     }, [groupName, names]);
 
     return (
