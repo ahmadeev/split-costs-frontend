@@ -10,6 +10,7 @@ type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
 
 const CURRENCY_SUFFIX = '₽';
+const NUMBER_REGEX = /^\d*$/;
 
 const getSumDivided = (amount: number, checkStates: Checks): DividedSum => {
     const numberOfChecked = Object.values(checkStates).reduce((acc, value) => {
@@ -86,8 +87,14 @@ const GROUPS: GroupResponseDTO[] = [GROUP, GROUP_2];
 export default function ExpensesForm() {
     const [total, setTotal] = useState('');
 
+    const validateAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
+        return NUMBER_REGEX.test(e.target.value);
+    };
+
     const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setTotal(e.target.value);
+        if (validateAmountChange(e)) {
+            setTotal(e.target.value);
+        }
     };
 
     const [group, setGroup] = useState<GroupResponseDTO>(GROUPS[0]);
@@ -151,7 +158,7 @@ export default function ExpensesForm() {
         };
 
         const handleBlur = () => {
-            setTotal(prev => `${prev} ${CURRENCY_SUFFIX}`);
+            setTotal(prev => prev ? `${prev} ${CURRENCY_SUFFIX}` : '');
         };
 
         input.addEventListener('focus', handleFocus);
