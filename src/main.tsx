@@ -7,6 +7,7 @@ import App from './App.tsx';
 import GroupForm from './components/GroupForm/GroupForm.tsx';
 import ExpensesForm from './components/ExpensesForm/ExpensesForm.tsx';
 import NotFoundError from './pages/NotFoundError/NotFoundError.tsx';
+import ListLayout from './components/ListLayout/ListLayout.tsx';
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
             {
                 path: '/expenses',
                 element: <ExpensesForm />,
+            },
+            {
+                path: '/list',
+                element: <ListLayout />,
             },
         ],
         errorElement: <NotFoundError />,

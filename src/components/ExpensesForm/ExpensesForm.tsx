@@ -31,7 +31,7 @@ const getHintString = (total: number, checkStates: Checks): string => {
         return '';
     }
 
-    return `${String(result.fraction)} ${CURRENCY_SUFFIX} × ${String(result.ways)} чел.`;
+    return `${Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 }).format(result.fraction)} ${CURRENCY_SUFFIX} × ${String(result.ways)} чел.`;
 };
 
 const validateTotalChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -31,6 +31,7 @@ export default function App() {
                 <NavLink to="/" style={({ isActive }) => getActiveLinkStyles(isActive)}>Главная</NavLink>
                 <NavLink to="/group" style={({ isActive }) => getActiveLinkStyles(isActive)}>Группа</NavLink>
                 <NavLink to="/expenses" style={({ isActive }) => getActiveLinkStyles(isActive)}>Расходы</NavLink>
+                <NavLink to="/list" style={({ isActive }) => getActiveLinkStyles(isActive)}>Лист</NavLink>
             </nav>
             <div style={{ marginTop: navHeight, width: '100%', height: `calc(100% - ${navHeight})` }}>
                 <Outlet/>
