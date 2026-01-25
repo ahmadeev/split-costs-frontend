@@ -132,8 +132,6 @@ export default function ExpensesForm() {
     })();
 
     const handleSegmentedControlChange = () => {
-        console.log(isDividedEvenly, checksState);
-
         setChecksState((): Checks => {
             return Object.keys(checksState).reduce((acc: Checks, name: string) => {
                 return { ...acc, [name]: !isDividedEvenly };
@@ -192,6 +190,39 @@ export default function ExpensesForm() {
                 ]}
                 defaultOption={isDividedEvenly ? { name: 'Разделить на всех', handler: handleSegmentedControlChange } : { name: 'Выбрать из списка', handler: handleSegmentedControlChange }}
             />
+
+            {
+                !isDividedEvenly && (
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-end',
+                        gap: '1rem',
+                        padding: '0.6rem 1.2rem',
+                    }}>
+                        <button
+                            className='form-layout__button-link'
+                            onClick={() => {
+                                setChecksState((): Checks => {
+                                    return Object.keys(checksState).reduce((acc: Checks, name: string) => {
+                                        return { ...acc, [name]: true };
+                                    }, {});
+                                });
+                            }}
+                        >Выбрать всех</button>
+                        <button
+                            className='form-layout__button-link'
+                            onClick={() => {
+                                setChecksState((): Checks => {
+                                    return Object.keys(checksState).reduce((acc: Checks, name: string) => {
+                                        return { ...acc, [name]: false };
+                                    }, {});
+                                });
+                            }}
+                        >Сбросить</button>
+                    </div>
+                )
+            }
 
             {
                 isDividedEvenly ? (

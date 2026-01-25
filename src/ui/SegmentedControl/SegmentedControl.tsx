@@ -24,6 +24,10 @@ export default function SegmentedControl({ options, defaultOption }: Props) {
                     key={index}
                     style={{ flexGrow: 1 }}
                     onClick={() => {
+                        if (option.name === activeOption.name) {
+                            return;
+                        }
+
                         setActiveOption(option);
 
                         if (option.handler) {

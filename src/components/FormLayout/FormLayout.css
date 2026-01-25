@@ -93,3 +93,20 @@
 .form-layout__button_full-width {
     width: 100%;
 }
+
+.form-layout__button-link {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    color: #646cff;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.form-layout__button-link:hover {
+    color: rgba(100, 108, 255, 0.68);
+}
+
+.form-layout__button-link:focus {
+    outline: none;
+}
