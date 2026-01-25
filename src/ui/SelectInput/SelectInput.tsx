@@ -29,7 +29,10 @@ export default function SelectInput({ options, handler, defaultValue }: Props) {
             <div
                 className={`${styles.option} ${styles.option_header} ${isShown ? styles.option_top : ''} ${value ? '' : styles.trigger}`}
                 onClick={() => { setIsShown(!isShown); }}
-            >{value?.name ?? 'Выберите группу'}</div>
+            >
+                <span>{value?.name ?? 'Выберите группу'}</span>
+                <span>&#9660;</span>
+            </div>
             {
                 isShown && (
                     <div className={styles.block}>

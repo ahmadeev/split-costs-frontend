@@ -28,7 +28,7 @@ const getHintString = (amount: number, checkStates: Checks): string => {
         return '';
     }
 
-    return `${String(result.fraction)} руб/чел`;
+    return `${String(result.fraction)} ₽ × ${String(result.ways)} чел.`;
 };
 
 const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
@@ -166,7 +166,7 @@ export default function ExpensesForm() {
                     type="text"
                     name='input-total'
                     className='form-layout__text-input_invisible-border form-layout__text-input_header'
-                    placeholder='Введите сумму'
+                    placeholder='9000 ₽'
                     value={total}
                     onChange={handleAmountChange}
                 />
@@ -187,10 +187,10 @@ export default function ExpensesForm() {
 
             <SegmentedControl
                 options={[
-                    { name: 'Разделить поровну', handler: handleSegmentedControlChange },
+                    { name: 'Разделить на всех', handler: handleSegmentedControlChange },
                     { name: 'Выбрать из списка', handler: handleSegmentedControlChange },
                 ]}
-                defaultOption={isDividedEvenly ? { name: 'Разделить поровну', handler: handleSegmentedControlChange } : { name: 'Выбрать из списка', handler: handleSegmentedControlChange }}
+                defaultOption={isDividedEvenly ? { name: 'Разделить на всех', handler: handleSegmentedControlChange } : { name: 'Выбрать из списка', handler: handleSegmentedControlChange }}
             />
 
             {
