@@ -2,7 +2,7 @@ import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
 import { type ChangeEvent, type SyntheticEvent, useEffect, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
-import type { Expense, GroupResponseDTO, MemberResponseDTO } from '../../types/types.ts';
+import type { ExpenseMemberRequestDTO, GroupResponseDTO, MemberResponseDTO } from '../../types/types.ts';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
 import SegmentedControl from '../../ui/SegmentedControl/SegmentedControl.tsx';
 
@@ -285,16 +285,17 @@ export default function ExpensesForm() {
                 disabled={isSubmitDisabled}
                 style={isSubmitDisabled ? { cursor: 'not-allowed' } : { cursor: 'pointer' }}
                 onClick={() => {
-                    const membersSet = new Set<string>(Object.keys(checksState).filter(name => checksState[name]));
+                    const checkedMembersSet = new Set<string>(Object.keys(checksState).filter(name => checksState[name]));
 
-                    const expense: Expense = {
-                        total: +cleanTotalValue(total),
-                        details: details,
-                        group: group,
-                        members: group.members.filter(member => membersSet.has(member.name)),
+                    const expenseMember: ExpenseMemberRequestDTO = {
+                        expense: {
+                            total: +cleanTotalValue(total),
+                            details: details,
+                        },
+                        members: group.members.filter(member => checkedMembersSet.has(member.name)),
                     };
 
-                    console.log(expense);
+                    console.log(expenseMember);
                 }}
             >Сохранить
             </button>
