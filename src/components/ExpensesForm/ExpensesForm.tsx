@@ -4,6 +4,7 @@ import { type ChangeEvent, type SyntheticEvent, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
 import type { Expense, GroupResponseDTO, MemberResponseDTO } from '../../types/types.ts';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
+import SegmentedControl from '../../ui/SegmentedControl/SegmentedControl.tsx';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -130,6 +131,18 @@ export default function ExpensesForm() {
         return !details || !total || (!isDividedEvenly && !isAnyChosen);
     })();
 
+    const handleSegmentedControlChange = () => {
+        console.log(isDividedEvenly, checksState);
+
+        setChecksState((): Checks => {
+            return Object.keys(checksState).reduce((acc: Checks, name: string) => {
+                return { ...acc, [name]: !isDividedEvenly };
+            }, {});
+        });
+
+        setIsDividedEvenly((prev: boolean) => !prev);
+    };
+
     return (
         <FormLayout>
             <span style={{ textAlign: 'left' }}>Комментарий</span>
@@ -172,17 +185,13 @@ export default function ExpensesForm() {
                 <SelectInput options={GROUPS} defaultValue={group} handler={selectChangeHandler}/>
             </div>
 
-            <button
-                onClick={() => {
-                    setChecksState((): Checks => {
-                        return Object.keys(checksState).reduce((acc: Checks, name: string) => {
-                            return { ...acc, [name]: !isDividedEvenly };
-                        }, {});
-                    });
-
-                    setIsDividedEvenly((prev: boolean) => !prev);
-                }}
-            >{isDividedEvenly ? 'Выбрать из списка' : 'Разделить поровну'}</button>
+            <SegmentedControl
+                options={[
+                    { name: 'Разделить поровну', handler: handleSegmentedControlChange },
+                    { name: 'Выбрать из списка', handler: handleSegmentedControlChange },
+                ]}
+                defaultOption={isDividedEvenly ? { name: 'Разделить поровну', handler: handleSegmentedControlChange } : { name: 'Выбрать из списка', handler: handleSegmentedControlChange }}
+            />
 
             {
                 isDividedEvenly ? (
