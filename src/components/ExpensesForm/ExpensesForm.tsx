@@ -132,6 +132,7 @@ export default function ExpensesForm() {
 
     return (
         <FormLayout>
+            <span style={{ textAlign: 'left' }}>Комментарий</span>
             <div
                 className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
                 onClick={handleEditClick}
@@ -139,10 +140,11 @@ export default function ExpensesForm() {
                 <input
                     type="text"
                     className='form-layout__text-input_invisible-border form-layout__text-input_header'
-                    placeholder='Введите комментарий'
+                    placeholder='Например, пицца'
                     onChange={handleExpenseNameInput}
                 />
             </div>
+            <span style={{ textAlign: 'left' }}>Сумма</span>
             <div
                 className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
                 onClick={handleEditClick}
@@ -165,6 +167,7 @@ export default function ExpensesForm() {
 
             <hr style={{ color: 'black', height: '1px' }}/>
 
+            <span style={{ textAlign: 'left' }}>Группа</span>
             <div>
                 <SelectInput options={GROUPS} defaultValue={group} handler={selectChangeHandler}/>
             </div>
