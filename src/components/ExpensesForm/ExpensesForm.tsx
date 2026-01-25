@@ -1,6 +1,6 @@
 import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
-import { type ChangeEvent, type SyntheticEvent, useState } from 'react';
+import { type ChangeEvent, type SyntheticEvent, useEffect, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
 import type { Expense, GroupResponseDTO, MemberResponseDTO } from '../../types/types.ts';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
@@ -8,6 +8,8 @@ import SegmentedControl from '../../ui/SegmentedControl/SegmentedControl.tsx';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
+
+const CURRENCY_SUFFIX = '₽';
 
 const getSumDivided = (amount: number, checkStates: Checks): DividedSum => {
     const numberOfChecked = Object.values(checkStates).reduce((acc, value) => {
@@ -28,7 +30,7 @@ const getHintString = (amount: number, checkStates: Checks): string => {
         return '';
     }
 
-    return `${String(result.fraction)} ₽ × ${String(result.ways)} чел.`;
+    return `${String(result.fraction)} ${CURRENCY_SUFFIX} × ${String(result.ways)} чел.`;
 };
 
 const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
@@ -140,6 +142,26 @@ export default function ExpensesForm() {
 
         setIsDividedEvenly((prev: boolean) => !prev);
     };
+
+    useEffect(() => {
+        const input = document.querySelector('input[name="input-total"]') as HTMLInputElement;
+
+        const handleFocus = () => {
+            setTotal(prev => prev.replace(` ${CURRENCY_SUFFIX}`, ''));
+        };
+
+        const handleBlur = () => {
+            setTotal(prev => `${prev} ${CURRENCY_SUFFIX}`);
+        };
+
+        input.addEventListener('focus', handleFocus);
+        input.addEventListener('blur', handleBlur);
+
+        return () => {
+            input.removeEventListener('focus', handleFocus);
+            input.removeEventListener('blur', handleBlur);
+        };
+    }, []);
 
     return (
         <FormLayout>
