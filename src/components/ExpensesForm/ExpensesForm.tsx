@@ -124,6 +124,12 @@ export default function ExpensesForm() {
         });
     };
 
+    const isSubmitDisabled = (() => {
+        const isAnyChosen: boolean = Object.values(checksState).some((value: boolean) => value);
+
+        return !details || !total || (!isDividedEvenly && !isAnyChosen);
+    })();
+
     return (
         <FormLayout>
             <div
@@ -143,6 +149,7 @@ export default function ExpensesForm() {
             >
                 <input
                     type="text"
+                    name='input-total'
                     className='form-layout__text-input_invisible-border form-layout__text-input_header'
                     placeholder='Введите сумму'
                     value={total}
@@ -156,9 +163,23 @@ export default function ExpensesForm() {
                 </div>
             )}
 
+            <hr style={{ color: 'black', height: '1px' }}/>
+
             <div>
-                <SelectInput options={GROUPS} defaultValue={group} handler={selectChangeHandler} />
+                <SelectInput options={GROUPS} defaultValue={group} handler={selectChangeHandler}/>
             </div>
+
+            <button
+                onClick={() => {
+                    setChecksState((): Checks => {
+                        return Object.keys(checksState).reduce((acc: Checks, name: string) => {
+                            return { ...acc, [name]: !isDividedEvenly };
+                        }, {});
+                    });
+
+                    setIsDividedEvenly((prev: boolean) => !prev);
+                }}
+            >{isDividedEvenly ? 'Выбрать из списка' : 'Разделить поровну'}</button>
 
             {
                 isDividedEvenly ? (
@@ -181,20 +202,12 @@ export default function ExpensesForm() {
                 )
             }
 
-            <button
-                onClick={() => {
-                    setChecksState((): Checks => {
-                        return Object.keys(checksState).reduce((acc: Checks, name: string) => {
-                            return { ...acc, [name]: !isDividedEvenly };
-                        }, {});
-                    });
-
-                    setIsDividedEvenly((prev: boolean) => !prev);
-                }}
-            >{isDividedEvenly ? 'Выбрать из списка' : 'Разделить поровну'}</button>
+            <hr style={{ color: 'black', height: '1px' }}/>
 
             <button
                 className='form-layout__button_primary form-layout__button_full-width'
+                disabled={isSubmitDisabled}
+                style={isSubmitDisabled ? { cursor: 'not-allowed' } : { cursor: 'pointer' }}
                 onClick={() => {
                     const expense: Expense = {
                         total: +total,
