@@ -154,11 +154,11 @@ export default function ExpensesForm() {
         const input = document.querySelector('input[name="input-total"]') as HTMLInputElement;
 
         const handleFocus = () => {
-            setTotal(prev => prev.replace(` ${CURRENCY_SUFFIX}`, ''));
+            setTotal(prev => prev.replace(CURRENCY_SUFFIX, '').replaceAll(/\s+/g, ''));
         };
 
         const handleBlur = () => {
-            setTotal(prev => prev ? `${prev} ${CURRENCY_SUFFIX}` : '');
+            setTotal(prev => prev ? `${Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(+prev)} ${CURRENCY_SUFFIX}` : '');
         };
 
         input.addEventListener('focus', handleFocus);
