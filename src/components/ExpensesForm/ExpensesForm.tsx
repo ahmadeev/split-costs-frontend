@@ -114,7 +114,7 @@ export default function ExpensesForm() {
     };
 
     // todo: не обновляется c useMemo
-    const hintString = getHintString(+total, checksState);
+    const hintString = getHintString(+total.replace(CURRENCY_SUFFIX, '').replaceAll(/\s+/g, ''), checksState);
 
     const [details, setDetails] = useState('');
 
