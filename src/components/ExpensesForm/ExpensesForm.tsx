@@ -12,26 +12,34 @@ interface DividedSum { fraction: number, ways: number }
 const CURRENCY_SUFFIX = '₽';
 const NUMBER_REGEX = /^\d*$/;
 
-const getSumDivided = (amount: number, checkStates: Checks): DividedSum => {
+const getFractionsAndWays = (total: number, checkStates: Checks): DividedSum => {
     const numberOfChecked = Object.values(checkStates).reduce((acc, value) => {
         return value ? acc + 1 : acc;
     }, 0);
 
-    if (!numberOfChecked || !amount) {
+    if (!numberOfChecked || !total) {
         return { fraction: 0, ways: 0 };
     }
 
-    return { fraction: Math.round(amount / numberOfChecked * 100) / 100, ways: numberOfChecked };
+    return { fraction: Math.round(total / numberOfChecked * 100) / 100, ways: numberOfChecked };
 };
 
-const getHintString = (amount: number, checkStates: Checks): string => {
-    const result: DividedSum = getSumDivided(amount, checkStates);
+const getHintString = (total: number, checkStates: Checks): string => {
+    const result: DividedSum = getFractionsAndWays(total, checkStates);
 
     if (!result.fraction || !result.ways) {
         return '';
     }
 
     return `${String(result.fraction)} ${CURRENCY_SUFFIX} × ${String(result.ways)} чел.`;
+};
+
+const validateTotalChange = (e: ChangeEvent<HTMLInputElement>) => {
+    return NUMBER_REGEX.test(e.target.value);
+};
+
+const cleanTotalValue = (total: string) => {
+    return total.replace(CURRENCY_SUFFIX, '').replaceAll(/\s+/g, '');
 };
 
 const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
@@ -87,12 +95,8 @@ const GROUPS: GroupResponseDTO[] = [GROUP, GROUP_2];
 export default function ExpensesForm() {
     const [total, setTotal] = useState('');
 
-    const validateAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-        return NUMBER_REGEX.test(e.target.value);
-    };
-
-    const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (validateAmountChange(e)) {
+    const handleTotalChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (validateTotalChange(e)) {
             setTotal(e.target.value);
         }
     };
@@ -114,15 +118,15 @@ export default function ExpensesForm() {
     };
 
     // todo: не обновляется c useMemo
-    const hintString = getHintString(+total.replace(CURRENCY_SUFFIX, '').replaceAll(/\s+/g, ''), checksState);
+    const hintString = getHintString(+cleanTotalValue(total), checksState);
 
     const [details, setDetails] = useState('');
 
-    const handleExpenseNameInput = (e: ChangeEvent<HTMLInputElement>): void => {
+    const handleDetailsInput = (e: ChangeEvent<HTMLInputElement>): void => {
         setDetails(e.target.value);
     };
 
-    const selectChangeHandler = (id: number) => {
+    const handleSelectChange = (id: number) => {
         const group: GroupResponseDTO = GROUPS.find((group: GroupResponseDTO) => group.id === id)!;
 
         setGroup(group);
@@ -154,7 +158,7 @@ export default function ExpensesForm() {
         const input = document.querySelector('input[name="input-total"]') as HTMLInputElement;
 
         const handleFocus = () => {
-            setTotal(prev => prev.replace(CURRENCY_SUFFIX, '').replaceAll(/\s+/g, ''));
+            setTotal(prev => cleanTotalValue(prev));
         };
 
         const handleBlur = () => {
@@ -181,7 +185,7 @@ export default function ExpensesForm() {
                     type="text"
                     className='form-layout__text-input_invisible-border form-layout__text-input_header'
                     placeholder='Например, пицца'
-                    onChange={handleExpenseNameInput}
+                    onChange={handleDetailsInput}
                 />
             </div>
             <span style={{ textAlign: 'left' }}>Сумма</span>
@@ -195,7 +199,7 @@ export default function ExpensesForm() {
                     className='form-layout__text-input_invisible-border form-layout__text-input_header'
                     placeholder='9000 ₽'
                     value={total}
-                    onChange={handleAmountChange}
+                    onChange={handleTotalChange}
                 />
             </div>
 
@@ -209,7 +213,7 @@ export default function ExpensesForm() {
 
             <span style={{ textAlign: 'left' }}>Группа</span>
             <div>
-                <SelectInput options={GROUPS} defaultValue={group} handler={selectChangeHandler}/>
+                <SelectInput options={GROUPS} defaultValue={group} handler={handleSelectChange}/>
             </div>
 
             <SegmentedControl
@@ -281,10 +285,13 @@ export default function ExpensesForm() {
                 disabled={isSubmitDisabled}
                 style={isSubmitDisabled ? { cursor: 'not-allowed' } : { cursor: 'pointer' }}
                 onClick={() => {
+                    const membersSet = new Set<string>(Object.keys(checksState).filter(name => checksState[name]));
+
                     const expense: Expense = {
-                        total: +total,
+                        total: +cleanTotalValue(total),
                         details: details,
-                        group: GROUP,
+                        group: group,
+                        members: group.members.filter(member => membersSet.has(member.name)),
                     };
 
                     console.log(expense);
