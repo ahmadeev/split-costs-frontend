@@ -3,6 +3,7 @@ import './GroupForm.css';
 import { type ChangeEvent, type SyntheticEvent, useCallback, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
 import type { Group, MemberResponseDTO } from '../../types/types.ts';
+import Delete from '../../icons/delete_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 
 export type Names = Record<string, string>;
 
@@ -13,8 +14,6 @@ const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
 };
 
 export default function GroupForm() {
-    const [emptyFieldsCount, setEmptyFieldsCount] = useState(0);
-
     const [groupName, setGroupName] = useState('');
 
     const [names, setNames] = useState<Names>({});
@@ -30,7 +29,7 @@ export default function GroupForm() {
     }, []);
 
     const handleAddClick = () => {
-        setEmptyFieldsCount(prev => prev + 1);
+        setNames((prev: Names) => ({ ...prev, [crypto.randomUUID()]: '' }));
     };
 
     const handleSubmitClick = useCallback(() => {
@@ -43,8 +42,31 @@ export default function GroupForm() {
         console.log(group);
     }, [groupName, names]);
 
+    const MemberRow = {
+        handleMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => {
+            e.currentTarget.querySelector('.group-form__delete-button')!.classList.add('active');
+        },
+        handleMouseLeave: (e: React.MouseEvent<HTMLDivElement>): void => {
+            e.currentTarget.querySelector('.group-form__delete-button')!.classList.remove('active');
+        },
+    };
+
+    const DeleteButton = {
+        handleClick: (e: React.MouseEvent<HTMLDivElement>, name: string) => {
+            e.stopPropagation();
+
+            setNames(prev => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { [name]: _, ...rest } = prev;
+
+                return { ...rest };
+            });
+        },
+    };
+
     return (
         <FormLayout>
+            <span style={{ textAlign: 'left' }}>Группа</span>
             <div
                 className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
                 onClick={handleEditClick}
@@ -56,22 +78,40 @@ export default function GroupForm() {
                     onChange={handleGroupNameInput}
                 />
             </div>
-            {Array.from({ length: emptyFieldsCount }).map((_: unknown, index: number) => (
-                <div
-                    className='form-layout__row form-layout__row_bordered'
-                    onClick={handleEditClick}
-                    key={index}
-                    style={{ cursor: 'text' }}
-                >
-                    <input
-                        type='text'
-                        className='form-layout__text-input_invisible-border'
-                        name={`input-${String(index)}`}
-                        placeholder='Введите имя'
-                        onChange={handleNameInput}
-                    />
-                </div>
-            ))}
+            <div className='group-form__input-container'
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.5rem',
+                }}
+            >
+                {Object.keys(names).map((nameKey: string, index: number) => (
+                    <div
+                        className='form-layout__row form-layout__row_bordered'
+                        onClick={handleEditClick}
+                        key={index}
+                        style={{ cursor: 'text', gap: '0.5rem' }}
+                        onMouseEnter={MemberRow.handleMouseEnter}
+                        onMouseLeave={MemberRow.handleMouseLeave}
+                    >
+                        <input
+                            type='text'
+                            className='form-layout__text-input_invisible-border'
+                            name={nameKey}
+                            value={names[nameKey]}
+                            placeholder={`Участник #${String(index + 1)}`}
+                            onChange={handleNameInput}
+                            style={{ textOverflow: 'ellipsis' }}
+                        />
+                        <div
+                            className='group-form__delete-button'
+                            onClick={(e) => { DeleteButton.handleClick(e, nameKey); }}
+                        >
+                            <Delete style={{ fill: '#424242' }} />
+                        </div>
+                    </div>
+                ))}
+            </div>
             <div
                 className='form-layout__row form-layout__row_bordered'
                 onClick={handleAddClick}

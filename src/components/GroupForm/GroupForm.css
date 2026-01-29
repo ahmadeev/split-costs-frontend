@@ -11,3 +11,17 @@
 
     background-color: white;
 }
+
+.group-form__delete-button {
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    cursor: auto;
+}
+
+.group-form__delete-button.active {
+    opacity: 1;
+    cursor: pointer;
+}

@@ -283,7 +283,10 @@ export default function ExpensesForm() {
             <button
                 className='form-layout__button_primary form-layout__button_full-width'
                 disabled={isSubmitDisabled}
-                style={isSubmitDisabled ? { cursor: 'not-allowed' } : { cursor: 'pointer' }}
+                style={{
+                    cursor: isSubmitDisabled ? 'not-allowed' : 'pointer',
+                    opacity: isSubmitDisabled ? '0.6' : '1',
+                }}
                 onClick={() => {
                     const checkedMembersSet = new Set<string>(Object.keys(checksState).filter(name => checksState[name]));
 
