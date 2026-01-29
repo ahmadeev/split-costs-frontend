@@ -197,7 +197,7 @@ export default function ExpensesForm() {
                     type="text"
                     name='input-total'
                     className='form-layout__text-input_invisible-border form-layout__text-input_header'
-                    placeholder='9000 ₽'
+                    placeholder='9 000 ₽'
                     value={total}
                     onChange={handleTotalChange}
                 />

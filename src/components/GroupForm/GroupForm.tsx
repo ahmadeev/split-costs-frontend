@@ -80,7 +80,7 @@ export default function GroupForm() {
             </div>
             <div className='group-form__input-container'
                 style={{
-                    display: 'flex',
+                    display: Object.keys(names).length ? 'flex' : 'none',
                     flexDirection: 'column',
                     gap: '0.5rem',
                 }}
