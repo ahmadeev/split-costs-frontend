@@ -9,7 +9,6 @@ import ExpensesForm from './components/ExpensesForm/ExpensesForm.tsx';
 import NotFoundError from './pages/NotFoundError/NotFoundError.tsx';
 import ListLayout from './components/ListLayout/ListLayout.tsx';
 
-// (import.meta.env.PROD ? createHashRouter : createBrowserRouter)
 const router = createHashRouter([
     {
         path: '/',
@@ -34,11 +33,7 @@ const router = createHashRouter([
         ],
         errorElement: <NotFoundError />,
     },
-], {
-    basename: import.meta.env.PROD
-        ? '/split-costs-frontend'
-        : '/',
-});
+]);
 
 
 createRoot(document.getElementById('root')!).render(
