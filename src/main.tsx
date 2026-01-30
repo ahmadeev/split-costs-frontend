@@ -33,7 +33,11 @@ const router = createBrowserRouter([
         ],
         errorElement: <NotFoundError />,
     },
-]);
+], {
+    basename: import.meta.env.PROD
+        ? '/split-costs-frontend'
+        : '/',
+});
 
 
 createRoot(document.getElementById('root')!).render(

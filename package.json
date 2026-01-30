@@ -2,7 +2,6 @@
   "name": "buhalovka-split",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://ahmadeev.github.io/split-costs-frontend/",
   "type": "module",
   "scripts": {
     "dev": "vite",
