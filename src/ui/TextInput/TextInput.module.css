@@ -1,0 +1,23 @@
+.title {
+    text-align: left;
+}
+
+.input {
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.input:focus::placeholder {
+    color: transparent;
+}
+
+.input.header {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #404040;
+}

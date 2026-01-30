@@ -4,6 +4,7 @@ import { type ChangeEvent, type SyntheticEvent, useCallback, useState } from 're
 import FormLayout from '../FormLayout/FormLayout.tsx';
 import type { Group, MemberResponseDTO } from '../../types/types.ts';
 import Delete from '../../icons/delete_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
+import TextInput from '../../ui/TextInput/TextInput.tsx';
 
 export type Names = Record<string, string>;
 
@@ -66,18 +67,12 @@ export default function GroupForm() {
 
     return (
         <FormLayout>
-            <span style={{ textAlign: 'left' }}>Группа</span>
-            <div
-                className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
-                onClick={handleEditClick}
-            >
-                <input
-                    type="text"
-                    className='form-layout__text-input_invisible-border form-layout__text-input_header'
-                    placeholder='Отчаянные козявки'
-                    onChange={handleGroupNameInput}
-                />
-            </div>
+            <TextInput
+                title={'Группа'}
+                onChange={handleGroupNameInput}
+                value={groupName}
+                placeholder={'Отчаянные козявки'}
+            />
             <div className='group-form__input-container'
                 style={{
                     display: Object.keys(names).length ? 'flex' : 'none',
