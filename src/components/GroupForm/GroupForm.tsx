@@ -5,6 +5,7 @@ import FormLayout from '../FormLayout/FormLayout.tsx';
 import type { Group, MemberResponseDTO } from '../../types/types.ts';
 import Delete from '../../icons/delete_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import TextInput from '../../ui/TextInput/TextInput.tsx';
+import Button from '../../ui/Button/Button.tsx';
 
 export type Names = Record<string, string>;
 
@@ -43,27 +44,16 @@ export default function GroupForm() {
         console.log(group);
     }, [groupName, names]);
 
-    const MemberRow = {
-        handleMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => {
-            e.currentTarget.querySelector('.group-form__delete-button')!.classList.add('active');
-        },
-        handleMouseLeave: (e: React.MouseEvent<HTMLDivElement>): void => {
-            e.currentTarget.querySelector('.group-form__delete-button')!.classList.remove('active');
-        },
-    };
+    const handleDeleteClick = useCallback((e: React.MouseEvent<HTMLDivElement>, name: string) => {
+        e.stopPropagation();
 
-    const DeleteButton = {
-        handleClick: (e: React.MouseEvent<HTMLDivElement>, name: string) => {
-            e.stopPropagation();
+        setNames(prev => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { [name]: _, ...rest } = prev;
 
-            setNames(prev => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { [name]: _, ...rest } = prev;
-
-                return { ...rest };
-            });
-        },
-    };
+            return { ...rest };
+        });
+    }, []);
 
     return (
         <FormLayout>
@@ -82,12 +72,10 @@ export default function GroupForm() {
             >
                 {Object.keys(names).map((nameKey: string, index: number) => (
                     <div
-                        className='form-layout__row form-layout__row_bordered'
+                        className='form-layout__row form-layout__row_bordered group-form__row'
                         onClick={handleEditClick}
                         key={index}
                         style={{ cursor: 'text', gap: '0.5rem' }}
-                        onMouseEnter={MemberRow.handleMouseEnter}
-                        onMouseLeave={MemberRow.handleMouseLeave}
                     >
                         <input
                             type='text'
@@ -100,7 +88,7 @@ export default function GroupForm() {
                         />
                         <div
                             className='group-form__delete-button'
-                            onClick={(e) => { DeleteButton.handleClick(e, nameKey); }}
+                            onClick={(e) => { handleDeleteClick(e, nameKey); }}
                         >
                             <Delete style={{ fill: '#424242' }} />
                         </div>
@@ -119,13 +107,11 @@ export default function GroupForm() {
                     <span>Добавить члена группы</span>
                 </div>
             </div>
-            <button
-                className='form-layout__button_primary form-layout__button_full-width'
-                onClick={() => {
-                    handleSubmitClick();
-                }}
-            >Создать группу
-            </button>
+            <Button
+                title={'Создать группу'}
+                onClick={handleSubmitClick}
+                type={'primary'}
+            />
         </FormLayout>
     );
 }

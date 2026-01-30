@@ -1,0 +1,32 @@
+.primary {
+    background-color: #535bf2;
+    color: white;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.primary:hover {
+    background-color: #4e56df;
+    transform: scale(1.01);
+}
+
+.link {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    color: #646cff;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.link:hover {
+    color: rgba(100, 108, 255, 0.68);
+}
+
+.link:focus {
+    outline: none;
+}
+
+.fullWidth {
+    width: 100%;
+}

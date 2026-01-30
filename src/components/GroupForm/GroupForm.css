@@ -21,7 +21,7 @@
     cursor: auto;
 }
 
-.group-form__delete-button.active {
+.group-form__row:hover .group-form__delete-button {
     opacity: 1;
     cursor: pointer;
 }
