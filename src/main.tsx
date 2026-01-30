@@ -2,14 +2,14 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import Home from './pages/Home/Home.tsx';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
 import GroupForm from './components/GroupForm/GroupForm.tsx';
 import ExpensesForm from './components/ExpensesForm/ExpensesForm.tsx';
 import NotFoundError from './pages/NotFoundError/NotFoundError.tsx';
 import ListLayout from './components/ListLayout/ListLayout.tsx';
 
-const router = createBrowserRouter([
+const router = (import.meta.env.PROD ? createHashRouter : createBrowserRouter)([
     {
         path: '/',
         element: <App />,
