@@ -16,8 +16,8 @@ export default function App() {
         top: '0',
         left: '0',
         boxSizing: 'border-box',
-        borderBottom: '1px solid #ddd',
-        backgroundColor: 'white',
+        borderBottom: '1px solid var(--outline)',
+        backgroundColor: 'var(--background-color)',
         zIndex: '9999',
     };
 
