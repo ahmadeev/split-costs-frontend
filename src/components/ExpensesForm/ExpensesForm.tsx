@@ -1,10 +1,12 @@
 import '../FormLayout/FormLayout.css';
 import './ExpensesForm.css';
-import { type ChangeEvent, type SyntheticEvent, useEffect, useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 import FormLayout from '../FormLayout/FormLayout.tsx';
 import type { ExpenseMemberRequestDTO, GroupResponseDTO, MemberResponseDTO } from '../../types/types.ts';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
 import SegmentedControl from '../../ui/SegmentedControl/SegmentedControl.tsx';
+import Button from '../../ui/Button/Button.tsx';
+import TextInput from '../../ui/TextInput/TextInput.tsx';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -40,12 +42,6 @@ const validateTotalChange = (e: ChangeEvent<HTMLInputElement>) => {
 
 const cleanTotalValue = (total: string) => {
     return total.replace(CURRENCY_SUFFIX, '').replaceAll(/\s+/g, '');
-};
-
-const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
-    const el = e.currentTarget.querySelector('input[type="text"]') as HTMLInputElement;
-
-    el.focus();
 };
 
 const GROUP: GroupResponseDTO = {
@@ -154,54 +150,57 @@ export default function ExpensesForm() {
         setIsDividedEvenly((prev: boolean) => !prev);
     };
 
-    useEffect(() => {
-        const input = document.querySelector('input[name="input-total"]') as HTMLInputElement;
+    const segmentedControlOptions = [
+        { name: 'Разделить на всех', handler: handleSegmentedControlChange },
+        { name: 'Выбрать из списка', handler: handleSegmentedControlChange },
+    ];
 
-        const handleFocus = () => {
-            setTotal(prev => cleanTotalValue(prev));
+    const handleFocusInputTotal = () => {
+        setTotal(prev => cleanTotalValue(prev));
+    };
+
+    const handleBlurInputTotal = () => {
+        setTotal(prev => prev ? `${Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(+prev)} ${CURRENCY_SUFFIX}` : '');
+    };
+
+    const handleSubmitClick = () => {
+        const checkedMembersSet = new Set<string>(Object.keys(checksState).filter(name => checksState[name]));
+
+        const expenseMember: ExpenseMemberRequestDTO = {
+            expense: {
+                total: +cleanTotalValue(total),
+                details: details,
+            },
+            members: group.members.filter(member => checkedMembersSet.has(member.name)),
         };
 
-        const handleBlur = () => {
-            setTotal(prev => prev ? `${Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(+prev)} ${CURRENCY_SUFFIX}` : '');
-        };
+        console.log(expenseMember);
+    };
 
-        input.addEventListener('focus', handleFocus);
-        input.addEventListener('blur', handleBlur);
-
-        return () => {
-            input.removeEventListener('focus', handleFocus);
-            input.removeEventListener('blur', handleBlur);
-        };
-    }, []);
+    const setChecksToState = (newState: boolean) => {
+        setChecksState((): Checks => {
+            return Object.keys(checksState).reduce((acc: Checks, name: string) => {
+                return { ...acc, [name]: newState };
+            }, {});
+        });
+    };
 
     return (
         <FormLayout>
-            <span style={{ textAlign: 'left' }}>Комментарий</span>
-            <div
-                className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
-                onClick={handleEditClick}
-            >
-                <input
-                    type="text"
-                    className='form-layout__text-input_invisible-border form-layout__text-input_header'
-                    placeholder='Например, пицца'
-                    onChange={handleDetailsInput}
-                />
-            </div>
-            <span style={{ textAlign: 'left' }}>Сумма</span>
-            <div
-                className='form-layout__row form-layout__row_bordered form-layout__row_header-input'
-                onClick={handleEditClick}
-            >
-                <input
-                    type="text"
-                    name='input-total'
-                    className='form-layout__text-input_invisible-border form-layout__text-input_header'
-                    placeholder='9 000 ₽'
-                    value={total}
-                    onChange={handleTotalChange}
-                />
-            </div>
+            <TextInput
+                title={'Комментарий'}
+                onChange={handleDetailsInput}
+                value={details}
+                placeholder={'Например, пицца'}
+            />
+            <TextInput
+                title={'Сумма'}
+                onChange={handleTotalChange}
+                value={total}
+                placeholder={'9 000 ₽'}
+                onFocus={handleFocusInputTotal}
+                onBlur={handleBlurInputTotal}
+            />
 
             {hintString && (
                 <div className={'form-layout__row'}>
@@ -213,15 +212,16 @@ export default function ExpensesForm() {
 
             <span style={{ textAlign: 'left' }}>Группа</span>
             <div>
-                <SelectInput options={GROUPS} defaultValue={group} handler={handleSelectChange}/>
+                <SelectInput
+                    options={GROUPS}
+                    defaultValue={group}
+                    handler={handleSelectChange}
+                />
             </div>
 
             <SegmentedControl
-                options={[
-                    { name: 'Разделить на всех', handler: handleSegmentedControlChange },
-                    { name: 'Выбрать из списка', handler: handleSegmentedControlChange },
-                ]}
-                defaultOption={isDividedEvenly ? { name: 'Разделить на всех', handler: handleSegmentedControlChange } : { name: 'Выбрать из списка', handler: handleSegmentedControlChange }}
+                options={segmentedControlOptions}
+                defaultOption={isDividedEvenly ? segmentedControlOptions[0] : segmentedControlOptions[1]}
             />
 
             {
@@ -233,26 +233,16 @@ export default function ExpensesForm() {
                         gap: '1rem',
                         padding: '0.6rem 1.2rem',
                     }}>
-                        <button
-                            className='form-layout__button-link'
-                            onClick={() => {
-                                setChecksState((): Checks => {
-                                    return Object.keys(checksState).reduce((acc: Checks, name: string) => {
-                                        return { ...acc, [name]: true };
-                                    }, {});
-                                });
-                            }}
-                        >Выбрать всех</button>
-                        <button
-                            className='form-layout__button-link'
-                            onClick={() => {
-                                setChecksState((): Checks => {
-                                    return Object.keys(checksState).reduce((acc: Checks, name: string) => {
-                                        return { ...acc, [name]: false };
-                                    }, {});
-                                });
-                            }}
-                        >Сбросить</button>
+                        <Button
+                            type={'link'}
+                            title={'Выбрать всех'}
+                            onClick={() => { setChecksToState(true); }}
+                        />
+                        <Button
+                            type={'link'}
+                            title={'Сбросить'}
+                            onClick={() => { setChecksToState(false); }}
+                        />
                     </div>
                 )
             }
@@ -280,28 +270,12 @@ export default function ExpensesForm() {
 
             <hr style={{ color: 'black', height: '1px' }}/>
 
-            <button
-                className='form-layout__button_primary form-layout__button_full-width'
-                disabled={isSubmitDisabled}
-                style={{
-                    cursor: isSubmitDisabled ? 'not-allowed' : 'pointer',
-                    opacity: isSubmitDisabled ? '0.6' : '1',
-                }}
-                onClick={() => {
-                    const checkedMembersSet = new Set<string>(Object.keys(checksState).filter(name => checksState[name]));
-
-                    const expenseMember: ExpenseMemberRequestDTO = {
-                        expense: {
-                            total: +cleanTotalValue(total),
-                            details: details,
-                        },
-                        members: group.members.filter(member => checkedMembersSet.has(member.name)),
-                    };
-
-                    console.log(expenseMember);
-                }}
-            >Сохранить
-            </button>
+            <Button
+                type={'primary'}
+                title={'Сохранить'}
+                isDisabled={isSubmitDisabled}
+                onClick={handleSubmitClick}
+            />
         </FormLayout>
     );
 }
