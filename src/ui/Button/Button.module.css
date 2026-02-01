@@ -10,6 +10,10 @@
     transform: scale(1.01);
 }
 
+.secondary {
+    background-color: var(--third-background-color);
+}
+
 .link {
     border: none;
     background-color: transparent;
