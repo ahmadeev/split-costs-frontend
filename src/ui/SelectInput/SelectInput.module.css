@@ -5,6 +5,7 @@
     user-select: none;
     cursor: pointer;
     background-color: var(--accent-background-color);
+    border-radius: 0.5rem;
 }
 
 .block {

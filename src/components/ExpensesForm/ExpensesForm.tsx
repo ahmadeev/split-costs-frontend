@@ -187,95 +187,96 @@ export default function ExpensesForm() {
 
     return (
         <FormLayout>
-            <TextInput
-                title={'Комментарий'}
-                onChange={handleDetailsInput}
-                value={details}
-                placeholder={'Например, пицца'}
-            />
-            <TextInput
-                title={'Сумма'}
-                onChange={handleTotalChange}
-                value={total}
-                placeholder={'9 000 ₽'}
-                onFocus={handleFocusInputTotal}
-                onBlur={handleBlurInputTotal}
-            />
-
-            {hintString && (
-                <div className={'form-layout__row'}>
-                    <span>{hintString}</span>
-                </div>
-            )}
-
-            <hr style={{ color: 'black', height: '1px' }}/>
-
-            <span style={{ textAlign: 'left' }}>Группа</span>
-            <div>
-                <SelectInput
-                    options={GROUPS}
-                    defaultValue={group}
-                    handler={handleSelectChange}
+            <div className="form-layout__section">
+                <TextInput
+                    title={'Комментарий'}
+                    onChange={handleDetailsInput}
+                    value={details}
+                    placeholder={'Например, пицца'}
                 />
+                <TextInput
+                    title={'Сумма'}
+                    onChange={handleTotalChange}
+                    value={total}
+                    placeholder={'9 000 ₽'}
+                    onFocus={handleFocusInputTotal}
+                    onBlur={handleBlurInputTotal}
+                />
+                {hintString && (
+                    <div className={'form-layout__row'}>
+                        <span>{hintString}</span>
+                    </div>
+                )}
             </div>
 
-            <SegmentedControl
-                options={segmentedControlOptions}
-                defaultOption={isDividedEvenly ? segmentedControlOptions[0] : segmentedControlOptions[1]}
-            />
+            <div className="form-layout__section">
+                <span style={{ textAlign: 'left' }}>Группа</span>
+                <div>
+                    <SelectInput
+                        options={GROUPS}
+                        defaultValue={group}
+                        handler={handleSelectChange}
+                    />
+                </div>
 
-            {
-                !isDividedEvenly && (
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
-                        gap: '1rem',
-                        padding: '0.6rem 1.2rem',
-                    }}>
-                        <Button
-                            type={'link'}
-                            title={'Выбрать всех'}
-                            onClick={() => { setChecksToState(true); }}
-                        />
-                        <Button
-                            type={'link'}
-                            title={'Сбросить'}
-                            onClick={() => { setChecksToState(false); }}
-                        />
-                    </div>
-                )
-            }
+                <SegmentedControl
+                    options={segmentedControlOptions}
+                    defaultOption={isDividedEvenly ? segmentedControlOptions[0] : segmentedControlOptions[1]}
+                />
 
-            {
-                isDividedEvenly ? (
-                    <></>
-                ) : (
-                    group.members.map((member: MemberResponseDTO, index: number) => (
-                        <div className='form-layout__row form-layout__row_bordered' key={index}>
-                            <label style={{ cursor: 'pointer' }}>
-                                <input
-                                    type="checkbox"
-                                    name={member.name}
-                                    onChange={handleCheckStateChange}
-                                    checked={checksState[member.name]}
-                                    style={{ margin: '1rem', cursor: 'pointer' }}
-                                />
-                                <span>{member.name}</span>
-                            </label>
+                {
+                    !isDividedEvenly && (
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                            gap: '1rem',
+                            padding: '0.6rem 1.2rem',
+                        }}>
+                            <Button
+                                type={'link'}
+                                title={'Выбрать всех'}
+                                onClick={() => { setChecksToState(true); }}
+                            />
+                            <Button
+                                type={'link'}
+                                title={'Сбросить'}
+                                onClick={() => { setChecksToState(false); }}
+                            />
                         </div>
-                    ))
-                )
-            }
+                    )
+                }
 
-            <hr style={{ color: 'black', height: '1px' }}/>
+                {
+                    isDividedEvenly ? (
+                        <></>
+                    ) : (
+                        group.members.map((member: MemberResponseDTO, index: number) => (
+                            <div className='form-layout__row form-layout__row_bordered' key={index}>
+                                <label style={{ cursor: 'pointer' }}>
+                                    <input
+                                        type="checkbox"
+                                        name={member.name}
+                                        onChange={handleCheckStateChange}
+                                        checked={checksState[member.name]}
+                                        style={{ margin: '1rem', cursor: 'pointer' }}
+                                    />
+                                    <span>{member.name}</span>
+                                </label>
+                            </div>
+                        ))
+                    )
+                }
+            </div>
 
-            <Button
-                type={'primary'}
-                title={'Сохранить'}
-                isDisabled={isSubmitDisabled}
-                onClick={handleSubmitClick}
-            />
+            <div className="form-layout__section">
+                <Button
+                    type={'primary'}
+                    title={'Сохранить'}
+                    isDisabled={isSubmitDisabled}
+                    onClick={handleSubmitClick}
+                />
+            </div>
         </FormLayout>
     );
 }

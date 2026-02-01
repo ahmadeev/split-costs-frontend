@@ -18,7 +18,7 @@ export default function TextInput({ title, onChange, value, placeholder, onFocus
     };
 
     return (
-        <>
+        <div className={styles.container}>
             <span className={styles.title}>{title}</span>
             <div
                 className={'form-layout__row form-layout__row_bordered form-layout__row_header-input'}
@@ -35,6 +35,6 @@ export default function TextInput({ title, onChange, value, placeholder, onFocus
                     onBlur={onBlur}
                 />
             </div>
-        </>
+        </div>
     );
 }

@@ -57,61 +57,65 @@ export default function GroupForm() {
 
     return (
         <FormLayout>
-            <TextInput
-                title={'Группа'}
-                onChange={handleGroupNameInput}
-                value={groupName}
-                placeholder={'Отчаянные козявки'}
-            />
-            <div className='group-form__input-container'
-                style={{
-                    display: Object.keys(names).length ? 'flex' : 'none',
-                    flexDirection: 'column',
-                    gap: '0.5rem',
-                }}
-            >
-                {Object.keys(names).map((nameKey: string, index: number) => (
-                    <div
-                        className='form-layout__row form-layout__row_bordered group-form__row'
-                        onClick={handleEditClick}
-                        key={index}
-                        style={{ cursor: 'text', gap: '0.5rem' }}
-                    >
-                        <input
-                            type='text'
-                            className='form-layout__text-input_invisible-border'
-                            name={nameKey}
-                            value={names[nameKey]}
-                            placeholder={`Участник #${String(index + 1)}`}
-                            onChange={handleNameInput}
-                            style={{ textOverflow: 'ellipsis' }}
-                        />
+            <div className="form-layout__section">
+                <TextInput
+                    title={'Группа'}
+                    onChange={handleGroupNameInput}
+                    value={groupName}
+                    placeholder={'Отчаянные козявки'}
+                />
+                <div className='group-form__input-container'
+                    style={{
+                        display: Object.keys(names).length ? 'flex' : 'none',
+                        flexDirection: 'column',
+                        gap: '0.5rem',
+                    }}
+                >
+                    {Object.keys(names).map((nameKey: string, index: number) => (
                         <div
-                            className='group-form__delete-button'
-                            onClick={(e) => { handleDeleteClick(e, nameKey); }}
+                            className='form-layout__row form-layout__row_bordered group-form__row'
+                            onClick={handleEditClick}
+                            key={index}
+                            style={{ cursor: 'text', gap: '0.5rem' }}
                         >
-                            <Delete style={{ fill: '#424242' }} />
+                            <input
+                                type='text'
+                                className='form-layout__text-input_invisible-border'
+                                name={nameKey}
+                                value={names[nameKey]}
+                                placeholder={`Участник #${String(index + 1)}`}
+                                onChange={handleNameInput}
+                                style={{ textOverflow: 'ellipsis' }}
+                            />
+                            <div
+                                className='group-form__delete-button'
+                                onClick={(e) => { handleDeleteClick(e, nameKey); }}
+                            >
+                                <Delete style={{ fill: '#424242' }} />
+                            </div>
                         </div>
+                    ))}
+                </div>
+                <div
+                    className='form-layout__row form-layout__row_bordered'
+                    onClick={handleAddClick}
+                    style={{ cursor: 'pointer', gap: '1rem' }}
+                >
+                    <div className='group-form__add-button'>
+                        <span>+</span>
                     </div>
-                ))}
-            </div>
-            <div
-                className='form-layout__row form-layout__row_bordered'
-                onClick={handleAddClick}
-                style={{ cursor: 'pointer', gap: '1rem' }}
-            >
-                <div className='group-form__add-button'>
-                    <span>+</span>
-                </div>
-                <div>
-                    <span>Добавить члена группы</span>
+                    <div>
+                        <span>Добавить члена группы</span>
+                    </div>
                 </div>
             </div>
-            <Button
-                title={'Создать группу'}
-                onClick={handleSubmitClick}
-                type={'primary'}
-            />
+            <div className="form-layout__section">
+                <Button
+                    title={'Создать группу'}
+                    onClick={handleSubmitClick}
+                    type={'primary'}
+                />
+            </div>
         </FormLayout>
     );
 }
