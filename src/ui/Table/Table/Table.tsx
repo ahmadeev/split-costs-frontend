@@ -1,4 +1,5 @@
 import './Table.css';
+import { useMemo } from 'react';
 
 interface Column { databaseValue: string, displayValue: string}
 
@@ -8,12 +9,14 @@ interface Props {
 }
 
 export default function Table({ data, visibleColumns }: Props) {
-    const columns = visibleColumns ?? Object.keys(data[0] ?? {}).map((key: string) => (
-        { databaseValue: key, displayValue: key }
-    ));
+    const columns = useMemo(() => {
+        return visibleColumns ?? Object.keys(data[0] ?? {}).map((key: string): Column => (
+            { databaseValue: key, displayValue: key }
+        ));
+    }, [data, visibleColumns]);
 
     return (
-        <>
+        <div className={'ui-table__container'}>
             <table>
                 <thead>
                     <tr>
@@ -36,8 +39,13 @@ export default function Table({ data, visibleColumns }: Props) {
                                     {
                                         columns.map((column: Column)=> {
                                             return (
-                                                // @ts-expect-error data type is unknown
-                                                <td key={column.databaseValue}>{row[column.databaseValue]}</td>
+                                                <td key={column.databaseValue}>{
+                                                    typeof row[column.databaseValue] === 'object' ? (
+                                                        row[column.databaseValue].id ?? `(reference to ${column.databaseValue})`
+                                                    ) : (
+                                                        row[column.databaseValue]
+                                                    )
+                                                }</td>
                                             );
                                         })
                                     }
@@ -47,6 +55,6 @@ export default function Table({ data, visibleColumns }: Props) {
                     }
                 </tbody>
             </table>
-        </>
+        </div>
     );
 }

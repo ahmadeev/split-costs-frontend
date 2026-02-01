@@ -1,6 +1,14 @@
+.ui-table__container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
+    max-width: 100%;
 }
 
 tr {

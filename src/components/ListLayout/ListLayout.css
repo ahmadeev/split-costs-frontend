@@ -9,11 +9,13 @@
 
     padding: 5vh 10vw;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .list-layout__title-container {
     width: 100%;
     text-align: left;
+    box-sizing: border-box;
 }
 
 .list-layout__title-container > * {
@@ -26,6 +28,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
+    box-sizing: border-box;
 }
 
 .list-layout__table-container {

@@ -40,6 +40,17 @@ export default function ListLayout() {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setPageCount] = useState(10);
 
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(data => { setData(data); })
+            .catch((error: unknown) => { console.log(error); })
+            .finally(() => { setIsLoading(false); });
+    }, []);
+
     return (
         <div
             className={'list-layout__container'}
@@ -59,10 +70,16 @@ export default function ListLayout() {
             <div
                 className={'list-layout__table-container'}
             >
-                <Table
-                    data={DATA}
-                    // visibleColumns={COLUMNS}
-                />
+                {
+                    isLoading ? (
+                        <span>Loading...</span>
+                    ) : (
+                        <Table
+                            data={data}
+                            // visibleColumns={COLUMNS}
+                        />
+                    )
+                }
             </div>
 
             <div
