@@ -33,3 +33,8 @@
     font-size: 1.5rem;
     color: #404040;
 }
+
+.mandatory {
+    color: #e5484d;
+    font-weight: 600;
+}

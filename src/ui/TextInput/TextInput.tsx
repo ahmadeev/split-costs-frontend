@@ -8,9 +8,10 @@ interface Props {
     placeholder: string,
     onFocus?: () => void,
     onBlur?: () => void,
+    isMandatory?: boolean,
 }
 
-export default function TextInput({ title, onChange, value, placeholder, onFocus, onBlur }: Props) {
+export default function TextInput({ title, onChange, value, placeholder, onFocus, onBlur, isMandatory }: Props) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleEditClick = () => {
@@ -19,7 +20,7 @@ export default function TextInput({ title, onChange, value, placeholder, onFocus
 
     return (
         <div className={styles.container}>
-            <span className={styles.title}>{title}</span>
+            <span className={styles.title}>{title}{isMandatory && <span className={styles.mandatory}> *</span>}</span>
             <div
                 className={'form-layout__row form-layout__row_bordered form-layout__row_header-input'}
                 onClick={handleEditClick}

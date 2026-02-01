@@ -190,12 +190,14 @@ export default function ExpensesForm() {
             <div className="form-layout__section">
                 <TextInput
                     title={'Комментарий'}
+                    isMandatory={true}
                     onChange={handleDetailsInput}
                     value={details}
                     placeholder={'Например, пицца'}
                 />
                 <TextInput
                     title={'Сумма'}
+                    isMandatory={true}
                     onChange={handleTotalChange}
                     value={total}
                     placeholder={'9 000 ₽'}
@@ -203,7 +205,13 @@ export default function ExpensesForm() {
                     onBlur={handleBlurInputTotal}
                 />
                 {hintString && (
-                    <div className={'form-layout__row'}>
+                    <div
+                        style={{
+                            color: 'var(--secondary-color)',
+                            textAlign: 'left',
+                            padding: '0.6rem 1.2rem',
+                        }}
+                    >
                         <span>{hintString}</span>
                     </div>
                 )}

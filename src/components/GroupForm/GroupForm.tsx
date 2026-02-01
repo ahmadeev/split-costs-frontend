@@ -7,6 +7,8 @@ import Delete from '../../icons/delete_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.sv
 import TextInput from '../../ui/TextInput/TextInput.tsx';
 import Button from '../../ui/Button/Button.tsx';
 
+const MEMBERS_LIMIT = 5;
+
 export type Names = Record<string, string>;
 
 const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
@@ -31,6 +33,10 @@ export default function GroupForm() {
     }, []);
 
     const handleAddClick = () => {
+        if (Object.keys(names).length >= MEMBERS_LIMIT) {
+            return;
+        }
+
         setNames((prev: Names) => ({ ...prev, [crypto.randomUUID()]: '' }));
     };
 
@@ -71,6 +77,15 @@ export default function GroupForm() {
                         gap: '0.5rem',
                     }}
                 >
+                    <div
+                        style={{
+                            color: 'var(--secondary-color)',
+                            textAlign: 'left',
+                            padding: '0.6rem 1.2rem',
+                        }}
+                    >
+                        <span>Добавлено: {Object.keys(names).length} / {MEMBERS_LIMIT}</span>
+                    </div>
                     {Object.keys(names).map((nameKey: string, index: number) => (
                         <div
                             className='form-layout__row form-layout__row_bordered group-form__row'
