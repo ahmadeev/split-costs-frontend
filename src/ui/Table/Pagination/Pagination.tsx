@@ -1,60 +1,46 @@
 import Button from '../../Button/Button.tsx';
+import { range } from '../../../utils.ts';
 
 interface Props {
     currentPage: number,
     pageCount: number,
     onChange: (page: number) => void,
+    delta: number,
 }
 
-interface Pages {
-    first: { value: number; isVisible: boolean },
-    last: { value: number; isVisible: boolean },
-    prev: { value: number; isVisible: boolean },
-    current: { value: number; isVisible: boolean },
-    next: { value: number; isVisible: boolean },
-    total: number,
-}
-
-export default function Pagination({ currentPage, pageCount, onChange }: Props) {
+export default function Pagination({ currentPage, pageCount, delta, onChange }: Props) {
     function handlePageChange(page: number) {
+        if (page < 1 || page > pageCount) {
+            return;
+        }
+
         console.log(page);
 
         onChange(page);
     }
 
-    function getLink(page: number) {
+    function getLink(page: number, isCurrentPage: boolean) {
         return (
             <Button
                 type={'link'}
-                title={String(page)}
+                title={isCurrentPage ? `[ ${String(page)} ]` : String(page)}
                 onClick={() => { handlePageChange(page); }}
             />
         );
     }
 
-    const pages: Pages = {
-        first: {
-            value: 1,
-            isVisible: true,
-        },
-        last: {
-            value: pageCount,
-            isVisible: pageCount > 1,
-        },
-        prev: {
-            value: currentPage - 1,
-            isVisible: currentPage - 1 > 1,
-        },
-        current: {
-            value: currentPage,
-            isVisible: 1 < currentPage && currentPage < pageCount,
-        },
-        next: {
-            value: currentPage + 1,
-            isVisible: currentPage + 1 < pageCount,
-        },
-        total: pageCount,
+    const getPagesArray = (currentPage: number, pageCount: number, delta: number) => {
+        return [1, ...range(currentPage - delta, currentPage + delta), pageCount]
+            .reduce((acc: number[], v: number, i: number) => {
+                if ((i === 0 || v > acc[acc.length - 1]) && (v >= 1 && v <= pageCount)) {
+                    acc.push(v);
+                }
+
+                return acc;
+            }, []);
     };
+
+    const pages = getPagesArray(currentPage, pageCount, delta);
 
     return (
         <div
@@ -70,20 +56,37 @@ export default function Pagination({ currentPage, pageCount, onChange }: Props) 
                 type={'link'}
                 title={'<'}
                 onClick={() => { handlePageChange(currentPage - 1); }}
-                isDisabled={!pages.first.isVisible || currentPage === pages.first.value}
+                isDisabled={currentPage === pages[0]}
             />
-            { getLink(pages.first.value) }
-            { pages.prev.isVisible && pages.prev.value - pages.first.value > 1 && ( <span>...</span> ) }
-            { pages.prev.isVisible && ( getLink(pages.prev.value) ) }
-            { pages.current.isVisible && getLink(pages.current.value) }
-            { pages.next.isVisible && ( getLink(pages.next.value) ) }
-            { pages.next.isVisible && pages.last.value - pages.next.value > 1 && ( <span>...</span> ) }
-            { pages.last.isVisible && ( getLink(pages.last.value) ) }
+            {
+                pages.map((page: number, index: number, arr: number[]) => {
+                    const isCurrentPage = currentPage === page;
+
+                    if (index === 0) {
+                        return getLink(page, isCurrentPage);
+                    }
+
+                    if (page - arr[index - 1] > 1) {
+                        return (
+                            <>
+                                <span>...</span>
+                                { getLink(page, isCurrentPage) }
+                            </>
+                        );
+                    }
+
+                    return (
+                        <>
+                            { getLink(page, isCurrentPage) }
+                        </>
+                    );
+                })
+            }
             <Button
                 type={'link'}
                 title={'>'}
                 onClick={() => { handlePageChange(currentPage + 1); }}
-                isDisabled={!pages.last.isVisible || currentPage === pages.total}
+                isDisabled={currentPage === pages[pages.length - 1]}
             />
         </div>
     );

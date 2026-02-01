@@ -71,6 +71,7 @@ export default function ListLayout() {
                 <Pagination
                     currentPage={currentPage}
                     pageCount={pageCount}
+                    delta={1}
                     onChange={(page: number) => { setCurrentPage(page); }}
                 />
             </div>
