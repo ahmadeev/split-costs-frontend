@@ -100,7 +100,7 @@ export default function GroupForm() {
                                 value={names[nameKey]}
                                 placeholder={`Участник #${String(index + 1)}`}
                                 onChange={handleNameInput}
-                                style={{ textOverflow: 'ellipsis' }}
+                                style={{ textOverflow: 'ellipsis', fontSize: '1rem' }}
                             />
                             <div
                                 className='group-form__delete-button'
