@@ -1,0 +1,39 @@
+.list-layout__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+
+    padding: 5vh 10vw;
+    box-sizing: border-box;
+}
+
+.list-layout__title-container {
+    width: 100%;
+    text-align: left;
+}
+
+.list-layout__title-container > * {
+    font-size: 2rem;
+}
+
+.list-layout__filter-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.list-layout__table-container {
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.list-layout__pagination-container {
+    width: 100%;
+}

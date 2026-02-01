@@ -1,4 +1,7 @@
-import Table from '../../ui/Table/Table.tsx';
+import './ListLayout.css';
+import Table from '../../ui/Table/Table/Table.tsx';
+import Pagination from '../../ui/Table/Pagination/Pagination.tsx';
+import Filters from '../../ui/Table/Filters/Filters.tsx';
 
 const DATA = [
     {
@@ -34,20 +37,35 @@ const TITLE = 'Табличка';
 
 export default function ListLayout() {
     return (
-        <div style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-        }}>
-            <h2>{TITLE}</h2>
+        <div
+            className={'list-layout__container'}
+        >
+            <div
+                className={'list-layout__title-container'}
+            >
+                <h1>{TITLE}</h1>
+            </div>
 
-            <Table
-                data={DATA}
-                columns={COLUMNS}
-            />
+            <div
+                className={'list-layout__filter-container'}
+            >
+                <Filters />
+            </div>
+
+            <div
+                className={'list-layout__table-container'}
+            >
+                <Table
+                    data={DATA}
+                    columns={COLUMNS}
+                />
+            </div>
+
+            <div
+                className={'list-layout__pagination-container'}
+            >
+                <Pagination />
+            </div>
         </div>
     );
 }

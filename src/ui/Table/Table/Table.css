@@ -1,0 +1,27 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tr {
+    background-color: var(--accent-background-color);
+}
+
+tr:nth-child(even) {
+    background-color: var(--third-background-color);
+}
+
+th, td {
+    max-height: 2rem;
+    max-width: 8rem;
+    border: 1px solid black;
+    padding: 0.6rem 1.2rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+thead > * {
+    background-color: var(--background-color) !important;
+}
