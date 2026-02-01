@@ -2,6 +2,7 @@ import './ListLayout.css';
 import Table from '../../ui/Table/Table/Table.tsx';
 import Pagination from '../../ui/Table/Pagination/Pagination.tsx';
 import Filters from '../../ui/Table/Filters/Filters.tsx';
+import { useState } from 'react';
 
 const DATA = [
     {
@@ -36,6 +37,9 @@ const COLUMNS = [
 const TITLE = 'Табличка';
 
 export default function ListLayout() {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageCount, setPageCount] = useState(10);
+
     return (
         <div
             className={'list-layout__container'}
@@ -64,7 +68,11 @@ export default function ListLayout() {
             <div
                 className={'list-layout__pagination-container'}
             >
-                <Pagination />
+                <Pagination
+                    currentPage={currentPage}
+                    pageCount={pageCount}
+                    onChange={(page: number) => { setCurrentPage(page); }}
+                />
             </div>
         </div>
     );
