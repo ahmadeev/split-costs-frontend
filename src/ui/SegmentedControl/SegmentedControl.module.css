@@ -1,3 +1,8 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
 .button:first-child {
     border-radius: 0.5rem 0 0 0.5rem;
 }
@@ -9,4 +14,12 @@
 .active {
     background-color: #535bf2;
     color: white;
+}
+
+.button:not(.active) {
+    background-color: var(--accent-background-color);
+}
+
+.button:not(.active):hover{
+    background-color: var(--third-background-color);
 }

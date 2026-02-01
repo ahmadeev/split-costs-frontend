@@ -4,11 +4,12 @@
     box-sizing: border-box;
     user-select: none;
     cursor: pointer;
+    background-color: var(--accent-background-color);
 }
 
 .block {
     position: absolute;
-    background-color: white;
+    background-color: var(--accent-background-color);
     width: 100%;
     z-index: 9995;
     border-radius: 0 0 0.5rem 0.5rem;
@@ -20,7 +21,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border: 1px black solid;
+    border: 1px solid var(--outline);
     padding: 0.6rem 1.2rem;
     box-sizing: border-box;
 
@@ -44,7 +45,7 @@
 }
 
 .option:hover {
-    background-color: var(--on-hover-white);
+    background-color: var(--third-background-color);
 }
 
 .trigger {

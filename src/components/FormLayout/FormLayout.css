@@ -30,10 +30,12 @@
     box-sizing: border-box;
 
     transition: all 0.2s ease-in-out;
+
+    background-color: var(--accent-background-color);
 }
 
 .form-layout__row:hover {
-    background-color: var(--on-hover-white);
+    background-color: var(--third-background-color);
 }
 
 .form-layout__row * {
@@ -41,13 +43,12 @@
 }
 
 .form-layout__row_bordered {
-    border: 1px solid lightgray;
+    border: 1px solid var(--outline);
     border-radius: var(--border-radius);
 }
 
 .form-layout__row_header-input {
     border: none;
-    background-color: rgba(243,243,243,0.48);
     cursor: text;
     font-weight: bold;
     font-size: 2rem;

@@ -17,7 +17,7 @@ export default function App() {
         left: '0',
         boxSizing: 'border-box',
         borderBottom: '1px solid var(--outline)',
-        backgroundColor: 'var(--background-color)',
+        backgroundColor: 'var(--accent-background-color)',
         zIndex: '9999',
     };
 

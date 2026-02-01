@@ -13,10 +13,7 @@ export default function SegmentedControl({ options, defaultOption }: Props) {
 
     return (
         <div
-            style={{
-                display: 'flex',
-                flexDirection: 'row',
-            }}
+            className={styles.container}
         >
             {options.map((option, index) => (
                 <button

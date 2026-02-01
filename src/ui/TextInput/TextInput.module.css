@@ -8,6 +8,10 @@
     border: none;
 }
 
+.input::placeholder {
+    color: var(--secondary-color);
+}
+
 .input:focus {
     outline: none;
 }
