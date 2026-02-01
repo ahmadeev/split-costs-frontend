@@ -4,10 +4,14 @@ interface Column { databaseValue: string, displayValue: string}
 
 interface Props {
     data: unknown[],
-    columns: Column[],
+    visibleColumns?: Column[],
 }
 
-export default function Table({ data, columns }: Props) {
+export default function Table({ data, visibleColumns }: Props) {
+    const columns = visibleColumns ?? Object.keys(data[0] ?? {}).map((key: string) => (
+        { databaseValue: key, displayValue: key }
+    ));
+
     return (
         <>
             <table>

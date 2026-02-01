@@ -2,7 +2,7 @@ import './ListLayout.css';
 import Table from '../../ui/Table/Table/Table.tsx';
 import Pagination from '../../ui/Table/Pagination/Pagination.tsx';
 import Filters from '../../ui/Table/Filters/Filters.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const DATA = [
     {
@@ -61,7 +61,7 @@ export default function ListLayout() {
             >
                 <Table
                     data={DATA}
-                    columns={COLUMNS}
+                    // visibleColumns={COLUMNS}
                 />
             </div>
 

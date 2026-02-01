@@ -11,6 +11,7 @@ export default function Filters() {
                 title={'Фильтры'}
                 type={'secondary'}
                 onClick={handleClick}
+                isDisabled={true}
             />
         </>
     );
