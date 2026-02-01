@@ -8,6 +8,31 @@ interface Props {
     delta: number,
 }
 
+const getPageNumbersArray = (currentPage: number, pageCount: number, delta: number) => {
+    return [1, ...range(currentPage - delta, currentPage + delta), pageCount]
+        .reduce((acc: number[], v: number, i: number) => {
+            if ((i === 0 || v > acc[acc.length - 1]) && (v >= 1 && v <= pageCount)) {
+                acc.push(v);
+            }
+
+            return acc;
+        }, []);
+};
+
+const getPagesArray = (currentPage: number, pageCount: number, delta: number) => {
+    const pages: (number | '...')[] = [];
+
+    getPageNumbersArray(currentPage, pageCount, delta).forEach((page: number, index: number, arr: number[]) => {
+        if (index && page - arr[index - 1] > 1) {
+            pages.push('...');
+        }
+
+        pages.push(page);
+    });
+
+    return pages;
+};
+
 export default function Pagination({ currentPage, pageCount, delta, onChange }: Props) {
     function handlePageChange(page: number) {
         if (page < 1 || page > pageCount) {
@@ -19,41 +44,16 @@ export default function Pagination({ currentPage, pageCount, delta, onChange }: 
         onChange(page);
     }
 
-    function getLink(page: number, isCurrentPage: boolean, key: number) {
+    function getLink(page: number, key: number) {
         return (
             <Button
                 type={'link'}
-                title={isCurrentPage ? `[ ${String(page)} ]` : String(page)}
+                title={page === currentPage ? `[ ${String(page)} ]` : String(page)}
                 onClick={() => { handlePageChange(page); }}
                 key={key}
             />
         );
     }
-
-    const getPageNumbersArray = (currentPage: number, pageCount: number, delta: number) => {
-        return [1, ...range(currentPage - delta, currentPage + delta), pageCount]
-            .reduce((acc: number[], v: number, i: number) => {
-                if ((i === 0 || v > acc[acc.length - 1]) && (v >= 1 && v <= pageCount)) {
-                    acc.push(v);
-                }
-
-                return acc;
-            }, []);
-    };
-
-    const getPagesArray = (currentPage: number, pageCount: number, delta: number) => {
-        const pages: (number | '...')[] = [];
-
-        getPageNumbersArray(currentPage, pageCount, delta).forEach((page: number, index: number, arr: number[]) => {
-            if (index && page - arr[index - 1] > 1) {
-                pages.push('...');
-            }
-
-            pages.push(page);
-        });
-
-        return pages;
-    };
 
     const pages = getPagesArray(currentPage, pageCount, delta);
 
@@ -77,7 +77,7 @@ export default function Pagination({ currentPage, pageCount, delta, onChange }: 
                 pages.map((item: number | '...', index: number) => {
                     return item === '...' ? (
                         <span key={index}>...</span>
-                    ) : getLink(item, item === currentPage, index);
+                    ) : getLink(item, index);
                 })
             }
             <Button
