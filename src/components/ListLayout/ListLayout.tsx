@@ -4,49 +4,23 @@ import Pagination from '../../ui/Table/Pagination/Pagination.tsx';
 import Filters from '../../ui/Table/Filters/Filters.tsx';
 import { useEffect, useState } from 'react';
 
-const DATA = [
-    {
-        id: 1,
-        name: 'lol',
-    },
-    {
-        id: 14,
-        name: 'kek',
-    },
-    {
-        id: 15,
-        name: 'cheburek',
-    },
-    {
-        id: 20,
-        name: 'lol',
-    },
-];
+interface Props<T> {
+    title: string,
+    fetchData: () => Promise<T[]>;
+}
 
-const COLUMNS = [
-    {
-        displayValue: 'ID',
-        databaseValue: 'id',
-    },
-    {
-        displayValue: 'Имя',
-        databaseValue: 'name',
-    },
-];
-
-const TITLE = 'Табличка';
-
-export default function ListLayout() {
+export default function ListLayout<T extends object>({ title }: Props<T>) {
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageCount, setPageCount] = useState(10);
+    // todo: щас сеттера нет
+    const [pageCount] = useState(10);
 
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<T[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
-            .then(data => { setData(data); })
+            .then((data: T[]) => { setData(data); })
             .catch((error: unknown) => { console.log(error); })
             .finally(() => { setIsLoading(false); });
     }, []);
@@ -58,7 +32,7 @@ export default function ListLayout() {
             <div
                 className={'list-layout__title-container'}
             >
-                <h1>{TITLE}</h1>
+                <h1>{title}</h1>
             </div>
 
             <div
@@ -74,7 +48,7 @@ export default function ListLayout() {
                     isLoading ? (
                         <span>Loading...</span>
                     ) : (
-                        <Table
+                        <Table<T>
                             data={data}
                             // visibleColumns={COLUMNS}
                         />

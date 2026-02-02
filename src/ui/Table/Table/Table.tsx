@@ -3,12 +3,12 @@ import { useMemo } from 'react';
 
 interface Column { databaseValue: string, displayValue: string}
 
-interface Props {
-    data: unknown[],
+interface Props<T> {
+    data: T[],
     visibleColumns?: Column[],
 }
 
-export default function Table({ data, visibleColumns }: Props) {
+export default function Table<T extends object>({ data, visibleColumns }: Props<T>) {
     const columns = useMemo(() => {
         return visibleColumns ?? Object.keys(data[0] ?? {}).map((key: string): Column => (
             { databaseValue: key, displayValue: key }
@@ -31,20 +31,25 @@ export default function Table({ data, visibleColumns }: Props) {
                 </thead>
                 <tbody>
                     {
-                        data.map((row: unknown, rowIndex: number)=> {
+                        data.map((row: T, rowIndex: number)=> {
                             return (
                                 // @ts-expect-error data type is unknown
-                                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                                <tr key={row.id ?? rowIndex}>
+                                <tr key={(row as Record<string, unknown>).id ?? rowIndex}>
                                     {
                                         columns.map((column: Column)=> {
+                                            const key = column.databaseValue;
+                                            const record = row as Record<string, unknown>;
+                                            const value = record[key];
+
                                             return (
-                                                <td key={column.databaseValue}>{
-                                                    typeof row[column.databaseValue] === 'object' ? (
-                                                        row[column.databaseValue].id ?? `(reference to ${column.databaseValue})`
-                                                    ) : (
-                                                        row[column.databaseValue]
-                                                    )
+                                                <td key={key}>{
+                                                    value == null
+                                                        ? ''
+                                                        : typeof value === 'string' ||
+                                                        typeof value === 'number' ||
+                                                        typeof value === 'boolean'
+                                                            ? value
+                                                            : `(reference to ${key})`
                                                 }</td>
                                             );
                                         })

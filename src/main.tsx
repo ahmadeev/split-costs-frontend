@@ -7,7 +7,7 @@ import App from './App.tsx';
 import GroupForm from './components/GroupForm/GroupForm.tsx';
 import ExpensesForm from './components/ExpensesForm/ExpensesForm.tsx';
 import NotFoundError from './pages/NotFoundError/NotFoundError.tsx';
-import ListLayout from './components/ListLayout/ListLayout.tsx';
+import List from './pages/List/List.tsx';
 
 const router = createHashRouter([
     {
@@ -28,7 +28,7 @@ const router = createHashRouter([
             },
             {
                 path: '/list',
-                element: <ListLayout />,
+                element: <List />,
             },
         ],
         errorElement: <NotFoundError />,
