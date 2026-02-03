@@ -4,17 +4,17 @@ import Pagination from '../../ui/Table/Pagination/Pagination.tsx';
 import Filters from '../../ui/Table/Filters/Filters.tsx';
 import { useEffect, useState } from 'react';
 
-interface Props<T> {
+interface Props {
     title: string,
-    fetchData: () => Promise<T[]>;
+    fetchData: () => Promise<Record<string, unknown>[]>;
 }
 
-export default function ListLayout<T extends object>({ title, fetchData }: Props<T>) {
+export default function ListLayout({ title, fetchData }: Props) {
     const [currentPage, setCurrentPage] = useState(1);
     // todo: щас сеттера нет
     const [pageCount] = useState(10);
 
-    const [data, setData] = useState<T[]>([]);
+    const [data, setData] = useState<Record<string, unknown>[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export default function ListLayout<T extends object>({ title, fetchData }: Props
                     isLoading ? (
                         <span>Loading...</span>
                     ) : (
-                        <Table<T>
+                        <Table
                             data={data}
                             // visibleColumns={COLUMNS}
                         />

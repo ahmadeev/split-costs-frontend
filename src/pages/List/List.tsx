@@ -2,7 +2,6 @@ import ListLayout from '../../components/ListLayout/ListLayout.tsx';
 import { useParams } from 'react-router-dom';
 import apiFetch from '../../api/apiFetch.ts';
 import PUBLIC_API from '../../api/publicUrls.ts';
-import type { User } from '../../api/dtos.ts';
 
 export default function List() {
     const { entity } = useParams();
@@ -13,9 +12,9 @@ export default function List() {
 
     return (
         <>
-            <ListLayout<User>
+            <ListLayout
                 title={'Табличка'}
-                fetchData={(): Promise<User[]> => ( apiFetch<User[]>(PUBLIC_API[entity]) ) }
+                fetchData={() => ( apiFetch<Record<string, unknown>[]>(PUBLIC_API[entity]) ) }
             />
         </>
     );
