@@ -8,6 +8,20 @@ interface Props<T> {
     visibleColumns?: Column[],
 }
 
+function renderCell(value: unknown, key: string) {
+    if (value == null) return '';
+
+    if (
+        typeof value === 'string' ||
+        typeof value === 'number' ||
+        typeof value === 'boolean'
+    ) {
+        return value;
+    }
+
+    return `(reference to ${key})`;
+}
+
 export default function Table<T extends object>({ data, visibleColumns }: Props<T>) {
     const columns = useMemo(() => {
         return visibleColumns ?? Object.keys(data[0] ?? {}).map((key: string): Column => (
@@ -37,21 +51,11 @@ export default function Table<T extends object>({ data, visibleColumns }: Props<
                                 <tr key={(row as Record<string, unknown>).id ?? rowIndex}>
                                     {
                                         columns.map((column: Column)=> {
-                                            const key = column.databaseValue;
                                             const record = row as Record<string, unknown>;
+                                            const key = column.databaseValue;
                                             const value = record[key];
 
-                                            return (
-                                                <td key={key}>{
-                                                    value == null
-                                                        ? ''
-                                                        : typeof value === 'string' ||
-                                                        typeof value === 'number' ||
-                                                        typeof value === 'boolean'
-                                                            ? value
-                                                            : `(reference to ${key})`
-                                                }</td>
-                                            );
+                                            return <td key={key}>{renderCell(value, key)}</td>;
                                         })
                                     }
                                 </tr>
