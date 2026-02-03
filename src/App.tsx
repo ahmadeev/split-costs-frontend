@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.tsx';
+import './App.css';
 
 const NAVBAR_HEIGHT = '10vh';
 
 const containerStyles = {
     marginTop: NAVBAR_HEIGHT,
-    width: '100%',
     height: `calc(100% - ${NAVBAR_HEIGHT})`,
 };
 
@@ -15,7 +15,10 @@ export default function App() {
             <Navbar
                 navbarHeight={NAVBAR_HEIGHT}
             />
-            <div style={containerStyles}>
+            <div
+                className={'app__container'}
+                style={containerStyles}
+            >
                 <Outlet/>
             </div>
         </>
