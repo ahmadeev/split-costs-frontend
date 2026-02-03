@@ -1,39 +1,21 @@
-import { NavLink, Outlet } from 'react-router-dom';
-import type { CSSProperties } from 'react';
+import { Outlet } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar.tsx';
+
+const NAVBAR_HEIGHT = '10vh';
+
+const containerStyles = {
+    marginTop: NAVBAR_HEIGHT,
+    width: '100%',
+    height: `calc(100% - ${NAVBAR_HEIGHT})`,
+};
 
 export default function App() {
-    const navHeight = '10vh';
-
-    const navStyles: CSSProperties = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '1rem',
-        width: '100%',
-        height: navHeight,
-        padding: '1rem',
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        boxSizing: 'border-box',
-        borderBottom: '1px solid var(--outline)',
-        backgroundColor: 'var(--accent-background-color)',
-        zIndex: '9999',
-    };
-
-    const getActiveLinkStyles = (isActive: boolean): CSSProperties => {
-        return isActive ? { textDecoration: 'underline' } : { textDecoration: 'none' };
-    };
-
     return (
         <>
-            <nav style={navStyles}>
-                <NavLink to="/" style={({ isActive }) => getActiveLinkStyles(isActive)}>Главная</NavLink>
-                <NavLink to="/group" style={({ isActive }) => getActiveLinkStyles(isActive)}>Группа</NavLink>
-                <NavLink to="/expenses" style={({ isActive }) => getActiveLinkStyles(isActive)}>Расходы</NavLink>
-                <NavLink to="/list" style={({ isActive }) => getActiveLinkStyles(isActive)}>Лист</NavLink>
-            </nav>
-            <div style={{ marginTop: navHeight, width: '100%', height: `calc(100% - ${navHeight})` }}>
+            <Navbar
+                navbarHeight={NAVBAR_HEIGHT}
+            />
+            <div style={containerStyles}>
                 <Outlet/>
             </div>
         </>

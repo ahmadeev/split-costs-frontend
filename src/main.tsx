@@ -27,7 +27,7 @@ const router = createHashRouter([
                 element: <ExpensesForm />,
             },
             {
-                path: '/list',
+                path: '/list/:entity',
                 element: <List />,
             },
         ],

@@ -9,7 +9,7 @@ interface Props<T> {
     fetchData: () => Promise<T[]>;
 }
 
-export default function ListLayout<T extends object>({ title }: Props<T>) {
+export default function ListLayout<T extends object>({ title, fetchData }: Props<T>) {
     const [currentPage, setCurrentPage] = useState(1);
     // todo: щас сеттера нет
     const [pageCount] = useState(10);
@@ -18,12 +18,11 @@ export default function ListLayout<T extends object>({ title }: Props<T>) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then((data: T[]) => { setData(data); })
-            .catch((error: unknown) => { console.log(error); })
+        fetchData()
+            .then(setData)
+            .catch(console.error)
             .finally(() => { setIsLoading(false); });
-    }, []);
+    }, [fetchData]);
 
     return (
         <div

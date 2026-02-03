@@ -1,11 +1,14 @@
 import './Table.css';
 import { useMemo } from 'react';
 
-interface Column { databaseValue: string, displayValue: string}
-
-interface Props<T> {
+interface Props<T extends object> {
     data: T[],
-    visibleColumns?: Column[],
+    visibleColumns?: Column<T>[],
+}
+
+interface Column<T extends object> {
+    databaseValue: keyof T,
+    displayValue: string
 }
 
 function renderCell(value: unknown, key: string) {
@@ -23,9 +26,20 @@ function renderCell(value: unknown, key: string) {
 }
 
 export default function Table<T extends object>({ data, visibleColumns }: Props<T>) {
-    const columns = useMemo(() => {
-        return visibleColumns ?? Object.keys(data[0] ?? {}).map((key: string): Column => (
-            { databaseValue: key, displayValue: key }
+    const columns: Column<T>[] = useMemo(() => {
+        if (visibleColumns) {
+            return visibleColumns;
+        }
+
+        if (!data.length) {
+            return [];
+        }
+
+        const firstRow = data[0];
+        const keys = Object.keys(firstRow) as (keyof T)[];
+
+        return keys.map((key): Column<T> => (
+            { databaseValue: key, displayValue: String(key) }
         ));
     }, [data, visibleColumns]);
 
@@ -35,9 +49,9 @@ export default function Table<T extends object>({ data, visibleColumns }: Props<
                 <thead>
                     <tr>
                         {
-                            columns.map((column: Column)=> {
+                            columns.map((column: Column<T>)=> {
                                 return (
-                                    <th key={column.databaseValue}>{column.displayValue}</th>
+                                    <th key={String(column.databaseValue)}>{column.displayValue}</th>
                                 );
                             })
                         }
@@ -50,12 +64,11 @@ export default function Table<T extends object>({ data, visibleColumns }: Props<
                                 // @ts-expect-error data type is unknown
                                 <tr key={(row as Record<string, unknown>).id ?? rowIndex}>
                                     {
-                                        columns.map((column: Column)=> {
-                                            const record = row as Record<string, unknown>;
+                                        columns.map((column: Column<T>)=> {
                                             const key = column.databaseValue;
-                                            const value = record[key];
+                                            const value = row[key];
 
-                                            return <td key={key}>{renderCell(value, key)}</td>;
+                                            return <td key={String(key)}>{renderCell(value, String(key))}</td>;
                                         })
                                     }
                                 </tr>
