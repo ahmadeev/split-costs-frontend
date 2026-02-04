@@ -1,11 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import type { CSSProperties } from 'react';
+import { isMobile } from '../../utils.ts';
 
 interface Props {
     navbarHeight: string;
 }
 
 export default function Navbar({ navbarHeight }: Props) {
+    const isMobileView = isMobile();
+
     const navStyles: CSSProperties = {
         display: 'flex',
         justifyContent: 'center',
@@ -15,12 +18,13 @@ export default function Navbar({ navbarHeight }: Props) {
         height: navbarHeight,
         padding: '1rem',
         position: 'fixed',
-        top: '0',
         left: '0',
         boxSizing: 'border-box',
         borderBottom: '1px solid var(--outline)',
         backgroundColor: 'var(--accent-background-color)',
         zIndex: '9999',
+        top: isMobileView ? undefined : '0',
+        bottom: isMobileView ? '0' : undefined,
     };
 
     const getActiveLinkStyles = (isActive: boolean): CSSProperties => {
