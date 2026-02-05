@@ -84,6 +84,12 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
+
+  div {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
 }
 
 @media (prefers-color-scheme: light) {

@@ -1,5 +1,5 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import { type CSSProperties, type ReactNode, useCallback } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { cloneElement, type CSSProperties, type ReactElement, type ReactNode, useCallback } from 'react';
 import { isMobile } from '../../utils.ts';
 import './Navbar.css';
 import Home from '../../icons/home_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
@@ -46,19 +46,26 @@ export default function Navbar({ navbarHeight }: Props) {
     };
 
     const navigate = useNavigate();
+    const currentPath = useLocation().pathname;
 
     const getNavItem = useCallback((path: string, title: string, icon: ReactNode) => {
+        const styledIcon = icon && cloneElement(icon as ReactElement<{ style?: CSSProperties}>, {
+            style: {
+                fill: currentPath === path ? 'var(--color)' : 'var(--secondary-color)',
+            },
+        });
+
         return (
             <div
                 style={linkStyles}
                 onClick={() => void navigate(path)}
             >
-                {icon}
+                {styledIcon}
                 {!isMobileView &&
                     <NavLink to={path} style={({ isActive }) => getActiveLinkStyles(isActive)}>{title}</NavLink>}
             </div>
         );
-    }, [isMobileView, navigate]);
+    }, [currentPath, isMobileView, navigate]);
 
     return (
         <nav style={navStyles}>
