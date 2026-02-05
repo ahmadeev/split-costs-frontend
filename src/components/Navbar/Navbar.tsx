@@ -11,15 +11,6 @@ interface Props {
     navbarHeight: string;
 }
 
-const linkStyles: CSSProperties = {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '1rem',
-    cursor: 'pointer',
-};
-
 const getActiveLinkStyles = (isActive: boolean): CSSProperties => {
     return isActive ? { textDecoration: 'underline' } : { textDecoration: 'none' };
 };
@@ -28,19 +19,7 @@ export default function Navbar({ navbarHeight }: Props) {
     const isMobileView = isMobile();
 
     const navStyles: CSSProperties = {
-        display: 'flex',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        gap: '1rem',
-        width: '100%',
-        height: `calc(${navbarHeight} + env(safe-area-inset-bottom))`,
-        padding: '1rem 1rem calc(1rem + env(safe-area-inset-bottom)) 1rem',
-        position: 'fixed',
-        left: '0',
-        boxSizing: 'border-box',
-        borderBottom: '1px solid var(--outline)',
-        backgroundColor: 'var(--accent-background-color)',
-        zIndex: '9999',
+        height: navbarHeight,
         top: isMobileView ? undefined : '0',
         bottom: isMobileView ? '0' : undefined,
     };
@@ -57,7 +36,7 @@ export default function Navbar({ navbarHeight }: Props) {
 
         return (
             <div
-                style={linkStyles}
+                className={'navbar__nav-item'}
                 onClick={() => void navigate(path)}
             >
                 {styledIcon}
@@ -68,7 +47,10 @@ export default function Navbar({ navbarHeight }: Props) {
     }, [currentPath, isMobileView, navigate]);
 
     return (
-        <nav style={navStyles}>
+        <nav
+            className={'navbar__container'}
+            style={navStyles}
+        >
             {getNavItem('/', 'Главная', <Home />)}
             {getNavItem('/group', 'Группа', <Group />)}
             {getNavItem('/expenses', 'Расходы', <Payments />)}

@@ -1,3 +1,27 @@
+.navbar__container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)) 1rem;
+    position: fixed;
+    left: 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--outline);
+    background-color: var(--accent-background-color);
+    z-index: 9999;
+}
+
+.navbar__nav-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
 nav svg {
     fill: var(--secondary-color);
 }

@@ -5,7 +5,7 @@
     "start_url": "/split-costs-frontend/#/",
     "icons": [
         {
-            "src": "/split-costs-frontend/assets/icon-32.svg",
+            "src": "/split-costs-frontend/icon-32.svg",
             "sizes": "any",
             "type": "image/svg+xml",
             "purpose": "any"
