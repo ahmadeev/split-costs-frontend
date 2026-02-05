@@ -1,0 +1,36 @@
+<svg width="32" height="32" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#2ecc71"/>
+            <stop offset="100%" stop-color="#27ae60"/>
+        </linearGradient>
+    </defs>
+
+    <rect x="0" y="0" width="1024" height="1024" rx="220" fill="url(#bg)"/>
+
+    <!-- Group of people -->
+    <!-- Center person -->
+    <circle cx="512" cy="390" r="90" fill="white"/>
+    <path d="M372 600c0-90 70-150 140-150s140 60 140 150v40H372z" fill="white"/>
+
+    <!-- Left person -->
+    <circle cx="320" cy="430" r="70" fill="white" opacity="0.95"/>
+    <path d="M210 600c0-70 55-120 110-120s110 50 110 120v40H210z" fill="white" opacity="0.95"/>
+
+    <!-- Right person -->
+    <circle cx="704" cy="430" r="70" fill="white" opacity="0.95"/>
+    <path d="M594 600c0-70 55-120 110-120s110 50 110 120v40H594z" fill="white" opacity="0.95"/>
+
+    <!-- Coins -->
+    <g transform="translate(0,40)">
+        <circle cx="380" cy="730" r="60" fill="#f1c40f"/>
+        <circle cx="460" cy="770" r="60" fill="#f39c12"/>
+        <circle cx="540" cy="730" r="60" fill="#f1c40f"/>
+    </g>
+
+    <!-- Coin highlights -->
+    <circle cx="360" cy="710" r="12" fill="white" opacity="0.5"/>
+    <circle cx="440" cy="750" r="12" fill="white" opacity="0.5"/>
+    <circle cx="520" cy="710" r="12" fill="white" opacity="0.5"/>
+</svg>

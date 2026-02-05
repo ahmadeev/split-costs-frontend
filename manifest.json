@@ -2,5 +2,13 @@
     "name": "Split Costs Application",
     "short_name": "Split Costs",
     "display": "fullscreen",
-    "start_url": "/"
+    "start_url": "/split-costs-frontend/#/",
+    "icons": [
+        {
+            "src": "src/assets/icon-32.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ]
 }
