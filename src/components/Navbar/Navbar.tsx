@@ -1,10 +1,11 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { type CSSProperties, type ReactElement, useCallback } from 'react';
+import { type CSSProperties, type ReactNode, useCallback } from 'react';
 import { isMobile } from '../../utils.ts';
 import './Navbar.css';
 import Home from '../../icons/home_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import Group from '../../icons/group_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import Payments from '../../icons/payments_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
+import Assignment from '../../icons/assignment_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 
 interface Props {
     navbarHeight: string;
@@ -46,13 +47,13 @@ export default function Navbar({ navbarHeight }: Props) {
 
     const navigate = useNavigate();
 
-    const getNavItem = useCallback((path: string, title: string, icon?: ReactElement) => {
+    const getNavItem = useCallback((path: string, title: string, icon: ReactNode) => {
         return (
             <div
                 style={linkStyles}
                 onClick={() => void navigate(path)}
             >
-                {!!icon && icon}
+                {icon}
                 {!isMobileView &&
                     <NavLink to={path} style={({ isActive }) => getActiveLinkStyles(isActive)}>{title}</NavLink>}
             </div>
@@ -64,7 +65,7 @@ export default function Navbar({ navbarHeight }: Props) {
             {getNavItem('/', 'Главная', <Home />)}
             {getNavItem('/group', 'Группа', <Group />)}
             {getNavItem('/expenses', 'Расходы', <Payments />)}
-            {getNavItem('/list/user', 'Лист')}
+            {getNavItem('/list/user', 'Лист', <Assignment />)}
         </nav>
     );
 }
