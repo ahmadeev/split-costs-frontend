@@ -3,10 +3,11 @@ import Table from '../../ui/Table/Table/Table.tsx';
 import Pagination from '../../ui/Table/Pagination/Pagination.tsx';
 import Filters from '../../ui/Table/Filters/Filters.tsx';
 import { useEffect, useState } from 'react';
+import type { AxiosResponse } from 'axios';
 
 interface Props {
     title: string,
-    fetchData: () => Promise<Record<string, unknown>[]>;
+    fetchData: () => Promise<AxiosResponse<unknown[]>>;
 }
 
 export default function ListLayout({ title, fetchData }: Props) {
@@ -19,7 +20,11 @@ export default function ListLayout({ title, fetchData }: Props) {
 
     useEffect(() => {
         fetchData()
-            .then(setData)
+            .then((res: AxiosResponse<unknown[]>) => {
+                const responseData = res.data as unknown as Record<string, unknown>[];
+
+                setData(responseData);
+            })
             .catch(console.error)
             .finally(() => { setIsLoading(false); });
     }, [fetchData]);

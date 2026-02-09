@@ -8,6 +8,7 @@ import GroupForm from './components/GroupForm/GroupForm.tsx';
 import ExpensesForm from './components/ExpensesForm/ExpensesForm.tsx';
 import NotFoundError from './pages/NotFoundError/NotFoundError.tsx';
 import List from './pages/List/List.tsx';
+import './api/index.ts';
 
 const router = createHashRouter([
     {
@@ -34,7 +35,6 @@ const router = createHashRouter([
         errorElement: <NotFoundError />,
     },
 ]);
-
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
