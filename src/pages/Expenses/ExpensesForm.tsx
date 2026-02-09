@@ -1,7 +1,7 @@
-import '../FormLayout/FormLayout.css';
+import '../../components/FormLayout/FormLayout.css';
 import './ExpensesForm.css';
 import { type ChangeEvent, useState } from 'react';
-import FormLayout from '../FormLayout/FormLayout.tsx';
+import FormLayout from '../../components/FormLayout/FormLayout.tsx';
 import type { ExpenseMemberRequestDTO, GroupResponseDTO, MemberResponseDTO } from '../../types/types.ts';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
 import SegmentedControl from '../../ui/SegmentedControl/SegmentedControl.tsx';
