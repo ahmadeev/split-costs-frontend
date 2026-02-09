@@ -9,9 +9,10 @@ interface Props {
     onFocus?: () => void,
     onBlur?: () => void,
     isMandatory?: boolean,
+    inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url',
 }
 
-export default function TextInput({ title, onChange, value, placeholder, onFocus, onBlur, isMandatory }: Props) {
+export default function TextInput({ title, onChange, value, placeholder, onFocus, onBlur, isMandatory, inputMode }: Props) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleEditClick = () => {
@@ -34,6 +35,7 @@ export default function TextInput({ title, onChange, value, placeholder, onFocus
                     onChange={onChange}
                     onFocus={onFocus}
                     onBlur={onBlur}
+                    inputMode={inputMode}
                 />
             </div>
         </div>

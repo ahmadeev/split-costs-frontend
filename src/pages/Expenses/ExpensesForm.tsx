@@ -203,6 +203,7 @@ export default function ExpensesForm() {
                     placeholder={'9 000 ₽'}
                     onFocus={handleFocusInputTotal}
                     onBlur={handleBlurInputTotal}
+                    inputMode={'numeric'}
                 />
                 {hintString && (
                     <div
