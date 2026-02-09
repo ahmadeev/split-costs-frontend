@@ -20,7 +20,10 @@ export default function App() {
     const containerStyle = getContainerStyle();
 
     return (
-        <>
+        <div style={{
+            height: '100vh',
+            width: '100vw',
+        }}>
             <Navbar
                 navbarHeight={NAVBAR_HEIGHT}
             />
@@ -30,6 +33,6 @@ export default function App() {
             >
                 <Outlet/>
             </div>
-        </>
+        </div>
     );
 }
