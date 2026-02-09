@@ -218,7 +218,7 @@ export default function ExpensesForm() {
             </div>
 
             <div className="form-layout__section">
-                <span style={{ textAlign: 'left' }}>Группа</span>
+                <span style={{ textAlign: 'left', color: 'var(--secondary-color)' }}>Группа</span>
                 <div>
                     <SelectInput
                         options={GROUPS}

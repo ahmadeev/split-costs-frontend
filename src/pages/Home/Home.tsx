@@ -1,34 +1,29 @@
-import { useState } from 'react';
-import reactLogo from '../../assets/react.svg';
-import viteLogo from '/vite.svg';
 import './Home.css';
+import Button from '../../ui/Button/Button.tsx';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
-    const [count, setCount] = useState(0);
+    const navigate = useNavigate();
 
     return (
-        <>
-            <div>
-                <a href="https://vite.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => { setCount((count) => count + 1); }}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
-        </>
+        <div className="home__container">
+            <h1>Split Costs.<br/>Simply.</h1>
+            <h3>Create a group. Add an expense. Split it instantly.</h3>
+            <p>Perfect for...</p>
+            <ul>
+                <li>🏠 Shared Apartment (Rent, utilities, groceries)</li>
+                <li>🚗 Road Trip (Fuel, hotels, food)</li>
+                <li>🎉 Party with Friends (Drinks, snacks, delivery)</li>
+                <li>💼 Business Project (Joint expenses, materials)</li>
+            </ul>
+            <Button
+                type="primary"
+                title={'Create Your First Group'}
+                onClick={() => {
+                    void navigate('/group');
+                }}
+            />
+        </div>
     );
 }
 

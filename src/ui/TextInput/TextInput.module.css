@@ -8,6 +8,7 @@
 
 .title {
     text-align: left;
+    color: var(--secondary-color);
 }
 
 .input {
@@ -15,6 +16,7 @@
     width: 100%;
     border: none;
     text-overflow: ellipsis;
+    color: var(--color);
 }
 
 .input::placeholder {
@@ -32,7 +34,7 @@
 .input.header {
     font-weight: 600;
     font-size: 1.5rem;
-    color: #404040;
+    /*color: #404040;*/
 }
 
 .mandatory {
