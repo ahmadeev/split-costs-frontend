@@ -1,7 +1,7 @@
 {
     "name": "Split Costs Application",
     "short_name": "Split Costs",
-    "display": "fullscreen",
+    "display": "standalone",
     "start_url": "/split-costs-frontend/#/",
     "icons": [
         {
