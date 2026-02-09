@@ -12,7 +12,8 @@ export default function List() {
     return (
         <>
             <ListLayout
-                title={'Табличка'}
+                title={entity}
+                cacheKey={[entity]}
                 fetchData={getApi(entity)}
             />
         </>

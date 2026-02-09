@@ -9,6 +9,9 @@ import ExpensesForm from './pages/Expenses/ExpensesForm.tsx';
 import NotFoundError from './pages/NotFoundError/NotFoundError.tsx';
 import List from './pages/List/List.tsx';
 import './api/index.ts';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './api/queryClient.ts';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const router = createHashRouter([
     {
@@ -38,6 +41,9 @@ const router = createHashRouter([
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+            <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
     </StrictMode>,
 );

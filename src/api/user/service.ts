@@ -1,11 +1,11 @@
 import type { AxiosResponse } from 'axios';
 import type { User } from './dto.ts';
-import { apiClient } from '../apiClient.ts';
+import { axiosClient } from '../axiosClient.ts';
 import { registerApi } from '../apiRegistry.ts';
 
 export const userApi = {
     getAllUsers(): Promise<AxiosResponse<User[]>> {
-        return apiClient.get('/users');
+        return axiosClient.get('/users');
     },
 };
 

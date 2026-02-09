@@ -2,32 +2,46 @@ import './ListLayout.css';
 import Table from '../../ui/Table/Table/Table.tsx';
 import Pagination from '../../ui/Table/Pagination/Pagination.tsx';
 import Filters from '../../ui/Table/Filters/Filters.tsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { AxiosResponse } from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 interface Props {
     title: string,
-    fetchData: () => Promise<AxiosResponse<unknown[]>>;
+    fetchData: () => Promise<AxiosResponse<unknown[]>>,
+    cacheKey: string[],
 }
 
-export default function ListLayout({ title, fetchData }: Props) {
+export default function ListLayout({ title, fetchData, cacheKey }: Props) {
     const [currentPage, setCurrentPage] = useState(1);
     // todo: щас сеттера нет
     const [pageCount] = useState(10);
 
-    const [data, setData] = useState<Record<string, unknown>[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { data, isLoading, error } = useQuery({
+        queryKey: cacheKey,
+        queryFn: fetchData,
+    });
 
-    useEffect(() => {
-        fetchData()
-            .then((res: AxiosResponse<unknown[]>) => {
-                const responseData = res.data as unknown as Record<string, unknown>[];
+    const renderTableSection = () => {
+        if (isLoading) {
+            return (
+                <span>Loading...</span>
+            );
+        }
 
-                setData(responseData);
-            })
-            .catch(console.error)
-            .finally(() => { setIsLoading(false); });
-    }, [fetchData]);
+        if (error) {
+            return (
+                <span>Error</span>
+            );
+        }
+
+        return (
+            <Table
+                data={data?.data as Record<string, unknown>[]}
+                // visibleColumns={COLUMNS}
+            />
+        );
+    };
 
     return (
         <div
@@ -48,16 +62,7 @@ export default function ListLayout({ title, fetchData }: Props) {
             <div
                 className={'list-layout__table-container'}
             >
-                {
-                    isLoading ? (
-                        <span>Loading...</span>
-                    ) : (
-                        <Table
-                            data={data}
-                            // visibleColumns={COLUMNS}
-                        />
-                    )
-                }
+                { renderTableSection() }
             </div>
 
             <div
