@@ -46,7 +46,7 @@ const cleanTotalValue = (total: string) => {
 
 const GROUP: GroupResponseDTO = {
     id: 1,
-    name: 'Buhaem v pyatnicu',
+    name: 'Дружная компания',
     members: [
         {
             id: 1,
