@@ -6,7 +6,9 @@ import Delete from '../../icons/delete_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.sv
 import TextInput from '../../ui/TextInput/TextInput.tsx';
 import Button from '../../ui/Button/Button.tsx';
 import type { CreateGroupDto } from '../../api/group/dto.ts';
-import type { MemberResponseDTO } from '../../api/member/dto.ts';
+import type { CreateMemberDto } from '../../api/member/dto.ts';
+import { useGroupContext } from '../../contexts/group/hook.ts';
+import { groupService } from '../../api/group/service.ts';
 
 const MEMBERS_LIMIT = 5;
 
@@ -19,6 +21,8 @@ const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
 };
 
 export default function GroupForm() {
+    const { setGroups } = useGroupContext();
+
     const [groupName, setGroupName] = useState('');
 
     const [names, setNames] = useState<Names>({});
@@ -42,14 +46,21 @@ export default function GroupForm() {
     };
 
     const handleSubmitClick = useCallback(() => {
-        const members: MemberResponseDTO[] = Object.entries(names).map(([id, name]: [string, string]): MemberResponseDTO => {
-            return { id: +id, name: name };
+        const members: CreateMemberDto[] = Object.entries(names).map(([, name]: [string, string]): CreateMemberDto => {
+            return { name: name };
         });
 
         const group: CreateGroupDto = { name: groupName, members };
 
-        console.log(group);
-    }, [groupName, names]);
+        groupService.create(group)
+            .then(json => {
+                console.log(json);
+                setGroups(prev => [...prev, json]);
+            })
+            .catch((err: unknown) => {
+                console.error(err);
+            });
+    }, [groupName, names, setGroups]);
 
     const handleDeleteClick = useCallback((e: React.MouseEvent<HTMLDivElement>, name: string) => {
         e.stopPropagation();

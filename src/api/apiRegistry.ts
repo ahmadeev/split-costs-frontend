@@ -1,23 +1,23 @@
-import type { AxiosResponse } from 'axios';
+import type { ListService } from '../types/types.ts';
 
+const registry = new Map<string, ListService<unknown>>();
 const publicApi = new Set<string>();
-const registry = new Map<string, () => Promise<AxiosResponse<unknown[]>>>();
 
 export function isPublicApi(entity: string) {
     return publicApi.has(entity);
 }
 
-export function getApi(entity: string) {
+export function getApi<T>(entity: string) {
     const api = registry.get(entity);
 
     if (!api) {
         throw new Error(`API not registered: ${entity}`);
     }
 
-    return api;
+    return api as ListService<T>;
 }
 
-export function registerApi(entity: string, fn: () => Promise<AxiosResponse<unknown[]>>) {
-    registry.set(entity, fn);
+export function registerApi<T>(entity: string, service: ListService<T>) {
+    registry.set(entity, service);
     publicApi.add(entity);
 }

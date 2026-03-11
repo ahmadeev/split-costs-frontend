@@ -1,14 +1,17 @@
 import '../../components/FormLayout/FormLayout.css';
 import './ExpensesForm.css';
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useEffect, useState } from 'react';
 import FormLayout from '../../components/FormLayout/FormLayout.tsx';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
 import SegmentedControl from '../../ui/SegmentedControl/SegmentedControl.tsx';
 import Button from '../../ui/Button/Button.tsx';
 import TextInput from '../../ui/TextInput/TextInput.tsx';
 import type { MemberResponseDTO } from '../../api/member/dto.ts';
-import type { GroupResponseDTO } from '../../api/group/dto.ts';
+import type { Group, GroupResponseDTO } from '../../api/group/dto.ts';
 import type { CreateExpenseMemberDto } from '../../api/expenseMember/dto.ts';
+import { useQuery } from '@tanstack/react-query';
+import { groupService } from '../../api/group/service.ts';
+import type { Option } from '../../types/types.ts';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -46,50 +49,6 @@ const cleanTotalValue = (total: string) => {
     return total.replace(CURRENCY_SUFFIX, '').replaceAll(/\s+/g, '');
 };
 
-const GROUP: GroupResponseDTO = {
-    id: 1,
-    name: 'Дружная компания',
-    members: [
-        {
-            id: 1,
-            name: 'Леша',
-        },
-        {
-            id: 2,
-            name: 'Саша',
-        },
-        {
-            id: 3,
-            name: 'Ваня',
-        },
-        {
-            id: 4,
-            name: 'Дима',
-        },
-        {
-            id: 5,
-            name: 'Тима',
-        },
-        {
-            id: 6,
-            name: 'Фая',
-        },
-    ],
-};
-
-const GROUP_2: GroupResponseDTO = {
-    id: 2,
-    name: 'веселые посиделки',
-    members: [
-        {
-            id: 1,
-            name: 'Леша',
-        },
-    ],
-};
-
-const GROUPS: GroupResponseDTO[] = [GROUP, GROUP_2];
-
 export default function ExpensesForm() {
     const [total, setTotal] = useState('');
 
@@ -99,11 +58,26 @@ export default function ExpensesForm() {
         }
     };
 
-    const [group, setGroup] = useState<GroupResponseDTO>(GROUPS[0]);
+    const { data: groups } = useQuery<Group[]>({
+        queryKey: ['groups'],
+        queryFn: () => groupService.getAll(),
+    });
+
+    const [group, setGroup] = useState<Group | null>(null);
+
+    useEffect(() => {
+        if (groups?.length) {
+            setGroup(groups[0]);
+        }
+    }, [groups]);
 
     const [isDividedEvenly, setIsDividedEvenly] = useState<boolean>(true);
 
     const [checksState, setChecksState] = useState<Checks>(() => {
+        if (!group) {
+            return {};
+        }
+
         return group.members.reduce((acc: Checks, value: MemberResponseDTO) => {
             return { ...acc, [value.name]: true };
         }, {});
@@ -125,7 +99,7 @@ export default function ExpensesForm() {
     };
 
     const handleSelectChange = (id: number) => {
-        const group = GROUPS.find((group: GroupResponseDTO) => group.id === id) as GroupResponseDTO;
+        const group = groups?.find((group: GroupResponseDTO) => group.id === id) as GroupResponseDTO;
 
         setGroup(group);
 
@@ -166,6 +140,10 @@ export default function ExpensesForm() {
     };
 
     const handleSubmitClick = () => {
+        if (!group) {
+            return;
+        }
+
         const checkedMembersSet = new Set<string>(Object.keys(checksState).filter(name => checksState[name]));
 
         const expenseMember: CreateExpenseMemberDto = {
@@ -224,7 +202,7 @@ export default function ExpensesForm() {
                 <span style={{ textAlign: 'left', color: 'var(--secondary-color)' }}>Группа</span>
                 <div>
                     <SelectInput
-                        options={GROUPS}
+                        options={groups ? groups.map((group: Group) => ({ id: group.id, name: group.name } as Option)) : []}
                         defaultValue={group}
                         handler={handleSelectChange}
                     />
@@ -259,7 +237,7 @@ export default function ExpensesForm() {
                 }
 
                 {
-                    isDividedEvenly ? (
+                    isDividedEvenly || !group ? (
                         <></>
                     ) : (
                         group.members.map((member: MemberResponseDTO, index: number) => (

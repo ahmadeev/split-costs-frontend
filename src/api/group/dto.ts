@@ -6,5 +6,5 @@ export interface Group {
     members: Member[],
 }
 
-export type CreateGroupDto = Omit<Group, 'id'> & { members: CreateMemberDto[] };
+export type CreateGroupDto = Omit<Group, 'id' | 'members'> & { members: CreateMemberDto[] };
 export type GroupResponseDTO = Group;

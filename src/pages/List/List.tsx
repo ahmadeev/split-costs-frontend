@@ -14,7 +14,7 @@ export default function List() {
             <ListLayout
                 title={entity}
                 cacheKey={[entity]}
-                fetchData={getApi(entity)}
+                fetchData={getApi(entity).getAll}
             />
         </>
     );

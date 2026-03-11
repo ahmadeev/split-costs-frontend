@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './SelectInput.module.css';
-
-interface Option { id?: number, name: string }
+import type { Option } from '../../types/types.ts';
 
 interface Props {
     options: Option[];
-    defaultValue?: Option;
+    defaultValue?: Option | null;
     handler: (id: number) => void;
 }
 

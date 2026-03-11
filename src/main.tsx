@@ -12,6 +12,7 @@ import './api/index.ts';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './api/queryClient.ts';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { GroupProvider } from './contexts/group/provider.tsx';
 
 const router = createHashRouter([
     {
@@ -41,10 +42,12 @@ const router = createHashRouter([
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-            <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        <GroupProvider>
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+                <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
+        </GroupProvider>
     </StrictMode>,
 );
 

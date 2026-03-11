@@ -3,12 +3,11 @@ import Table from '../../ui/Table/Table/Table.tsx';
 import Pagination from '../../ui/Table/Pagination/Pagination.tsx';
 import Filters from '../../ui/Table/Filters/Filters.tsx';
 import { useState } from 'react';
-import type { AxiosResponse } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
 interface Props {
     title: string,
-    fetchData: () => Promise<AxiosResponse<unknown[]>>,
+    fetchData: () => Promise<unknown[]>,
     cacheKey: string[],
 }
 
@@ -37,7 +36,7 @@ export default function ListLayout({ title, fetchData, cacheKey }: Props) {
 
         return (
             <Table
-                data={data?.data as Record<string, unknown>[]}
+                data={data as Record<string, unknown>[]}
                 // visibleColumns={COLUMNS}
             />
         );
