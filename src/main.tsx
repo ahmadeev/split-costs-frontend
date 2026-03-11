@@ -47,3 +47,13 @@ createRoot(document.getElementById('root')!).render(
         </QueryClientProvider>
     </StrictMode>,
 );
+
+async function enableMocking() {
+    if (import.meta.env.DEV) {
+        const { worker } = await import('./mocks/browser.ts');
+
+        await worker.start();
+    }
+}
+
+await enableMocking();
