@@ -23,44 +23,6 @@ function Home() {
                     void navigate('/group');
                 }}
             />
-
-            <Button
-                type="primary"
-                title={'test'}
-                onClick={() => {
-                    async function fetchData() {
-                        try {
-                            const res = await fetch('/api/group', {
-                                method: 'post',
-                                body: JSON.stringify(
-                                    {
-                                        name: 'meowww',
-                                        members: [
-                                            {
-                                                name: 'member#1',
-                                            },
-                                        ],
-                                    },
-                                ),
-                            });
-
-                            console.log(res);
-
-                            //eslint-disable-next-line
-                            return await res.json();
-                        } catch (e) {
-                            console.error(e);
-                        }
-                    }
-
-                    fetchData()
-                        .then(json => {
-                            console.log(json);
-                        })
-                        .catch((err: unknown) => {
-                            console.error(err);
-                        });
-                }}/>
         </div>
     );
 }
