@@ -40,6 +40,8 @@ const router = createHashRouter([
     },
 ]);
 
+await enableMocking();
+
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <GroupProvider>
@@ -58,5 +60,3 @@ async function enableMocking() {
         await worker.start();
     }
 }
-
-await enableMocking();
