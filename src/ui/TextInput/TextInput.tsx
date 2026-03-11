@@ -5,7 +5,7 @@ interface Props {
     title: string,
     onChange: (e: ChangeEvent<HTMLInputElement>) => void,
     value: string,
-    placeholder: string,
+    placeholder?: string,
     onFocus?: () => void,
     onBlur?: () => void,
     isMandatory?: boolean,
