@@ -54,9 +54,13 @@ createRoot(document.getElementById('root')!).render(
 );
 
 async function enableMocking() {
-    if (import.meta.env.DEV) {
+/*    if (import.meta.env.DEV) {
         const { worker } = await import('./mocks/browser.ts');
 
         await worker.start();
-    }
+    }*/
+
+    const { worker } = await import('./mocks/browser.ts');
+
+    await worker.start();
 }
