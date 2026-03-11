@@ -62,5 +62,9 @@ async function enableMocking() {
 
     const { worker } = await import('./mocks/browser.ts');
 
-    await worker.start();
+    await worker.start({
+        serviceWorker: {
+            url: `${import.meta.env.BASE_URL}mockServiceWorker.js`,
+        },
+    });
 }
