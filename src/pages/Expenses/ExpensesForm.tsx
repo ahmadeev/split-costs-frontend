@@ -2,11 +2,13 @@ import '../../components/FormLayout/FormLayout.css';
 import './ExpensesForm.css';
 import { type ChangeEvent, useState } from 'react';
 import FormLayout from '../../components/FormLayout/FormLayout.tsx';
-import type { ExpenseMemberRequestDTO, GroupResponseDTO, MemberResponseDTO } from '../../types/types.ts';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
 import SegmentedControl from '../../ui/SegmentedControl/SegmentedControl.tsx';
 import Button from '../../ui/Button/Button.tsx';
 import TextInput from '../../ui/TextInput/TextInput.tsx';
+import type { MemberResponseDTO } from '../../api/member/dto.ts';
+import type { GroupResponseDTO } from '../../api/group/dto.ts';
+import type { CreateExpenseMemberDto } from '../../api/expenseMember/dto.ts';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -123,7 +125,7 @@ export default function ExpensesForm() {
     };
 
     const handleSelectChange = (id: number) => {
-        const group: GroupResponseDTO = GROUPS.find((group: GroupResponseDTO) => group.id === id)!;
+        const group = GROUPS.find((group: GroupResponseDTO) => group.id === id) as GroupResponseDTO;
 
         setGroup(group);
 
@@ -166,7 +168,7 @@ export default function ExpensesForm() {
     const handleSubmitClick = () => {
         const checkedMembersSet = new Set<string>(Object.keys(checksState).filter(name => checksState[name]));
 
-        const expenseMember: ExpenseMemberRequestDTO = {
+        const expenseMember: CreateExpenseMemberDto = {
             expense: {
                 total: +cleanTotalValue(total),
                 details: details,

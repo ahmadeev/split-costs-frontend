@@ -2,10 +2,11 @@ import '../../components/FormLayout/FormLayout.css';
 import './GroupForm.css';
 import { type ChangeEvent, type SyntheticEvent, useCallback, useState } from 'react';
 import FormLayout from '../../components/FormLayout/FormLayout.tsx';
-import type { Group, MemberResponseDTO } from '../../types/types.ts';
 import Delete from '../../icons/delete_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import TextInput from '../../ui/TextInput/TextInput.tsx';
 import Button from '../../ui/Button/Button.tsx';
+import type { CreateGroupDto } from '../../api/group/dto.ts';
+import type { MemberResponseDTO } from '../../api/member/dto.ts';
 
 const MEMBERS_LIMIT = 5;
 
@@ -45,7 +46,7 @@ export default function GroupForm() {
             return { id: +id, name: name };
         });
 
-        const group: Group = { name: groupName, members };
+        const group: CreateGroupDto = { name: groupName, members };
 
         console.log(group);
     }, [groupName, names]);
