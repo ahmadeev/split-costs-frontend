@@ -6,7 +6,7 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
 import GroupForm from './pages/Group/GroupForm.tsx';
 import ExpensesForm from './pages/Expenses/ExpensesForm.tsx';
-import NotFoundError from './pages/NotFoundError/NotFoundError.tsx';
+import FallbackPage from './pages/FallbackPage/FallbackPage.tsx';
 import List from './pages/List/List.tsx';
 import './api/index.ts';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -41,7 +41,7 @@ const router = createHashRouter([
                 element: <List />,
             },
         ],
-        errorElement: <NotFoundError />,
+        errorElement: <FallbackPage />,
     },
 ]);
 
