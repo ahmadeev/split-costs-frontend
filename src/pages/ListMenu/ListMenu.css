@@ -2,18 +2,17 @@
     padding: 10vh 10vw;
     box-sizing: border-box;
     margin: 0 auto;
-    width: fit-content;
+    width: 100%;
 }
 
 .list-menu__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 0.5rem;
 }
 
 .list-menu__cell {
     background-color: var(--third-background-color);
-    width: clamp(2rem, 20vw, 16rem);
     aspect-ratio: 1 / 1;
     display: flex;
     flex-direction: column;
