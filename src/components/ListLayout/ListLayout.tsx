@@ -55,7 +55,7 @@ export default function ListLayout({ title, fetchData, cacheKey }: Props) {
             <div
                 className={'list-layout__filter-container'}
             >
-                <Filters />
+                <Filters cacheKey={cacheKey} />
             </div>
 
             <div
