@@ -23,15 +23,12 @@ export default function ListMenu() {
             <div className="list-menu__grid">
                 {
                     LISTS.map((list, i) => (
-                        <div className="list-menu__cell" key={i}>
-                            <Link to={list.link}>{list.text}</Link>
-                        </div>
+                        <Link
+                            className={'list-menu__cell'}
+                            key={i}
+                            to={list.link}
+                        >{list.text}</Link>
                     ))
-                }
-                {
-                    LISTS.length % 2 === 1 && (
-                        <div className="list-menu__cell"></div>
-                    )
                 }
             </div>
         </div>
