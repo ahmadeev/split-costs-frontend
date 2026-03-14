@@ -12,7 +12,7 @@ import './api/index.ts';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './api/queryClient.ts';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { GroupProvider } from './contexts/group/provider.tsx';
+import { GlobalProvider } from './contexts/group/provider.tsx';
 import ListMenu from './pages/ListMenu/ListMenu.tsx';
 
 const router = createHashRouter([
@@ -49,12 +49,12 @@ await enableMocking();
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <GroupProvider>
+        <GlobalProvider>
             <QueryClientProvider client={queryClient}>
                 <RouterProvider router={router} />
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
-        </GroupProvider>
+        </GlobalProvider>
     </StrictMode>,
 );
 

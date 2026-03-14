@@ -1,13 +1,12 @@
 import { type ReactNode, useState } from 'react';
-import { GroupContext } from './context.ts';
-import type { Group } from '../../api/group/dto.ts';
+import { GlobalContext } from './context.ts';
 
-export const GroupProvider = ({ children }: { children: ReactNode }) => {
-    const [groups, setGroups] = useState<Group[]>([]);
+export const GlobalProvider = ({ children }: { children: ReactNode }) => {
+    const [properties, setProperties] = useState<Record<string, unknown>>({});
 
     return (
-        <GroupContext.Provider value={{ groups, setGroups }}>
+        <GlobalContext.Provider value={{ properties, setProperties }}>
             {children}
-        </GroupContext.Provider>
+        </GlobalContext.Provider>
     );
 };

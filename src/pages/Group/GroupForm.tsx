@@ -7,7 +7,7 @@ import TextInput from '../../ui/TextInput/TextInput.tsx';
 import Button from '../../ui/Button/Button.tsx';
 import type { CreateGroupDto } from '../../api/group/dto.ts';
 import type { CreateMemberDto } from '../../api/member/dto.ts';
-import { useGroupContext } from '../../contexts/group/hook.ts';
+import { useGlobalContext } from '../../contexts/group/hook.ts';
 import { groupService } from '../../api/group/service.ts';
 
 const MEMBERS_LIMIT = 5;
@@ -21,7 +21,7 @@ const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
 };
 
 export default function GroupForm() {
-    const { setGroups } = useGroupContext();
+    const { setGroups } = useGlobalContext();
 
     const [groupName, setGroupName] = useState('');
 

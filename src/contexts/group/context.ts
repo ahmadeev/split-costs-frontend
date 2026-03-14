@@ -1,9 +1,8 @@
 import React, { createContext } from 'react';
-import type { Group } from '../../api/group/dto.ts';
 
-interface GroupContextType {
-    groups: Group[]
-    setGroups: React.Dispatch<React.SetStateAction<Group[]>>
+interface GlobalContextType {
+    properties: Record<string, unknown>
+    setProperties: React.Dispatch<React.SetStateAction<Record<string, unknown>>>
 }
 
-export const GroupContext = createContext<GroupContextType | undefined>(undefined);
+export const GlobalContext = createContext<GlobalContextType | undefined>(undefined);

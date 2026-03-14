@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import { GroupContext } from './context.ts';
+import { GlobalContext } from './context.ts';
 
-export const useGroupContext = () => {
-    const context = useContext(GroupContext);
+export const useGlobalContext = () => {
+    const context = useContext(GlobalContext);
 
     if (!context) {
-        throw new Error('useGroupContext must be used within GroupProvider');
+        throw new Error('useGlobalContext must be used within GlobalProvider');
     }
 
     return context;
