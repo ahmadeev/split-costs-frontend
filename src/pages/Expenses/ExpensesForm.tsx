@@ -149,7 +149,7 @@ export default function ExpensesForm() {
             .then(() => {
                 setTotal('');
                 setDetails('');
-                setGroup(groups[0]);
+                // setGroup(groups[0]);
                 setIsDividedEvenly(true);
                 setSegmentedControlOption(SEGMENTED_CONTROL_OPTIONS[0]);
                 setChecksState(() => {
