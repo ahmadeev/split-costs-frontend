@@ -64,15 +64,15 @@ export default function ExpensesForm() {
         }
     };
 
-    const { data: groups } = useQuery<Group[]>({
+    const { data: groups = [] } = useQuery<Group[]>({
         queryKey: ['groups'],
         queryFn: () => groupService.getAll(),
     });
 
-    const [group, setGroup] = useState<Group | null>(groups?.length ? groups[0] : null);
+    const [group, setGroup] = useState<Group | null>(groups.length ? groups[0] : null);
 
     useEffect(() => {
-        if (groups?.length) {
+        if (groups.length) {
             setGroup(groups[0]);
         }
     }, [groups]);
@@ -105,7 +105,7 @@ export default function ExpensesForm() {
     };
 
     const handleSelectChange = (id: number) => {
-        const group = groups?.find((group: GroupResponseDTO) => group.id === id) as GroupResponseDTO;
+        const group = groups.find((group: GroupResponseDTO) => group.id === id) as GroupResponseDTO;
 
         setGroup(group);
 
@@ -149,7 +149,7 @@ export default function ExpensesForm() {
             .then(() => {
                 setTotal('');
                 setDetails('');
-                setGroup(groups?.length ? groups[0] : null);
+                setGroup(groups[0]);
                 setIsDividedEvenly(true);
                 setSegmentedControlOption(SEGMENTED_CONTROL_OPTIONS[0]);
                 setChecksState(() => {
@@ -176,6 +176,12 @@ export default function ExpensesForm() {
     };
 
     const [segmentedControlOption, setSegmentedControlOption] = useState(SEGMENTED_CONTROL_OPTIONS[0]);
+
+    console.log('[ExpensesForm] render №', performance.now().toFixed(0), {
+        groups: groups.length,
+        group: group ? group.name : 'null',
+        renderTime: new Date().toISOString(),
+    });
 
     return (
         <FormLayout>
@@ -215,7 +221,7 @@ export default function ExpensesForm() {
                 <div>
                     <SelectInput
                         displayValue={group?.name}
-                        options={groups ? groups.map((group: Group) => ({ id: group.id, name: group.name } as Option)) : []}
+                        options={groups.map((group: Group) => ({ id: group.id, name: group.name } as Option))}
                         onChange={handleSelectChange}
                         placeholder={'Выберите группу'}
                     />
