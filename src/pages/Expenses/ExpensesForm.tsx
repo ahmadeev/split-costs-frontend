@@ -117,19 +117,9 @@ export default function ExpensesForm() {
         return !details || !total || (!isDividedEvenly && !isAnyChosen);
     })();
 
-    const handleSegmentedControlChange = () => {
-        setChecksState((): Checks => {
-            return Object.keys(checksState).reduce((acc: Checks, name: string) => {
-                return { ...acc, [name]: !isDividedEvenly };
-            }, {});
-        });
-
-        setIsDividedEvenly((prev: boolean) => !prev);
-    };
-
     const segmentedControlOptions = [
-        { name: 'Разделить на всех', handler: handleSegmentedControlChange },
-        { name: 'Выбрать из списка', handler: handleSegmentedControlChange },
+        { name: 'Разделить на всех' },
+        { name: 'Выбрать из списка' },
     ];
 
     const handleFocusInputTotal = () => {
@@ -162,6 +152,17 @@ export default function ExpensesForm() {
                 setTotal('');
                 setDetails('');
                 setGroup(groups?.length ? groups[0] : null);
+                setIsDividedEvenly(true);
+                setSegmentedControlOption(segmentedControlOptions[0]);
+                setChecksState(() => {
+                    if (!group) {
+                        return {};
+                    }
+
+                    return group.members.reduce((acc: Checks, value: MemberResponseDTO) => {
+                        return { ...acc, [value.name]: true };
+                    }, {});
+                });
             })
             .catch((error: unknown) => {
                 console.error('Ошибка при создании траты', error);
@@ -175,6 +176,8 @@ export default function ExpensesForm() {
             }, {});
         });
     };
+
+    const [segmentedControlOption, setSegmentedControlOption] = useState(segmentedControlOptions[0]);
 
     return (
         <FormLayout>
@@ -222,7 +225,18 @@ export default function ExpensesForm() {
 
                 <SegmentedControl
                     options={segmentedControlOptions}
-                    defaultOption={isDividedEvenly ? segmentedControlOptions[0] : segmentedControlOptions[1]}
+                    value={segmentedControlOption}
+                    onChange={(option: Option) => {
+                        setSegmentedControlOption(option);
+
+                        setChecksState((): Checks => {
+                            return Object.keys(checksState).reduce((acc: Checks, name: string) => {
+                                return { ...acc, [name]: !isDividedEvenly };
+                            }, {});
+                        });
+
+                        setIsDividedEvenly((prev: boolean) => !prev);
+                    }}
                 />
 
                 {
@@ -259,7 +273,7 @@ export default function ExpensesForm() {
                                         type="checkbox"
                                         name={member.name}
                                         onChange={handleCheckStateChange}
-                                        checked={checksState[member.name]}
+                                        checked={checksState[member.name] ?? false}
                                         style={{ margin: '1rem', cursor: 'pointer' }}
                                     />
                                     <span>{member.name}</span>

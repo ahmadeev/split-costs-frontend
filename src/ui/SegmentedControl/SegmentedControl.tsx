@@ -1,35 +1,28 @@
 import styles from './SegmentedControl.module.css';
-import { useState } from 'react';
-
-interface Option { name: string, handler: (() => void) | null | undefined }
+import type { Option } from '../../types/types.ts';
 
 interface Props {
-    options: Option[],
-    defaultOption: Option,
+    options: Option[];
+    value: Option;
+    onChange: (option: Option) => void;
 }
 
-export default function SegmentedControl({ options, defaultOption }: Props) {
-    const [activeOption, setActiveOption] = useState<Option>(defaultOption);
-
+export default function SegmentedControl({ options, value, onChange }: Props) {
     return (
         <div
             className={styles.container}
         >
             {options.map((option, index) => (
                 <button
-                    className={`${styles.button} ${option.name === activeOption.name ? styles.active : ''}`}
+                    className={`${styles.button} ${option.name === value.name ? styles.active : ''}`}
                     key={index}
                     style={{ flexGrow: 1 }}
                     onClick={() => {
-                        if (option.name === activeOption.name) {
+                        if (option.name === value.name) {
                             return;
                         }
 
-                        setActiveOption(option);
-
-                        if (option.handler) {
-                            option.handler();
-                        }
+                        onChange(option);
                     }}
                 >{option.name}</button>
             ))}
