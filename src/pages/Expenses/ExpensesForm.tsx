@@ -50,6 +50,11 @@ const cleanTotalValue = (total: string) => {
     return total.replace(CURRENCY_SUFFIX, '').replaceAll(/\s+/g, '');
 };
 
+const SEGMENTED_CONTROL_OPTIONS = [
+    { name: 'Разделить на всех' },
+    { name: 'Выбрать из списка' },
+];
+
 export default function ExpensesForm() {
     const [total, setTotal] = useState('');
 
@@ -117,11 +122,6 @@ export default function ExpensesForm() {
         return !details || !total || (!isDividedEvenly && !isAnyChosen);
     })();
 
-    const segmentedControlOptions = [
-        { name: 'Разделить на всех' },
-        { name: 'Выбрать из списка' },
-    ];
-
     const handleFocusInputTotal = () => {
         setTotal(prev => cleanTotalValue(prev));
     };
@@ -145,15 +145,13 @@ export default function ExpensesForm() {
             members: group.members.filter(member => checkedMembersSet.has(member.name)),
         };
 
-        console.log(expenseMember);
-
         expenseMemberService.create(expenseMember)
             .then(() => {
                 setTotal('');
                 setDetails('');
                 setGroup(groups?.length ? groups[0] : null);
                 setIsDividedEvenly(true);
-                setSegmentedControlOption(segmentedControlOptions[0]);
+                setSegmentedControlOption(SEGMENTED_CONTROL_OPTIONS[0]);
                 setChecksState(() => {
                     if (!group) {
                         return {};
@@ -177,7 +175,7 @@ export default function ExpensesForm() {
         });
     };
 
-    const [segmentedControlOption, setSegmentedControlOption] = useState(segmentedControlOptions[0]);
+    const [segmentedControlOption, setSegmentedControlOption] = useState(SEGMENTED_CONTROL_OPTIONS[0]);
 
     return (
         <FormLayout>
@@ -224,7 +222,7 @@ export default function ExpensesForm() {
                 </div>
 
                 <SegmentedControl
-                    options={segmentedControlOptions}
+                    options={SEGMENTED_CONTROL_OPTIONS}
                     value={segmentedControlOption}
                     onChange={(option: Option) => {
                         setSegmentedControlOption(option);
