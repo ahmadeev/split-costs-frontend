@@ -177,12 +177,6 @@ export default function ExpensesForm() {
 
     const [segmentedControlOption, setSegmentedControlOption] = useState(SEGMENTED_CONTROL_OPTIONS[0]);
 
-    console.log('[ExpensesForm] render №', performance.now().toFixed(0), {
-        groups: groups.length,
-        group: group ? group.name : 'null',
-        renderTime: new Date().toISOString(),
-    });
-
     return (
         <FormLayout>
             <div className="form-layout__section">
