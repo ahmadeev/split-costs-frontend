@@ -12,6 +12,7 @@ import type { CreateExpenseMemberDto } from '../../api/expenseMember/dto.ts';
 import { useQuery } from '@tanstack/react-query';
 import { groupService } from '../../api/group/service.ts';
 import type { Option } from '../../types/types.ts';
+import { expenseMemberService } from '../../api/expenseMember/service.ts';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -63,7 +64,7 @@ export default function ExpensesForm() {
         queryFn: () => groupService.getAll(),
     });
 
-    const [group, setGroup] = useState<Group | null>(null);
+    const [group, setGroup] = useState<Group | null>(groups?.length ? groups[0] : null);
 
     useEffect(() => {
         if (groups?.length) {
@@ -155,6 +156,16 @@ export default function ExpensesForm() {
         };
 
         console.log(expenseMember);
+
+        expenseMemberService.create(expenseMember)
+            .then(() => {
+                setTotal('');
+                setDetails('');
+                setGroup(groups?.length ? groups[0] : null);
+            })
+            .catch((error: unknown) => {
+                console.error('Ошибка при создании траты', error);
+            });
     };
 
     const setChecksToState = (newState: boolean) => {
@@ -202,9 +213,10 @@ export default function ExpensesForm() {
                 <span style={{ textAlign: 'left', color: 'var(--secondary-color)' }}>Группа</span>
                 <div>
                     <SelectInput
+                        displayValue={group?.name}
                         options={groups ? groups.map((group: Group) => ({ id: group.id, name: group.name } as Option)) : []}
-                        defaultValue={group}
-                        handler={handleSelectChange}
+                        onChange={handleSelectChange}
+                        placeholder={'Выберите группу'}
                     />
                 </div>
 

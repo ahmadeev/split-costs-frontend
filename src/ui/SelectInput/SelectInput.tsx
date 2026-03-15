@@ -3,35 +3,40 @@ import styles from './SelectInput.module.css';
 import type { Option } from '../../types/types.ts';
 
 interface Props {
-    options: Option[];
-    defaultValue?: Option | null;
-    handler: (id: number) => void;
+    options: Option[],
+    displayValue: string | null | undefined,
+    onChange: (id: number) => void,
+    placeholder?: string,
 }
 
-export default function SelectInput({ options, handler, defaultValue }: Props) {
+export default function SelectInput({ displayValue, options, onChange, placeholder }: Props) {
     const [isShown, setIsShown] = useState(false);
 
-    const [value, setValue] = useState<Option | null | undefined>(defaultValue);
-
     useEffect(() => {
-        document.addEventListener('click', (e: PointerEvent) => {
+        const callback = (e: PointerEvent) => {
             const select = document.querySelector(`.${styles.container}`);
 
             if (!select?.contains(e.target as Node)) {
                 setIsShown(false);
             }
-        });
+        };
+
+        document.addEventListener('click', callback);
+
+        return () => {
+            document.removeEventListener('click', callback);
+        };
     }, []);
 
     return (
         <div className={styles.container}>
             <div
-                className={`${styles.option} ${styles.option_header} ${isShown ? styles.option_top : ''} ${value ? '' : styles.trigger}`}
+                className={`${styles.option} ${styles.option_header} ${isShown ? styles.option_top : ''} ${displayValue ? '' : styles.trigger}`}
                 onClick={() => {
                     setIsShown(!isShown);
                 }}
             >
-                <span>{value?.name ?? 'Выберите группу'}</span>
+                <span>{displayValue ?? placeholder ?? 'Выберите из списка'}</span>
                 <span>&#9660;</span>
             </div>
             {
@@ -43,8 +48,7 @@ export default function SelectInput({ options, handler, defaultValue }: Props) {
                                     className={styles.option}
                                     key={option.id}
                                     onClick={() => {
-                                        setValue(option);
-                                        handler(option.id ?? 0);
+                                        onChange(option.id ?? 0);
                                         setIsShown(!isShown);
                                     }}
                                 >

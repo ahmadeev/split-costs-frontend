@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import type { Group, GroupResponseDTO } from '../api/group/dto.ts';
+import type { ExpenseMember } from '../api/expenseMember/dto.ts';
 
 let id = 3;
 
@@ -47,6 +48,8 @@ const GROUP_2: Group = {
 
 const groups: Group[] = [GROUP, GROUP_2];
 
+const expenseMembers: ExpenseMember[] = [];
+
 export const handlers = [
     http.get('/api/users', () => {
         return HttpResponse.json([
@@ -64,6 +67,20 @@ export const handlers = [
         json.id = id++;
 
         groups.push(json);
+
+        return HttpResponse.json(json);
+    }),
+    /* expense */
+    http.get('/api/expenses', () => {
+        return HttpResponse.json(expenseMembers.map(em => em.expense));
+    }),
+    /* expenseMember */
+    http.post('/api/expense-member', async ({ request }) => {
+        const json = await request.json() as ExpenseMember;
+
+        json.id = id++;
+
+        expenseMembers.push(json);
 
         return HttpResponse.json(json);
     }),

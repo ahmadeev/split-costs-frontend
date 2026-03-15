@@ -7,7 +7,7 @@ const LISTS = [
         text: 'Пользователи',
     },
     {
-        link: '/list/expenses',
+        link: '/list/expense',
         text: 'Траты',
     },
     {

@@ -7,7 +7,6 @@ import TextInput from '../../ui/TextInput/TextInput.tsx';
 import Button from '../../ui/Button/Button.tsx';
 import type { CreateGroupDto } from '../../api/group/dto.ts';
 import type { CreateMemberDto } from '../../api/member/dto.ts';
-import { useGlobalContext } from '../../contexts/group/hook.ts';
 import { groupService } from '../../api/group/service.ts';
 
 const MEMBERS_LIMIT = 5;
@@ -21,8 +20,6 @@ const handleEditClick = (e: SyntheticEvent<HTMLElement>): void => {
 };
 
 export default function GroupForm() {
-    const { setGroups } = useGlobalContext();
-
     const [groupName, setGroupName] = useState('');
 
     const [names, setNames] = useState<Names>({});
@@ -53,14 +50,14 @@ export default function GroupForm() {
         const group: CreateGroupDto = { name: groupName, members };
 
         groupService.create(group)
-            .then(json => {
-                console.log(json);
-                setGroups(prev => [...prev, json]);
+            .then(() => {
+                setGroupName('');
+                setNames({});
             })
-            .catch((err: unknown) => {
-                console.error(err);
+            .catch((error: unknown) => {
+                console.error('Ошибка при создании группы', error);
             });
-    }, [groupName, names, setGroups]);
+    }, [groupName, names]);
 
     const handleDeleteClick = useCallback((e: React.MouseEvent<HTMLDivElement>, name: string) => {
         e.stopPropagation();
