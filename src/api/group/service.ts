@@ -22,7 +22,6 @@ class GroupService implements ListService<GroupResponseDTO> {
 
         void queryClient.invalidateQueries({ queryKey: ['groups'] });
 
-
         return res.data;
     }
 }

@@ -7,6 +7,7 @@ class ExpenseMemberService {
         const res = await axiosClient.post<ExpenseMemberResponseDto>('/expense-member', expenseMember);
 
         void queryClient.invalidateQueries({ queryKey: ['expenseMember'] });
+        void queryClient.invalidateQueries({ queryKey: ['expenses'] });
 
         return res.data;
     }
