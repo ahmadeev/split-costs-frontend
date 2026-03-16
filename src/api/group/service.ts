@@ -29,4 +29,4 @@ class GroupService implements ListService<GroupResponseDTO> {
 
 export const groupService = new GroupService();
 
-registerApi('group', groupService);
+registerApi('groups', groupService);

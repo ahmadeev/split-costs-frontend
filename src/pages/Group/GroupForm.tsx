@@ -3,6 +3,7 @@ import './GroupForm.css';
 import { type ChangeEvent, type SyntheticEvent, useCallback, useState } from 'react';
 import FormLayout from '../../components/FormLayout/FormLayout.tsx';
 import Delete from '../../icons/delete_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
+import Add from '../../icons/add_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import TextInput from '../../ui/TextInput/TextInput.tsx';
 import Button from '../../ui/Button/Button.tsx';
 import type { CreateGroupDto } from '../../api/group/dto.ts';
@@ -125,8 +126,8 @@ export default function GroupForm() {
                     onClick={handleAddClick}
                     style={{ cursor: 'pointer', gap: '1rem' }}
                 >
-                    <div className='group-form__add-button'>
-                        <span>+</span>
+                    <div className="group-form__add-button">
+                        <Add />
                     </div>
                     <div>
                         <span>Добавить члена группы</span>

@@ -1,5 +1,5 @@
 .container {
-    background-color: var(--third-background-color);
+    background-color: var(--accent-background-color);
     padding: 2rem;
     width: fit-content;
     border-radius: var(--border-radius);

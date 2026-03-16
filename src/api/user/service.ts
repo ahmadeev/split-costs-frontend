@@ -13,4 +13,4 @@ class UserService implements ListService<User> {
 
 export const userService = new UserService();
 
-registerApi('user', userService);
+registerApi('users', userService);

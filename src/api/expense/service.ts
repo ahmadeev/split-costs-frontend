@@ -28,4 +28,4 @@ class ExpenseService implements ListService<ExpenseResponseDto> {
 
 export const expenseService = new ExpenseService();
 
-registerApi('expense', expenseService);
+registerApi('expenses', expenseService);

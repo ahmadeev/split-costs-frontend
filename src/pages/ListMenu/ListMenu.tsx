@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 
 const LISTS = [
     {
-        link: '/list/user',
+        link: '/list/users',
         text: 'Пользователи',
     },
     {
-        link: '/list/expense',
+        link: '/list/expenses',
         text: 'Расходы',
     },
     {
-        link: '/list/group',
+        link: '/list/groups',
         text: 'Группы',
     },
 ];
