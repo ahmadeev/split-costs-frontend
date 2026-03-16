@@ -1,32 +1,29 @@
-import { type ReactNode, useState } from 'react';
+import { type ReactNode } from 'react';
 import Close from '../../icons/close_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
+import styles from './CloseableInfo.module.css';
 
-export default function CloseableInfo({ children }: { children?: ReactNode }) {
-    const [open, setOpen] = useState(true);
+interface Props {
+    title: string;
+    children?: ReactNode;
+    isOpen: boolean;
+    onStateChange: (isOpen: boolean) => void;
+}
 
-    if (!open) return null;
+export default function CloseableInfo({ title, children, isOpen, onStateChange }: Props) {
+    if (!isOpen) return null;
 
     return (
-        <div
-            style={{
-                backgroundColor: 'var(--third-background-color)',
-                padding: '2rem',
-                width: 'fit-content',
-                borderRadius: 'var(--border-radius)',
-                position: 'relative',
-            }}
-        >
-            <Close
-                style={{
-                    position: 'absolute',
-                    top: '1rem',
-                    right: '1rem',
-                    fill: 'var(--color)',
-                    cursor: 'pointer',
-                }}
-                onClick={() => { setOpen(false); }}
-            />
-            {children}
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h2 className={styles.title}>{title}</h2>
+                <Close
+                    className={styles.icon}
+                    onClick={() => { onStateChange(false); }}
+                />
+            </div>
+            <div>
+                {children}
+            </div>
         </div>
     );
 }

@@ -1,0 +1,29 @@
+.container {
+    background-color: var(--third-background-color);
+    padding: 2rem;
+    width: fit-content;
+    border-radius: var(--border-radius);
+    max-width: 600px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.icon {
+    fill: var(--color);
+    cursor: pointer;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.icon:hover {
+    fill: var(--secondary-color);
+}

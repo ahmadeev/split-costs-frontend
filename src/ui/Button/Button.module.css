@@ -1,12 +1,10 @@
+.button * {
+    transition: color,fill 0.2s ease-in-out;
+}
+
 .primary {
     background-color: #535bf2;
     color: white;
-
-    transition: all 0.2s ease-in-out;
-}
-
-.primary svg {
-    fill: white;
 }
 
 .primary:hover {
@@ -23,8 +21,6 @@
     background-color: transparent;
     padding: 0;
     color: #646cff;
-
-    transition: all 0.2s ease-in-out;
 }
 
 .link:hover {
@@ -42,4 +38,12 @@
 .disabled {
     cursor: not-allowed;
     opacity: 0.6;
+}
+
+.button svg {
+    fill: #646cff;
+}
+
+.button:hover svg {
+    fill: rgba(100, 108, 255, 0.68);
 }
