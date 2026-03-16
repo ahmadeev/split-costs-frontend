@@ -8,7 +8,7 @@ const LISTS = [
     },
     {
         link: '/list/expense',
-        text: 'Траты',
+        text: 'Расходы',
     },
     {
         link: '/list/group',

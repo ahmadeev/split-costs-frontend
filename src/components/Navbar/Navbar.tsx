@@ -52,7 +52,7 @@ export default function Navbar({ navbarHeight }: Props) {
             style={navStyles}
         >
             {getNavItem('/', 'Главная', <Home />)}
-            {getNavItem('/group', 'Группа', <Group />)}
+            {getNavItem('/group', 'Группы', <Group />)}
             {getNavItem('/expenses', 'Расходы', <Payments />)}
             {getNavItem('/lists', 'Ещё', <More />)}
         </nav>
