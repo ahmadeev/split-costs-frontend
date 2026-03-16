@@ -37,7 +37,6 @@ export default function ListLayout({ title, fetchData, cacheKey }: Props) {
         return (
             <Table
                 data={data as Record<string, unknown>[]}
-                // visibleColumns={COLUMNS}
             />
         );
     };

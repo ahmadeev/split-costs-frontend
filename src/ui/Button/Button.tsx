@@ -1,8 +1,9 @@
 import styles from './Button.module.css';
+import type { ReactNode } from 'react';
 
 interface Props {
     onClick: () => void;
-    title: string;
+    title: string | ReactNode;
     type: 'primary' | 'secondary' | 'link';
     isDisabled?: boolean;
 }

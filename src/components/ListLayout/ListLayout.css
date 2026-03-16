@@ -29,6 +29,7 @@
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
+    gap: 1rem;
 }
 
 .list-layout__table-container {

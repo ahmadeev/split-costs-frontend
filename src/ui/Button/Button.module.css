@@ -5,6 +5,10 @@
     transition: all 0.2s ease-in-out;
 }
 
+.primary svg {
+    fill: white;
+}
+
 .primary:hover {
     background-color: #4e56df;
     transform: scale(1.01);
