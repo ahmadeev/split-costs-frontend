@@ -20,15 +20,12 @@ export default function App() {
     const containerStyle = getContainerStyle();
 
     return (
-        <div style={{
-            height: '100vh',
-            width: '100vw',
-        }}>
+        <div className={'app__container'}>
             <Navbar
                 navbarHeight={NAVBAR_HEIGHT}
             />
             <div
-                className={'app__container'}
+                className={'app__content'}
                 style={containerStyle}
             >
                 <Outlet/>
