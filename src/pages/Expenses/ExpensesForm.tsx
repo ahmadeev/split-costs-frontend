@@ -261,22 +261,22 @@ export default function ExpensesForm() {
                 }
 
                 {
-                    isDividedEvenly || !group ? (
-                        <></>
-                    ) : (
+                    isDividedEvenly || !group ? null : (
                         group.members.map((member: MemberResponseDTO, index: number) => (
-                            <div className='form-layout__row form-layout__row_bordered' key={index}>
-                                <label style={{ cursor: 'pointer' }}>
-                                    <input
-                                        type="checkbox"
-                                        name={member.name}
-                                        onChange={handleCheckStateChange}
-                                        checked={checksState[member.name] ?? false}
-                                        style={{ margin: '1rem', cursor: 'pointer' }}
-                                    />
-                                    <span>{member.name}</span>
-                                </label>
-                            </div>
+                            <label
+                                className="form-layout__row form-layout__row_bordered"
+                                key={index}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <input
+                                    type="checkbox"
+                                    name={member.name}
+                                    onChange={handleCheckStateChange}
+                                    checked={checksState[member.name] ?? false}
+                                    style={{ margin: '1rem', cursor: 'pointer' }}
+                                />
+                                <span>{member.name}</span>
+                            </label>
                         ))
                     )
                 }
