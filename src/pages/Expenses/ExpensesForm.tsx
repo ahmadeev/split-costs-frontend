@@ -4,7 +4,7 @@ import { type ChangeEvent, useEffect, useState } from 'react';
 import FormLayout from '../../components/FormLayout/FormLayout.tsx';
 import SelectInput from '../../ui/SelectInput/SelectInput.tsx';
 import SegmentedControl from '../../ui/SegmentedControl/SegmentedControl.tsx';
-import Button from '../../ui/Button/Button.tsx';
+import { Button } from '../../ui/Button/Button.tsx';
 import TextInput from '../../ui/TextInput/TextInput.tsx';
 import type { MemberResponseDTO } from '../../api/member/dto.ts';
 import type { Group, GroupResponseDTO } from '../../api/group/dto.ts';
@@ -247,13 +247,13 @@ export default function ExpensesForm() {
                             padding: '0.6rem 1.2rem',
                         }}>
                             <Button
-                                type={'link'}
-                                title={'Выбрать всех'}
+                                variant={'link'}
+                                children={'Выбрать всех'}
                                 onClick={() => { setChecksToState(true); }}
                             />
                             <Button
-                                type={'link'}
-                                title={'Сбросить'}
+                                variant={'link'}
+                                children={'Сбросить'}
                                 onClick={() => { setChecksToState(false); }}
                             />
                         </div>
@@ -284,9 +284,9 @@ export default function ExpensesForm() {
 
             <div className="form-layout__section">
                 <Button
-                    type={'primary'}
-                    title={'Сохранить'}
-                    isDisabled={isSubmitDisabled}
+                    variant={'primary'}
+                    children={'Сохранить'}
+                    disabled={isSubmitDisabled}
                     onClick={handleSubmitClick}
                 />
             </div>

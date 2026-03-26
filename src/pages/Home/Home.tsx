@@ -1,5 +1,5 @@
 import './Home.css';
-import Button from '../../ui/Button/Button.tsx';
+import { Button } from '../../ui/Button/Button.tsx';
 import { useNavigate } from 'react-router-dom';
 import CloseableInfo from '../../ui/CloseableInfo/CloseableInfo.tsx';
 import { useState } from 'react';
@@ -36,8 +36,8 @@ function Home() {
                     <li>💼 Business Project (Joint expenses, materials)</li>
                 </ul>
                 <Button
-                    type="primary"
-                    title={'Create Your First Group'}
+                    variant="primary"
+                    children={'Create Your First Group'}
                     onClick={() => {
                         void navigate('/group');
                     }}

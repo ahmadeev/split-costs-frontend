@@ -1,4 +1,4 @@
-import Button from '../../Button/Button.tsx';
+import { Button } from '../../Button/Button.tsx';
 import { queryClient } from '../../../api/queryClient.ts';
 import Refresh from '../../../icons/refresh_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24 (1).svg?react';
 import { useIsFetching } from '@tanstack/react-query';
@@ -23,15 +23,15 @@ export default function Filters({ cacheKey }: { cacheKey: string[] }) {
                 onClick={() => {
                     void queryClient.invalidateQueries({ queryKey: cacheKey });
                 }}
-                title={<Refresh />}
-                type={'secondary'}
+                children={<Refresh />}
+                variant={'secondary'}
             />
             <span style={{ marginRight: 'auto', color: 'var(--secondary-color)' }}>{!isMobileView && 'Последнее обновление: '}{lastFetched}</span>
             <Button
-                title={'Фильтры'}
-                type={'secondary'}
+                children={'Фильтры'}
+                variant={'secondary'}
                 onClick={handleClick}
-                isDisabled={true}
+                disabled={true}
             />
         </>
     );

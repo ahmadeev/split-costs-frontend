@@ -5,7 +5,7 @@ import FormLayout from '../../components/FormLayout/FormLayout.tsx';
 import Delete from '../../icons/delete_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import Add from '../../icons/add_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import TextInput from '../../ui/TextInput/TextInput.tsx';
-import Button from '../../ui/Button/Button.tsx';
+import { Button } from '../../ui/Button/Button.tsx';
 import type { CreateGroupDto } from '../../api/group/dto.ts';
 import type { CreateMemberDto } from '../../api/member/dto.ts';
 import { groupService } from '../../api/group/service.ts';
@@ -136,9 +136,9 @@ export default function GroupForm() {
             </div>
             <div className="form-layout__section">
                 <Button
-                    title={'Создать группу'}
+                    children={'Создать группу'}
                     onClick={handleSubmitClick}
-                    type={'primary'}
+                    variant={'primary'}
                 />
             </div>
         </FormLayout>

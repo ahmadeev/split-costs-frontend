@@ -1,21 +1,28 @@
 import styles from './Button.module.css';
-import type { ReactNode } from 'react';
+import { type ButtonHTMLAttributes, forwardRef, type ReactNode } from 'react';
 
-interface Props {
-    onClick: () => void;
-    title: string | ReactNode;
-    type: 'primary' | 'secondary' | 'link';
-    isDisabled?: boolean;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    children?: ReactNode;
+    variant?: 'primary' | 'secondary' | 'link';
 }
 
-export default function Button({ title, onClick, type, isDisabled }: Props) {
-    return (
-        <>
-            <button
-                className={`${styles.button} ${styles[type]} ${isDisabled ? styles.disabled : ''}`}
-                disabled={isDisabled}
-                onClick={onClick}
-            >{title}</button>
-        </>
-    );
-}
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+    ({ children, variant = 'primary', disabled = false, className = '', ...props }, ref) => {
+        return (
+            <>
+                <button
+                    ref={ref}
+                    className={`
+                        ${styles.button} 
+                        ${styles[variant]} 
+                        ${disabled ? styles.disabled : ''}
+                        ${className}
+                    `}
+                    {...props}
+                >
+                    {children}
+                </button>
+            </>
+        );
+    },
+);

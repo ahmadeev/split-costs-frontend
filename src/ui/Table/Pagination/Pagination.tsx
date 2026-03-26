@@ -1,4 +1,4 @@
-import Button from '../../Button/Button.tsx';
+import { Button } from '../../Button/Button.tsx';
 import { range } from '../../../utils.ts';
 
 interface Props {
@@ -47,8 +47,8 @@ export default function Pagination({ currentPage, pageCount, delta, onChange }: 
     function getLink(page: number, key: number) {
         return (
             <Button
-                type={'link'}
-                title={page === currentPage ? `[ ${String(page)} ]` : String(page)}
+                variant={'link'}
+                children={page === currentPage ? `[ ${String(page)} ]` : String(page)}
                 onClick={() => { handlePageChange(page); }}
                 key={key}
             />
@@ -68,10 +68,10 @@ export default function Pagination({ currentPage, pageCount, delta, onChange }: 
             }}
         >
             <Button
-                type={'link'}
-                title={'<'}
+                variant={'link'}
+                children={'<'}
                 onClick={() => { handlePageChange(currentPage - 1); }}
-                isDisabled={currentPage === pages[0]}
+                disabled={currentPage === pages[0]}
             />
             {
                 pages.map((item: number | '...', index: number) => {
@@ -81,10 +81,10 @@ export default function Pagination({ currentPage, pageCount, delta, onChange }: 
                 })
             }
             <Button
-                type={'link'}
-                title={'>'}
+                variant={'link'}
+                children={'>'}
                 onClick={() => { handlePageChange(currentPage + 1); }}
-                isDisabled={currentPage === pages[pages.length - 1]}
+                disabled={currentPage === pages[pages.length - 1]}
             />
         </div>
     );
