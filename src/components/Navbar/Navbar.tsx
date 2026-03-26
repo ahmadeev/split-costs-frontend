@@ -1,4 +1,3 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import { type CSSProperties } from 'react';
 import { isMobile } from '../../utils.ts';
 import './Navbar.css';
@@ -7,6 +6,7 @@ import Group from '../../icons/group_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?
 import Payments from '../../icons/payments_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import More from '../../icons/more_horiz_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import SmartNavLink from './SmartNavLink/SmartNavLink.tsx';
+import Home from '../../pages/Home/Home.tsx';
 
 interface Props {
     navbarHeight: string;
@@ -14,24 +14,32 @@ interface Props {
 
 const links = [
     {
-        path: '/',
+        to: '/',
         title: 'Главная',
-        icon: <Home />,
+        getIcon: (active: boolean) => (
+            <Home style={{ fill: active ? 'var(--color)' : 'var(--secondary-color)' }} />
+        ),
     },
     {
-        path: '/group',
+        to: '/group',
         title: 'Группы',
-        icon: <Group />,
+        getIcon: (active: boolean) => (
+            <Group style={{ fill: active ? 'var(--color)' : 'var(--secondary-color)' }} />
+        ),
     },
     {
-        path: '/expenses',
+        to: '/expenses',
         title: 'Расходы',
-        icon: <Payments />,
+        getIcon: (active: boolean) => (
+            <Payments style={{ fill: active ? 'var(--color)' : 'var(--secondary-color)' }} />
+        ),
     },
     {
-        path: '/lists',
+        to: '/lists',
         title: 'Ещё',
-        icon: <More />,
+        getIcon: (active: boolean) => (
+            <More style={{ fill: active ? 'var(--color)' : 'var(--secondary-color)' }} />
+        ),
     },
 ];
 
@@ -44,9 +52,6 @@ export default function Navbar({ navbarHeight }: Props) {
         bottom: isMobileView ? '0' : undefined,
     };
 
-    const navigate = useNavigate();
-    const currentPath = useLocation().pathname;
-
     return (
         <nav
             className={'navbar__container'}
@@ -56,11 +61,9 @@ export default function Navbar({ navbarHeight }: Props) {
                 links.map((link, index) => (
                     <SmartNavLink
                         key={index}
-                        path={link.path}
-                        currentPath={currentPath}
+                        to={link.to}
                         title={link.title}
-                        icon={link.icon}
-                        onClick={() => void navigate(link.path)}
+                        icon={link.getIcon}
                         isMobileView={isMobileView}
                     />
                 ))
