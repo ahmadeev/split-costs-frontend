@@ -46,11 +46,11 @@ export default function GroupForm() {
     };
 
     const handleSubmitClick = useCallback(() => {
-        const members: CreateMemberDto[] = Object.entries(names).map(([, name]: [string, string]): CreateMemberDto => {
-            return { name: name };
+        const members: CreateMemberDto[] = Object.entries(names).map(([, name]: [string, string], index: number): CreateMemberDto => {
+            return { name: name ? name : `Участник #${String(index + 1)}` };
         });
 
-        const group: CreateGroupDto = { name: groupName, members };
+        const group: CreateGroupDto = { name: groupName ? groupName : 'Новая группа', members };
 
         groupService.create(group)
             .then(() => {
@@ -72,6 +72,8 @@ export default function GroupForm() {
             return { ...rest };
         });
     }, []);
+
+    const isAddButtonDisabled = namesKeys.length >= MEMBERS_LIMIT;
 
     return (
         <FormLayout>
@@ -128,7 +130,8 @@ export default function GroupForm() {
                 <Button
                     variant={'secondary'}
                     onClick={handleAddClick}
-                    style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', gap: '1rem', fontWeight: 'normal', backgroundColor: 'var(--accent-background-color)' }}
+                    style={{ display: 'flex', flexDirection: 'row', gap: '1rem', fontWeight: 'normal' }}
+                    disabled={isAddButtonDisabled}
                 >
                     <div className="group-form__add-button">
                         <Add style={{ fill: 'var(--secondary-color)' }} />

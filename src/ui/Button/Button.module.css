@@ -4,8 +4,8 @@
     border: none;
 }
 
-.button * {
-    transition: color,fill 0.2s ease-in-out;
+.button {
+    transition: color,fill,background-color 0.2s ease-in-out;
 }
 
 .primary {
@@ -19,6 +19,10 @@
 }
 
 .secondary {
+    background-color: var(--accent-background-color);
+}
+
+.secondary:hover {
     background-color: var(--third-background-color);
 }
 
