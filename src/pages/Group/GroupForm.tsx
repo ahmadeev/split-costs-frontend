@@ -25,6 +25,8 @@ export default function GroupForm() {
 
     const [names, setNames] = useState<Names>({});
 
+    const namesKeys = Object.keys(names);
+
     const handleGroupNameInput = (e: ChangeEvent<HTMLInputElement>): void => {
         setGroupName(e.target.value);
     };
@@ -36,7 +38,7 @@ export default function GroupForm() {
     }, []);
 
     const handleAddClick = () => {
-        if (Object.keys(names).length >= MEMBERS_LIMIT) {
+        if (namesKeys.length >= MEMBERS_LIMIT) {
             return;
         }
 
@@ -82,7 +84,7 @@ export default function GroupForm() {
                 />
                 <div className='group-form__input-container'
                     style={{
-                        display: Object.keys(names).length ? 'flex' : 'none',
+                        display: namesKeys.length ? 'flex' : 'none',
                         flexDirection: 'column',
                         gap: '0.5rem',
                     }}
@@ -94,9 +96,9 @@ export default function GroupForm() {
                             padding: '0.6rem 1.2rem',
                         }}
                     >
-                        <span>Добавлено: {Object.keys(names).length} / {MEMBERS_LIMIT}</span>
+                        <span>Добавлено: {namesKeys.length} / {MEMBERS_LIMIT}</span>
                     </div>
-                    {Object.keys(names).map((nameKey: string, index: number) => (
+                    {namesKeys.map((nameKey: string, index: number) => (
                         <div
                             className='form-layout__row form-layout__row_bordered group-form__row'
                             onClick={handleEditClick}
@@ -114,25 +116,27 @@ export default function GroupForm() {
                             />
 
                             <Button
-                                children={<Delete style={{ fill: '#424242' }} />}
+                                children={<Delete style={{ fill: '#424242' }}/>}
                                 className='group-form__delete-button'
-                                onClick={(e) => { handleDeleteClick(e, nameKey); }}
+                                onClick={(e) => {
+                                    handleDeleteClick(e, nameKey);
+                                }}
                             />
                         </div>
                     ))}
                 </div>
-                <div
-                    className='form-layout__row form-layout__row_bordered'
+                <Button
+                    variant={'secondary'}
                     onClick={handleAddClick}
-                    style={{ cursor: 'pointer', gap: '1rem' }}
+                    style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', gap: '1rem', fontWeight: 'normal', backgroundColor: 'var(--accent-background-color)' }}
                 >
                     <div className="group-form__add-button">
-                        <Add />
+                        <Add style={{ fill: 'var(--secondary-color)' }} />
                     </div>
                     <div>
                         <span>Добавить члена группы</span>
                     </div>
-                </div>
+                </Button>
             </div>
             <div className="form-layout__section">
                 <Button

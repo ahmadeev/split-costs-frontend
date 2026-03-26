@@ -1,3 +1,9 @@
+/* todo: сделать менее специфичным и добавить красивый аутлайн */
+:is(.button, .button:focus) {
+    outline: none;
+    border: none;
+}
+
 .button * {
     transition: color,fill 0.2s ease-in-out;
 }

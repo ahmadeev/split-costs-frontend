@@ -2,10 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    svg {
-        fill: var(--secondary-color);
-    }
 }
 
 .group-form__delete-button {
@@ -24,7 +20,7 @@
     border: 0;
 }
 
-.group-form__row:hover .group-form__delete-button {
+.group-form__row:hover .group-form__delete-button, .group-form__delete-button:focus {
     opacity: 1;
     cursor: pointer;
 
