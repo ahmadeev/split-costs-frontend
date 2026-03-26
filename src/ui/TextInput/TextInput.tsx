@@ -7,7 +7,7 @@ interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'ty
     isMandatory?: boolean;
 }
 
-export default function TextInput({ label, value, isMandatory, ...props }: TextInputProps) {
+export default function TextInput({ label, value, isMandatory, className = '', ...props }: TextInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleEditClick = () => {
@@ -18,7 +18,7 @@ export default function TextInput({ label, value, isMandatory, ...props }: TextI
         <div className={styles.container}>
             <span className={styles.title}>{label}{isMandatory && <span className={styles.mandatory}> *</span>}</span>
             <div
-                className={'form-layout__row form-layout__row_bordered form-layout__row_header-input'}
+                className={`form-layout__row form-layout__row_bordered form-layout__row_header-input ${className}`}
                 onClick={handleEditClick}
             >
                 <input
