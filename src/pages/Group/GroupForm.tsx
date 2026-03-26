@@ -75,7 +75,7 @@ export default function GroupForm() {
         <FormLayout>
             <div className="form-layout__section">
                 <TextInput
-                    title={'Группа'}
+                    label={'Группа'}
                     onChange={handleGroupNameInput}
                     value={groupName}
                     placeholder={'Отчаянные козявки'}

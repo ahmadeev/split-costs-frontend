@@ -1,18 +1,13 @@
-import { type ChangeEvent, useRef } from 'react';
+import { type InputHTMLAttributes, useRef } from 'react';
 import styles from './TextInput.module.css';
 
-interface Props {
-    title: string,
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void,
-    value: string,
-    placeholder?: string,
-    onFocus?: () => void,
-    onBlur?: () => void,
-    isMandatory?: boolean,
-    inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url',
+interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+    label: string;
+    value: string;
+    isMandatory?: boolean;
 }
 
-export default function TextInput({ title, onChange, value, placeholder, onFocus, onBlur, isMandatory, inputMode }: Props) {
+export default function TextInput({ label, value, isMandatory, ...props }: TextInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleEditClick = () => {
@@ -21,7 +16,7 @@ export default function TextInput({ title, onChange, value, placeholder, onFocus
 
     return (
         <div className={styles.container}>
-            <span className={styles.title}>{title}{isMandatory && <span className={styles.mandatory}> *</span>}</span>
+            <span className={styles.title}>{label}{isMandatory && <span className={styles.mandatory}> *</span>}</span>
             <div
                 className={'form-layout__row form-layout__row_bordered form-layout__row_header-input'}
                 onClick={handleEditClick}
@@ -30,12 +25,8 @@ export default function TextInput({ title, onChange, value, placeholder, onFocus
                     ref={inputRef}
                     type="text"
                     className={`${styles.input} ${styles.header}`}
-                    placeholder={placeholder}
                     value={value}
-                    onChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    inputMode={inputMode}
+                    {...props}
                 />
             </div>
         </div>

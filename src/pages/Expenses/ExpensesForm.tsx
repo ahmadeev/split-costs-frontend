@@ -181,14 +181,14 @@ export default function ExpensesForm() {
         <FormLayout>
             <div className="form-layout__section">
                 <TextInput
-                    title={'Комментарий'}
+                    label={'Комментарий'}
                     isMandatory={true}
                     onChange={handleDetailsInput}
                     value={details}
                     placeholder={'Например, пицца'}
                 />
                 <TextInput
-                    title={'Сумма'}
+                    label={'Сумма'}
                     isMandatory={true}
                     onChange={handleTotalChange}
                     value={total}
