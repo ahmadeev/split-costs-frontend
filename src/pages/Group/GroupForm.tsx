@@ -60,7 +60,7 @@ export default function GroupForm() {
             });
     }, [groupName, names]);
 
-    const handleDeleteClick = useCallback((e: React.MouseEvent<HTMLDivElement>, name: string) => {
+    const handleDeleteClick = useCallback((e: React.MouseEvent<HTMLElement>, name: string) => {
         e.stopPropagation();
 
         setNames(prev => {
@@ -112,12 +112,12 @@ export default function GroupForm() {
                                 onChange={handleNameInput}
                                 style={{ textOverflow: 'ellipsis', fontSize: '1rem' }}
                             />
-                            <div
+
+                            <Button
+                                children={<Delete style={{ fill: '#424242' }} />}
                                 className='group-form__delete-button'
                                 onClick={(e) => { handleDeleteClick(e, nameKey); }}
-                            >
-                                <Delete style={{ fill: '#424242' }} />
-                            </div>
+                            />
                         </div>
                     ))}
                 </div>

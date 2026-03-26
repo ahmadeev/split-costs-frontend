@@ -9,15 +9,26 @@
 }
 
 .group-form__delete-button {
-    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    transition: opacity 0.2s ease;
     opacity: 0;
     cursor: auto;
+
+    padding: 0;
+
+    background-color: transparent;
+    outline: none;
+    border: 0;
 }
 
 .group-form__row:hover .group-form__delete-button {
     opacity: 1;
     cursor: pointer;
+
+    background-color: transparent;
+    outline: none;
+    border: 0;
 }
