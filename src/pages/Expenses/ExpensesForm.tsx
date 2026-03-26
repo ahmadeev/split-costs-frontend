@@ -186,7 +186,6 @@ export default function ExpensesForm() {
                     onChange={handleDetailsInput}
                     controlledValue={details}
                     placeholder={'Например, пицца'}
-                    wrapperClassName={'form-layout__row form-layout__row_bordered form-layout__row_header-input'}
                 />
                 <TextInput
                     label={'Сумма'}
@@ -197,7 +196,6 @@ export default function ExpensesForm() {
                     onFocus={handleFocusInputTotal}
                     onBlur={handleBlurInputTotal}
                     inputMode={'numeric'}
-                    wrapperClassName={'form-layout__row form-layout__row_bordered form-layout__row_header-input'}
                 />
                 {hintString && (
                     <div

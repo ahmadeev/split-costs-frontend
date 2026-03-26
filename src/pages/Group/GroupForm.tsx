@@ -79,7 +79,6 @@ export default function GroupForm() {
                     onChange={handleGroupNameInput}
                     controlledValue={groupName}
                     placeholder={'Отчаянные козявки'}
-                    wrapperClassName={'form-layout__row form-layout__row_bordered form-layout__row_header-input'}
                 />
                 <div className='group-form__input-container'
                     style={{
