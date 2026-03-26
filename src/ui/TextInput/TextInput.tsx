@@ -1,13 +1,14 @@
 import { type InputHTMLAttributes, useRef } from 'react';
 import styles from './TextInput.module.css';
 
-interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+interface TextInputProps extends InputHTMLAttributes<HTMLInputElement>/*Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>*/ {
     label: string;
-    value: string;
+    controlledValue: string;
     isMandatory?: boolean;
+    wrapperClassName?: string;
 }
 
-export default function TextInput({ label, value, isMandatory, className = '', ...props }: TextInputProps) {
+export default function TextInput({ label, controlledValue, isMandatory = false, wrapperClassName = '', ...props }: TextInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleEditClick = () => {
@@ -18,14 +19,14 @@ export default function TextInput({ label, value, isMandatory, className = '', .
         <div className={styles.container}>
             <span className={styles.title}>{label}{isMandatory && <span className={styles.mandatory}> *</span>}</span>
             <div
-                className={`form-layout__row form-layout__row_bordered form-layout__row_header-input ${className}`}
+                className={wrapperClassName}
                 onClick={handleEditClick}
             >
                 <input
                     ref={inputRef}
                     type="text"
                     className={`${styles.input} ${styles.header}`}
-                    value={value}
+                    value={controlledValue}
                     {...props}
                 />
             </div>

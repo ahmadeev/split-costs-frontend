@@ -184,18 +184,20 @@ export default function ExpensesForm() {
                     label={'Комментарий'}
                     isMandatory={true}
                     onChange={handleDetailsInput}
-                    value={details}
+                    controlledValue={details}
                     placeholder={'Например, пицца'}
+                    wrapperClassName={'form-layout__row form-layout__row_bordered form-layout__row_header-input'}
                 />
                 <TextInput
                     label={'Сумма'}
                     isMandatory={true}
                     onChange={handleTotalChange}
-                    value={total}
+                    controlledValue={total}
                     placeholder={'9 000 ₽'}
                     onFocus={handleFocusInputTotal}
                     onBlur={handleBlurInputTotal}
                     inputMode={'numeric'}
+                    wrapperClassName={'form-layout__row form-layout__row_bordered form-layout__row_header-input'}
                 />
                 {hintString && (
                     <div
