@@ -211,15 +211,13 @@ export default function ExpensesForm() {
             </div>
 
             <div className="form-layout__section">
-                <span style={{ textAlign: 'left', color: 'var(--secondary-color)' }}>Группа</span>
-                <div>
-                    <SelectInput
-                        displayValue={group?.name}
-                        options={groups.map((group: Group) => ({ id: group.id, name: group.name } as Option))}
-                        onChange={handleSelectChange}
-                        placeholder={'Выберите группу'}
-                    />
-                </div>
+                <SelectInput
+                    title={'Группа'}
+                    displayValue={group?.name}
+                    options={groups.map((group: Group) => ({ id: group.id, name: group.name } as Option))}
+                    onChange={handleSelectChange}
+                    placeholder={'Выберите группу'}
+                />
 
                 <SegmentedControl
                     options={SEGMENTED_CONTROL_OPTIONS}

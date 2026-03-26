@@ -7,9 +7,10 @@ interface Props {
     displayValue: string | null | undefined,
     onChange: (id: number) => void,
     placeholder?: string,
+    title?: string;
 }
 
-export default function SelectInput({ displayValue, options, onChange, placeholder }: Props) {
+export default function SelectInput({ displayValue, options, onChange, placeholder, title }: Props) {
     const [isShown, setIsShown] = useState(false);
 
     useEffect(() => {
@@ -29,36 +30,47 @@ export default function SelectInput({ displayValue, options, onChange, placehold
     }, []);
 
     return (
-        <div className={styles.container}>
-            <div
-                className={`${styles.option} ${styles.option_header} ${isShown ? styles.option_top : ''} ${displayValue ? '' : styles.trigger}`}
-                onClick={() => {
-                    setIsShown(!isShown);
-                }}
-            >
-                <span>{displayValue ?? placeholder ?? 'Выберите из списка'}</span>
-                <span>&#9660;</span>
-            </div>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+        }}>
             {
-                isShown && (
-                    <div className={styles.block}>
-                        {
-                            options.map((option: Option) => (
-                                <div
-                                    className={styles.option}
-                                    key={option.id}
-                                    onClick={() => {
-                                        onChange(option.id ?? 0);
-                                        setIsShown(!isShown);
-                                    }}
-                                >
-                                    <span>{option.name}</span>
-                                </div>
-                            ))
-                        }
-                    </div>
+                title && (
+                    <span style={{ textAlign: 'left', color: 'var(--secondary-color)', width: '100%', display: 'inline-block' }}>{title}</span>
                 )
             }
+            <div className={styles.container}>
+                <div
+                    className={`${styles.option} ${styles.option_header} ${isShown ? styles.option_top : ''} ${displayValue ? '' : styles.trigger}`}
+                    onClick={() => {
+                        setIsShown(!isShown);
+                    }}
+                >
+                    <span>{displayValue ?? placeholder ?? 'Выберите из списка'}</span>
+                    <span>&#9660;</span>
+                </div>
+                {
+                    isShown && (
+                        <div className={styles.block}>
+                            {
+                                options.map((option: Option) => (
+                                    <div
+                                        className={styles.option}
+                                        key={option.id}
+                                        onClick={() => {
+                                            onChange(option.id ?? 0);
+                                            setIsShown(!isShown);
+                                        }}
+                                    >
+                                        <span>{option.name}</span>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    )
+                }
+            </div>
         </div>
     );
 }
