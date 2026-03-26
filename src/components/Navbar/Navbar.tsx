@@ -1,12 +1,11 @@
 import { type CSSProperties } from 'react';
 import { isMobile } from '../../utils.ts';
 import './Navbar.css';
-import Home from '../../icons/home_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
+import HomeIcon from '../../icons/home_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import Group from '../../icons/group_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import Payments from '../../icons/payments_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import More from '../../icons/more_horiz_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg?react';
 import SmartNavLink from './SmartNavLink/SmartNavLink.tsx';
-import Home from '../../pages/Home/Home.tsx';
 
 interface Props {
     navbarHeight: string;
@@ -17,7 +16,7 @@ const links = [
         to: '/',
         title: 'Главная',
         getIcon: (active: boolean) => (
-            <Home style={{ fill: active ? 'var(--color)' : 'var(--secondary-color)' }} />
+            <HomeIcon style={{ fill: active ? 'var(--color)' : 'var(--secondary-color)' }} />
         ),
     },
     {
