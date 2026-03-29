@@ -1,8 +1,12 @@
 .home__container {
   padding: 10vh 10vw;
-  text-align: left;
   box-sizing: border-box;
   overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .home__container button {

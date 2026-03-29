@@ -43,6 +43,17 @@ export default function Table({ data, visibleColumns }: Props) {
         ));
     }, [data, visibleColumns]);
 
+    if (!data.length) {
+        return (
+            <div
+                className={'ui-table__container'}
+                style={{ textAlign: 'center' }}
+            >
+                <span>Данные отсутствуют</span>
+            </div>
+        );
+    }
+
     return (
         <div className={'ui-table__container'}>
             <table>
@@ -59,7 +70,7 @@ export default function Table({ data, visibleColumns }: Props) {
                 </thead>
                 <tbody>
                     {
-                        data.length ? data.map((row: Record<string, unknown>, rowIndex: number)=> {
+                        data.length && data.map((row: Record<string, unknown>, rowIndex: number)=> {
                             return (
                                 // @ts-expect-error data type is unknown
                                 <tr key={row.id ?? rowIndex}>
@@ -73,7 +84,7 @@ export default function Table({ data, visibleColumns }: Props) {
                                     }
                                 </tr>
                             );
-                        }) : (<span>Данные отсутствуют</span>)
+                        })
                     }
                 </tbody>
             </table>
