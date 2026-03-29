@@ -130,7 +130,7 @@ export default function GroupForm() {
                 <Button
                     variant={'secondary'}
                     onClick={handleAddClick}
-                    style={{ display: 'flex', flexDirection: 'row', gap: '1rem', fontWeight: 'normal' }}
+                    style={{ gap: '1rem', justifyContent: 'start', fontWeight: 'normal' }}
                     disabled={isAddButtonDisabled}
                 >
                     <div className="group-form__add-button">

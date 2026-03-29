@@ -33,7 +33,7 @@ const getPagesArray = (currentPage: number, pageCount: number, delta: number) =>
     return pages;
 };
 
-export default function Pagination({ currentPage, pageCount, delta, onChange }: Props) {
+export default function Footer({ currentPage, pageCount, delta, onChange }: Props) {
     function handlePageChange(page: number) {
         if (page < 1 || page > pageCount) {
             return;

@@ -1,7 +1,7 @@
 import './ListLayout.css';
 import Table from '../../ui/Table/Table/Table.tsx';
-import Pagination from '../../ui/Table/Pagination/Pagination.tsx';
-import Filters from '../../ui/Table/Filters/Filters.tsx';
+import Footer from '../../ui/Table/Footer/Footer.tsx';
+import Header from '../../ui/Table/Header/Header.tsx';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
@@ -54,7 +54,7 @@ export default function ListLayout({ title, fetchData, cacheKey }: Props) {
             <div
                 className={'list-layout__filter-container'}
             >
-                <Filters cacheKey={cacheKey} />
+                <Header cacheKey={cacheKey} />
             </div>
 
             <div
@@ -66,7 +66,7 @@ export default function ListLayout({ title, fetchData, cacheKey }: Props) {
             <div
                 className={'list-layout__pagination-container'}
             >
-                <Pagination
+                <Footer
                     currentPage={currentPage}
                     pageCount={pageCount}
                     delta={1}

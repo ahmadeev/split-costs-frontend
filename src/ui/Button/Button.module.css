@@ -6,6 +6,10 @@
 
 .button {
     transition: color,fill,background-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
 }
 
 .primary {
