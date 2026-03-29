@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
-import './FormSection.css';
+import styles from './FormSection.module.css';
 
 export default function FormSection({ children }: {children: ReactNode}) {
     return (
-        <div className="form-section__container">
+        <div className={styles.container}>
             {children}
         </div>
     );
