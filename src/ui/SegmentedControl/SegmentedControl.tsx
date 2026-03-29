@@ -12,20 +12,24 @@ export default function SegmentedControl({ options, value, onChange }: Props) {
         <div
             className={styles.container}
         >
-            {options.map((option, index) => (
-                <button
-                    className={`${styles.button} ${option.name === value.name ? styles.active : ''}`}
-                    key={index}
-                    style={{ flexGrow: 1 }}
-                    onClick={() => {
-                        if (option.name === value.name) {
-                            return;
-                        }
+            {options.map((option, index) => {
+                const isActive = option.name === value.name;
 
-                        onChange(option);
-                    }}
-                >{option.name}</button>
-            ))}
+                return (
+                    <button
+                        className={`${styles.button} ${isActive ? styles.active : ''}`}
+                        key={index}
+                        style={{ flexGrow: 1 }}
+                        onClick={() => {
+                            if (isActive) {
+                                return;
+                            }
+
+                            onChange(option);
+                        }}
+                    >{option.name}</button>
+                );
+            })}
         </div>
     );
 }

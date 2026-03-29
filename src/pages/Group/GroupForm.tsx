@@ -9,6 +9,7 @@ import { Button } from '../../ui/Button/Button.tsx';
 import type { CreateGroupDto } from '../../api/group/dto.ts';
 import type { CreateMemberDto } from '../../api/member/dto.ts';
 import { groupService } from '../../api/group/service.ts';
+import FormSection from '../../components/FormLayout/FormSection/FormSection.tsx';
 
 const MEMBERS_LIMIT = 5;
 
@@ -77,7 +78,7 @@ export default function GroupForm() {
 
     return (
         <FormLayout>
-            <div className="form-layout__section">
+            <FormSection>
                 <TextInput
                     label={'Группа'}
                     onChange={handleGroupNameInput}
@@ -140,14 +141,15 @@ export default function GroupForm() {
                         <span>Добавить члена группы</span>
                     </div>
                 </Button>
-            </div>
-            <div className="form-layout__section">
+            </FormSection>
+
+            <FormSection>
                 <Button
                     children={'Создать группу'}
                     onClick={handleSubmitClick}
                     variant={'primary'}
                 />
-            </div>
+            </FormSection>
         </FormLayout>
     );
 }

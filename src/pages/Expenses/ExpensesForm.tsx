@@ -13,6 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 import { groupService } from '../../api/group/service.ts';
 import type { Option } from '../../types/types.ts';
 import { expenseMemberService } from '../../api/expenseMember/service.ts';
+import FormSection from '../../components/FormLayout/FormSection/FormSection.tsx';
 
 type Checks = Record<string, boolean>;
 interface DividedSum { fraction: number, ways: number }
@@ -177,9 +178,19 @@ export default function ExpensesForm() {
 
     const [segmentedControlOption, setSegmentedControlOption] = useState(SEGMENTED_CONTROL_OPTIONS[0]);
 
+    useEffect(() => {
+        if (!group) {
+            setChecksState({});
+        } else {
+            setChecksState(group.members.reduce((acc: Checks, value: MemberResponseDTO) => {
+                return { ...acc, [value.name]: true };
+            }, {}));
+        }
+    }, [group]);
+
     return (
         <FormLayout>
-            <div className="form-layout__section">
+            <FormSection>
                 <TextInput
                     label={'Комментарий'}
                     isMandatory={true}
@@ -208,9 +219,9 @@ export default function ExpensesForm() {
                         <span>{hintString}</span>
                     </div>
                 )}
-            </div>
+            </FormSection>
 
-            <div className="form-layout__section">
+            <FormSection>
                 <SelectInput
                     title={'Группа'}
                     displayValue={group?.name}
@@ -278,16 +289,16 @@ export default function ExpensesForm() {
                         ))
                     )
                 }
-            </div>
+            </FormSection>
 
-            <div className="form-layout__section">
+            <FormSection>
                 <Button
                     variant={'primary'}
                     children={'Сохранить'}
                     disabled={isSubmitDisabled}
                     onClick={handleSubmitClick}
                 />
-            </div>
+            </FormSection>
         </FormLayout>
     );
 }

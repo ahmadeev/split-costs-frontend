@@ -16,12 +16,6 @@
     padding: 10vh 10vw;
 }
 
-.form-layout__section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
 .form-layout__row {
     display: flex;
     flex-direction: row;
