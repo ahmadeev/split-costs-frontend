@@ -11,3 +11,5 @@ export interface ExpenseMember { id: number, expense: Expense, members: Member[]
 export interface Option { id?: number, name: string }
 
 export interface ListService<T> { getAll: () => Promise<T[]> }
+
+export interface RecordService<T> { getById: (id: number) => Promise<T> }

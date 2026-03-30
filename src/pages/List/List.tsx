@@ -1,11 +1,11 @@
 import ListLayout from '../../components/ListLayout/ListLayout.tsx';
 import { useParams } from 'react-router-dom';
-import { getApi, isPublicApi } from '../../api/apiRegistry.ts';
+import { getListApi, isPublicListApi } from '../../api/apiRegistry.ts';
 
 export default function List() {
     const { entity } = useParams();
 
-    if (!entity || !isPublicApi(entity)) {
+    if (!entity || !isPublicListApi(entity)) {
         throw new Error(`Invalid URL: ${String(entity)}`);
     }
 
@@ -13,8 +13,9 @@ export default function List() {
         <>
             <ListLayout
                 title={entity}
+                entity={entity}
                 cacheKey={[entity]}
-                fetchData={getApi(entity).getAll}
+                fetchData={getListApi(entity).getAll}
             />
         </>
     );

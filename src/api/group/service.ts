@@ -1,7 +1,7 @@
 import { axiosClient } from '../axiosClient.ts';
 import type { CreateGroupDto, GroupResponseDTO } from './dto.ts';
 import type { ListService } from '../../types/types.ts';
-import { registerApi } from '../apiRegistry.ts';
+import { registerListApi } from '../apiRegistry.ts';
 import { queryClient } from '../queryClient.ts';
 
 class GroupService implements ListService<GroupResponseDTO> {
@@ -28,4 +28,4 @@ class GroupService implements ListService<GroupResponseDTO> {
 
 export const groupService = new GroupService();
 
-registerApi('groups', groupService);
+registerListApi('groups', groupService);

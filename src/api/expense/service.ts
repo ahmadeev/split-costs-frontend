@@ -1,7 +1,7 @@
 import { axiosClient } from '../axiosClient.ts';
 import type { CreateExpenseDto, ExpenseResponseDto } from './dto.ts';
 import type { ListService } from '../../types/types.ts';
-import { registerApi } from '../apiRegistry.ts';
+import { registerListApi } from '../apiRegistry.ts';
 import { queryClient } from '../queryClient.ts';
 
 class ExpenseService implements ListService<ExpenseResponseDto> {
@@ -28,4 +28,4 @@ class ExpenseService implements ListService<ExpenseResponseDto> {
 
 export const expenseService = new ExpenseService();
 
-registerApi('expenses', expenseService);
+registerListApi('expenses', expenseService);

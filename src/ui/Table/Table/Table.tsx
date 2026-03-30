@@ -1,9 +1,11 @@
 import './Table.css';
 import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 interface Props {
     data: Record<string, unknown>[],
     visibleColumns?: Column[],
+    entity: string,
 }
 
 interface Column {
@@ -25,9 +27,23 @@ function renderCell(value: unknown, key: string) {
     return `(reference to ${key})`;
 }
 
-export default function Table({ data, visibleColumns }: Props) {
+function modifyColumnArray(arr: Column[]) {
+    const index = arr.findIndex(value => value.databaseValue.startsWith('id'));
+
+    if (index === -1) {
+        return;
+    }
+
+    const title = arr.splice(index, 1)[0];
+
+    arr.unshift(title);
+}
+
+export default function Table({ data, visibleColumns, entity }: Props) {
     const columns: Column[] = useMemo(() => {
         if (visibleColumns) {
+            modifyColumnArray(visibleColumns);
+
             return visibleColumns;
         }
 
@@ -35,12 +51,15 @@ export default function Table({ data, visibleColumns }: Props) {
             return [];
         }
 
-        const firstRow = data[0];
-        const keys = Object.keys(firstRow);
+        const keys = Object.keys(data[0]);
 
-        return keys.map((key): Column => (
+        const columns = keys.map((key): Column => (
             { databaseValue: key, displayValue: key }
         ));
+
+        modifyColumnArray(columns);
+
+        return columns;
     }, [data, visibleColumns]);
 
     if (!data.length) {
@@ -78,6 +97,10 @@ export default function Table({ data, visibleColumns }: Props) {
                                         columns.map((column: Column)=> {
                                             const key = column.databaseValue;
                                             const value = row[key];
+
+                                            if (key === 'id') {
+                                                return <td key={key}><Link to={`/record/${entity}/${String(row.id)}`}>{renderCell(value, key)}</Link></td>;
+                                            }
 
                                             return <td key={key}>{renderCell(value, key)}</td>;
                                         })

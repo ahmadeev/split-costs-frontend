@@ -14,6 +14,7 @@ import { queryClient } from './api/queryClient.ts';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { GlobalProvider } from './contexts/global/provider.tsx';
 import ListMenu from './pages/ListMenu/ListMenu.tsx';
+import RecordPage from './pages/RecordPage/RecordPage.tsx';
 
 const router = createHashRouter([
     {
@@ -39,6 +40,10 @@ const router = createHashRouter([
             {
                 path: '/list/:entity',
                 element: <List />,
+            },
+            {
+                path: '/record/:entity/:id',
+                element: <RecordPage />,
             },
         ],
         errorElement: <FallbackPage />,

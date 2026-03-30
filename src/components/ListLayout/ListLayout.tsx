@@ -9,9 +9,10 @@ interface Props {
     title: string,
     fetchData: () => Promise<unknown[]>,
     cacheKey: string[],
+    entity: string,
 }
 
-export default function ListLayout({ title, fetchData, cacheKey }: Props) {
+export default function ListLayout({ title, fetchData, cacheKey, entity }: Props) {
     const [currentPage, setCurrentPage] = useState(1);
     // todo: щас сеттера нет
     const [pageCount] = useState(10);
@@ -37,6 +38,7 @@ export default function ListLayout({ title, fetchData, cacheKey }: Props) {
         return (
             <Table
                 data={data as Record<string, unknown>[]}
+                entity={entity}
             />
         );
     };

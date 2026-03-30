@@ -4,12 +4,19 @@ import type { ExpenseMember } from '../api/expenseMember/dto.ts';
 import { groupsFakeServer } from './GroupsFakeServer.ts';
 import { expenseMembersFakeServer } from './ExpensesFakeServer.ts';
 
+const USERS = [
+    { id: 1, name: 'John' },
+    { id: 2, name: 'Anna' },
+];
+
 export const handlers = [
+    http.get<{ id: string }>('/api/users/:id', ({ params }) => {
+        const { id } = params;
+
+        return HttpResponse.json(USERS.find(el => el.id === Number(id)));
+    }),
     http.get('/api/users', () => {
-        return HttpResponse.json([
-            { id: 1, name: 'John' },
-            { id: 2, name: 'Anna' },
-        ]);
+        return HttpResponse.json(USERS);
     }),
     /* group */
     http.get('/api/groups', () => {

@@ -1,9 +1,15 @@
 import type { User } from './dto.ts';
 import { axiosClient } from '../axiosClient.ts';
-import type { ListService } from '../../types/types.ts';
-import { registerApi } from '../apiRegistry.ts';
+import type { ListService, RecordService } from '../../types/types.ts';
+import { registerListApi, registerRecordApi } from '../apiRegistry.ts';
 
-class UserService implements ListService<User> {
+class UserService implements ListService<User>, RecordService<User> {
+    async getById(id: number): Promise<User> {
+        const res = await axiosClient.get(`/users/${String(id)}`);
+
+        return res.data as User;
+    }
+
     async getAll(): Promise<User[]> {
         const res = await axiosClient.get('/users');
 
@@ -13,4 +19,5 @@ class UserService implements ListService<User> {
 
 export const userService = new UserService();
 
-registerApi('users', userService);
+registerListApi('users', userService);
+registerRecordApi('users', userService);
