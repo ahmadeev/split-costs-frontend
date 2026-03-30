@@ -16,6 +16,14 @@ export default function RecordPage() {
         queryFn: () => ( api.getById(Number(id)) ),
     });
 
+    if (isLoading) {
+        return <>Загрузка</>;
+    }
+
+    if (error) {
+        throw error;
+    }
+
     return (
         <>
             <h3>/{entity}/{id}</h3>
